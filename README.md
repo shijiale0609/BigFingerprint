@@ -1,1 +1,1 @@
-# BigSMILES-Embedding
+# BigFingerprint
