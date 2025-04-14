@@ -8,6 +8,7 @@ import copy
 import xlwt
 import pandas as pd
 import sys, os
+import matplotlib.pyplot as plt
 
 import search_tools
 
@@ -99,7 +100,7 @@ def bonds_compat_desc(list_bonds, bonds):
     
     return path in possible
 
-def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False, print_all = True):
+def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print_identifiers = False, print_all = True, graph_name = ""):
     # https://chemicbook.com/2021/03/25/a-beginners-guide-for-understanding-extended-connectivity-fingerprints.html
     # remove [H] from graph
 
@@ -122,11 +123,26 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
         row = 1
 
     atomistic = graphs["atomistic"]
+    print(type(atomistic), nx.is_directed(atomistic),isinstance(atomistic, nx.MultiGraph))
+
+
+
+    plt.figure(figsize=(8, 6))
+    nx.draw(atomistic, with_labels=True, node_color='lightblue', node_size=800, font_size=14, font_weight='bold')
+
+    # Save the visualization to a file
+    graph_file_name = "network_graph"+ graph_name +".png" 
+    plt.savefig(graph_file_name, format="PNG")    
+
+
     symbols = nx.get_node_attributes(atomistic, "symbol")
     for key in symbols:
         if symbols[key] == "H":
             atomistic.remove_node(key)
     symbols = nx.get_node_attributes(atomistic, "symbol")
+    print("########################")
+    print(symbols)
+    print("########################")
     formal_charge = nx.get_node_attributes(atomistic, "formal_charge")
     valence = nx.get_node_attributes(atomistic, "valence")
     atomic_num = nx.get_node_attributes(atomistic, "atomic_num")
@@ -181,7 +197,8 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
 
             neighbor_hash = dict()
             for neighbor_1 in atomistic[node]:
-                if is_descriptor(symbols[neighbor_1]):
+                # the neighbor_1 all need to check whether it is blank node
+                if is_descriptor(symbols[neighbor_1]) or symbols[neighbor_1] == "":
                     continue
 
                 for bond in bonds:
@@ -196,21 +213,27 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
                             order = 4
                 if iteration == 1:
                     neighbor_hash[neighbor_1] = [(order, all_identifiers[(neighbor_1, iteration - 1)])]
+                    print("neighbor information",neighbor_1, neighbor_hash[neighbor_1])
+
                 elif iteration == 2:
                     n = []
                     ident = all_identifiers[(neighbor_1, iteration - 1)]
+                    print("ident information",neighbor_1, iteration, ident)
                     if type(ident) == dict:
                         for key in ident:
                             n.append((order, ident[key]))
+                        print(n)    
                     else:
                         n = [(order, ident)]
                     neighbor_hash[neighbor_1] = n
+                    print("neighbor information iteration 2", neighbor_1, neighbor_hash[neighbor_1] )
+
             print("neighbor (order, prev. identifier):", neighbor_hash)
             
             # populate across hash, which maps atom across descriptor to hash of that atom from previous iteration
             across_hash = dict()
             for neighbor_1 in atomistic[node]:
-                if not is_descriptor(symbols[neighbor_1]):
+                if not is_descriptor(symbols[neighbor_1]) :
                     continue
                 for neighbor_2 in atomistic[neighbor_1]:
                     if symbols[neighbor_2] == "":
@@ -253,8 +276,51 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
                         if not bonds_compat_desc(list_bonds, bonds):
                             continue
                         across_hash[neighbor_2] = (order, all_identifiers[(neighbor_2, iteration - 1)])
-            print("across (order, prev. identifier):", across_hash)                    
+            print("across (order, prev. identifier):", across_hash)   
 
+            # if the node is connected to both a distinct descriptor and a blank node
+            check_neighbor_empty_node = False
+            check_neighbor_descriptor = False
+            neighbor_empty_node_index = 0
+            neighbor_descriptor_index = 0
+            neighbor_empty_node_bond_order = 1
+            neighbor_descriptor_bond_order = 1
+
+            for neighbor_1 in atomistic[node]:
+                if symbols[neighbor_1] == "":
+                    check_neighbor_empty_node = True
+                    neighbor_empty_node_index = neighbor_1
+                    neighbor_empty_node_bond_type =  atomistic[node][neighbor_empty_node_index]["bond_type"]
+                    if "SINGLE" in neighbor_empty_node_bond_type:
+                        neighbor_empty_node_bond_order = 1
+                    elif "DOUBLE" in neighbor_empty_node_bond_type:
+                        neighbor_empty_node_bond_order = 2
+                    elif "TRIPLE" in neighbor_empty_node_bond_type:
+                        neighbor_empty_node_bond_order = 3 
+                    else:
+                        neighbor_empty_node_bond_order = 4
+                    
+                if is_descriptor(symbols[neighbor_1]):
+                    check_neighbor_descriptor = True
+                    neighbor_descriptor_index = neighbor_1
+                    descriptor_bond_type =  atomistic[node][neighbor_descriptor_index]["bond_type"]
+                    if "SINGLE" in descriptor_bond_type:
+                        neighbor_descriptor_bond_order = 1
+                    elif "DOUBLE" in descriptor_bond_type:
+                        neighbor_descriptor_bond_order = 2
+                    elif "TRIPLE" in descriptor_bond_type:
+                        neighbor_descriptor_bond_order = 3
+                    else:  
+                        neighbor_descriptor_bond_order = 4
+
+
+            if check_neighbor_empty_node and check_neighbor_descriptor:
+                across_hash[node] = (neighbor_empty_node_bond_order, all_identifiers[(node, iteration - 1)])
+                across_hash[node] = (neighbor_descriptor_bond_order, all_identifiers[(node, iteration - 1)])
+                print("========================================")
+                print("update across (order, prev. identifier):", across_hash)
+
+                            
             if iteration == 1:
                 if not across_hash:
                     print("\nno across atoms")
@@ -270,6 +336,7 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
                     for pair in neighbors:
                         for item in pair:
                             proper_list.append(item)
+
                     print("iter, atom hash + sorted:", proper_list)
                     identifier = hash(tuple(proper_list)) 
                     print("identifier after hashing:", identifier)
@@ -288,6 +355,10 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
                         print("neighbors combined:", neighbors)
                         neighbors.append(across_hash[atom_across]) 
                         print("neighbors + across:", neighbors)
+
+                        if check_neighbor_empty_node and check_neighbor_descriptor:
+                            neighbors.append(across_hash[node]) 
+
                         neighbors = sorted(neighbors)
                         print("sorted:", neighbors)
 
@@ -295,6 +366,7 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
                         for pair in neighbors:
                             for item in pair:
                                 proper_list.append(item)
+
                         print("iter, atom hash + sorted:", proper_list)
                         identifier = hash(tuple(proper_list)) 
                         print("identifier after hashing atom", str(atom_across) + ":", identifier)
@@ -348,13 +420,22 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
                             print("neighbors combined:", neighbors)
                             neighbors.append((across_hash[atom_across][0], across_hash[atom_across][1][node]))
                             print("neighbors + across:", neighbors)
+
+                            if check_neighbor_empty_node and check_neighbor_descriptor:
+                               neighbors.append((across_hash[node][0], across_hash[node][1][node])) 
+
                             neighbors = sorted(neighbors)
+
+
                             print("sorted:", neighbors)
 
                             proper_list = [2, atom_hash[atom_across]]
                             for pair in neighbors:
                                 for item in pair:
                                     proper_list.append(item)
+
+
+
                             print("iter, atom hash + sorted:", proper_list)
                             identifier = hash(tuple(proper_list)) 
                             print("identifier after hashing atom", str(atom_across) + ":", identifier)
@@ -373,6 +454,7 @@ def ECFP(graphs, individual_clusters, fp_size = 1024, print_identifiers = False,
     
     if not print_all:
         enablePrint()
+
     
     return fp    
 
