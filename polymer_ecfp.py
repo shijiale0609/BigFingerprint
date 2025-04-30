@@ -38,10 +38,18 @@ def in_ring(atomistic, atom):
 
 def in_repeat(graphs, individual_clusters, atom):
     ids = graphs["ids"]
+    #print(graphs["topology"])
+    #symbols = nx.get_node_attributes(graphs["topology"], "symbol")
+    #print(symbols)
+    #for node in symbols:
+    #    print(node, symbols[node])
+    #print(ids)
     # get the topological id of the atom
     id = ids[atom]
+    #print(individual_clusters)
     # determine if the topological id is in a stochastic object
     for stochastic_object in individual_clusters:
+        #print(atom, id, stochastic_object)
         if id in stochastic_object:
             return True
     return False
@@ -74,6 +82,17 @@ def get_all_backbone_atoms(graphs, individual_clusters):
                     for p in path:
                         all_backbone.add(p)
 
+    for i in range(0, len(backbone)):
+        neighbors = atomistic[backbone[i]]
+        amount_of_neighbor_descriptors = 0
+        for n in neighbors:
+            if is_descriptor(symbols[n]):
+                amount_of_neighbor_descriptors += 1
+                all_backbone.add(n)
+        if amount_of_neighbor_descriptors >= 2:
+            all_backbone.add(backbone[i])
+            
+    #print("all_backbone result:",all_backbone)
     return all_backbone
 
 def is_descriptor(symbol):
@@ -100,7 +119,7 @@ def bonds_compat_desc(list_bonds, bonds):
     
     return path in possible
 
-def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print_identifiers = False, print_all = True, graph_name = ""):
+def ECFP(graphs, individual_clusters, iteration_input = 2, repeat_unit_property = False, backbone_property = False, fp_size = 2048, print_identifiers = False, print_all = True, graph_name = ""):
     # https://chemicbook.com/2021/03/25/a-beginners-guide-for-understanding-extended-connectivity-fingerprints.html
     # remove [H] from graph
 
@@ -118,12 +137,15 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
         sheet1.write(0, 5, "Atom Charge")
         sheet1.write(0, 6, "Hydrogens")
         sheet1.write(0, 7, "Ring")
-        sheet1.write(0, 8, "Repeat")
-        sheet1.write(0, 9, "Backbone")
+
+        if repeat_unit_property == True:
+            sheet1.write(0, 8, "Repeat")
+        if backbone_property == True:
+            sheet1.write(0, 9, "Backbone")
         row = 1
 
     atomistic = graphs["atomistic"]
-    print(type(atomistic), nx.is_directed(atomistic),isinstance(atomistic, nx.MultiGraph))
+    #print(type(atomistic), nx.is_directed(atomistic),isinstance(atomistic, nx.MultiGraph))
 
 
 
@@ -150,7 +172,8 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
     num_hs = nx.get_node_attributes(atomistic, "num_hs") 
     bonds = nx.get_edge_attributes(atomistic, "bond_type")
 
-    backbone_atoms = get_all_backbone_atoms(graphs, individual_clusters)
+    if backbone_property == True:
+        backbone_atoms = get_all_backbone_atoms(graphs, individual_clusters)
 
     all_identifiers = dict()
     feature_list = [] 
@@ -164,10 +187,20 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
             mass_atom = mass[node]
             charge_atom = formal_charge[node] 
             ring = int(in_ring(atomistic, node))
-            repeat = int(in_repeat(graphs, individual_clusters, node))
-            backbone = int(node in backbone_atoms)
+            if repeat_unit_property == True:
+                repeat = int(in_repeat(graphs, individual_clusters, node))
+            if backbone_property == True:
+                backbone = int(node in backbone_atoms)
             
-            invar = (neighbors, valence_atoms - hydrogens_atom, atomic_atom, mass_atom, charge_atom, hydrogens_atom, ring, repeat, backbone)
+            if repeat_unit_property == True and backbone_property == True:
+                invar = (neighbors, valence_atoms - hydrogens_atom, atomic_atom, mass_atom, charge_atom, hydrogens_atom, ring, repeat, backbone)
+            elif repeat_unit_property == True and backbone_property == False:
+                invar = (neighbors, valence_atoms - hydrogens_atom, atomic_atom, mass_atom, charge_atom, hydrogens_atom, ring, repeat)
+            elif repeat_unit_property == False and backbone_property == True:
+                invar = (neighbors, valence_atoms - hydrogens_atom, atomic_atom, mass_atom, charge_atom, hydrogens_atom, ring, backbone)
+            else:
+                invar = (neighbors, valence_atoms - hydrogens_atom, atomic_atom, mass_atom, charge_atom, hydrogens_atom, ring)
+
             identifier = hash(invar)
             if print_identifiers:
                 col = 0
@@ -185,7 +218,7 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
         book.save("Atom_Invariants.xls")
 
     iteration = 1
-    while iteration <= 2:
+    while iteration <= iteration_input:
         print("\nIteration:", iteration)
         for node in symbols:
             if is_descriptor(symbols[node]) or symbols[node] == "":
@@ -285,6 +318,8 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
             neighbor_descriptor_index = 0
             neighbor_empty_node_bond_order = 1
             neighbor_descriptor_bond_order = 1
+            neighbor_descriptor_extra_neighbor_index_list = []
+            neighbor_descriptor_extra_neighbor_bond_list = []
 
             for neighbor_1 in atomistic[node]:
                 if symbols[neighbor_1] == "":
@@ -312,11 +347,35 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
                         neighbor_descriptor_bond_order = 3
                     else:  
                         neighbor_descriptor_bond_order = 4
+                    # check whether the descriptor is connected with other atoms
+                    amount_of_neighbors_for_descriptor = len(atomistic[neighbor_1])
+                    if amount_of_neighbors_for_descriptor > 2:
+                        for neighbor_2 in atomistic[neighbor_1]:
+                            if neighbor_2 != node and symbols[neighbor_2] != "":
+                                descriptor_neighbor_index = neighbor_2
+                                descriptor_neighbor_bond_type =  atomistic[neighbor_1][descriptor_neighbor_index]["bond_type"]
+                                if "SINGLE" in descriptor_neighbor_bond_type:
+                                    descriptor_neighbor_bond_order = 1
+                                elif "DOUBLE" in descriptor_neighbor_bond_type:
+                                    descriptor_neighbor_bond_order = 2
+                                elif "TRIPLE" in descriptor_neighbor_bond_type:
+                                    descriptor_neighbor_bond_order = 3 
+                                else:
+                                    descriptor_neighbor_bond_order = 4
+                                neighbor_descriptor_extra_neighbor_index_list.append(descriptor_neighbor_index)
+                                neighbor_descriptor_extra_neighbor_bond_list.append(descriptor_neighbor_bond_order)
+                                
+            
 
 
             if check_neighbor_empty_node and check_neighbor_descriptor:
                 across_hash[node] = (neighbor_empty_node_bond_order, all_identifiers[(node, iteration - 1)])
                 across_hash[node] = (neighbor_descriptor_bond_order, all_identifiers[(node, iteration - 1)])
+                #if len(neighbor_descriptor_extra_neighbor_index_list)>0:
+                #    print(len(neighbor_descriptor_extra_neighbor_index_list))
+                #    print(node, neighbor_descriptor_extra_neighbor_index_list, neighbor_descriptor_extra_neighbor_bond_list)
+                #    for index_i in range(0, len(neighbor_descriptor_extra_neighbor_index_list)):
+                #        across_hash[neighbor_descriptor_extra_neighbor_index_list[index_i]] = (neighbor_descriptor_extra_neighbor_bond_list[index_i], all_identifiers[(neighbor_descriptor_extra_neighbor_index_list[index_i], iteration - 1)])
                 print("========================================")
                 print("update across (order, prev. identifier):", across_hash)
 
@@ -346,6 +405,7 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
                 else:
                     print("\nacross atoms (adjacent to descriptor)")
                     new_identifiers = dict()
+                    print(across_hash)
                     for atom_across in across_hash:
                         print("next across:", atom_across)
                         neighbors = []
@@ -353,6 +413,7 @@ def ECFP(graphs, individual_clusters, iteration_input = 2, fp_size = 1024, print
                             for order_ident in neighbor_hash[key]:
                                 neighbors.append(order_ident)
                         print("neighbors combined:", neighbors)
+                        
                         neighbors.append(across_hash[atom_across]) 
                         print("neighbors + across:", neighbors)
 
