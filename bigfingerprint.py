@@ -1,74 +1,36 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import json
 
 import search_tools 
 import polymer_ecfp
+import polymer_topfp
 
 
-bigsmarts_query_list = [
-"{[][]}",
-"{[][]}!{[][]}",
-"{[][]}?*{[][]}",
-"{[][]}?*{[][]}!{[][]}",
-"{[][]}?*{[][]}?*{[][]}",
-"{[][<]C(=O)O?*[>][]}",
-"{[][<]OC(=O)O?*[>][]}",
-"{[][<]NC(=O)O?*[>][]}",
-"{[][<]C=C?*[>][]}",
-"{[][<]NC(=O)N?*[>][]}",
-]
+def generate_bigfingerprint_vector(bigsmiles):
 
-bigsmiles_list = [
-"{[][<]COC[>],[<]COC[>][]}",
-"{[][$]CC[$][]}",
-"C([#Arm])([#Arm])([#Arm])[#Arm].{#Arm=CO{[<][>]CCO[<][]}}",
-"{[][<]CC(C)O[>][]}",
-]
-
-
-
-def polymer_bigsmarts_search_one_hot_encoding(given_bigsmiles, given_bigsmarts_query_list):
-
-    one_hot_encoding = []
-
-    for bigsmarts in given_bigsmarts_query_list:
-        return_result = search_tools.graph_traversal_match(bigsmarts, bigsmiles)
-        if return_result == True:
-            one_hot_encoding.append(1)
-        else:
-            one_hot_encoding.append(0)
-    return np.array(one_hot_encoding)
-
-bigfingerprint_matrix = []
-for bigsmiles in bigsmiles_list:
     graphs = search_tools.generate_NetworkX_graphs(bigsmiles, is_bigsmarts = False)
     group_cycles, individual_clusters, treat_as_cycle = search_tools.identify_cycles(graphs)
-    v1 = polymer_ecfp.ECFP(graphs = graphs, individual_clusters = individual_clusters)
+    pecfp_vector = polymer_ecfp.ECFP(graphs = graphs, individual_clusters = individual_clusters, iteration_input = 2, repeat_unit_property = False, backbone_property = False, fp_size = 2048, print_identifiers = True)
 
-    v2 = polymer_bigsmarts_search_one_hot_encoding(given_bigsmiles=bigsmiles, given_bigsmarts_query_list=bigsmarts_query_list)
+    ptopfp_vector = polymer_topfp.bigsmiles_topology_vector(bigsmiles)
 
-    print(type(v1), type(v2))
-    bigfingerprint = np.concatenate((v1, v2),axis=0)
-    bigfingerprint_matrix.append(bigfingerprint)
+    bigfingerprint_vector = np.concatenate((pecfp_vector, ptopfp_vector),axis=0)
     
-#print(bigfingerprint.shape)
-bigfingerprint_matrix = np.array(bigfingerprint_matrix)
-print(bigfingerprint_matrix.shape)
-for i in range(0, 4):
-    for j in range(0, 1024):
-        if bigfingerprint_matrix[i,j]>0.0001 and bigfingerprint_matrix[i,j]<1:
-            print(i,j, bigfingerprint_matrix[i,j])
+    return bigfingerprint_vector
+ 
 
 
-plt.figure(figsize=(500, 1))
-#plt.imshow(bigfingerprint_matrix, cmap='viridis', aspect='auto')  # You can choose other colormaps like 'hot', 'coolwarm', 'jet', etc.
-#plt.colorbar(label='Value')
-plt.imshow(bigfingerprint_matrix, cmap='gray', aspect='auto')
-plt.title('BigFinerprint Matrix')
-plt.xlabel('X-axis')
-plt.ylabel('Y-axis')
+bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCC(CO[>])(CO[>])CO[>][]}"
+bigfingerprint_example = generate_bigfingerprint_vector(bigsmiles_example)
+print("BigSMILES:", bigsmiles_example)
+print("BigFingerprint:", bigfingerprint_example)
+print("BigFingerprint Shape:", bigfingerprint_example.shape)
+print("\n\n")
 
-plt.show()
-
-
-
+bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"
+bigfingerprint_example = generate_bigfingerprint_vector(bigsmiles_example)
+print("BigSMILES:", bigsmiles_example)
+print("BigFingerprint:", bigfingerprint_example)
+print("BigFingerprint Shape:", bigfingerprint_example.shape)
+print("\n\n")
