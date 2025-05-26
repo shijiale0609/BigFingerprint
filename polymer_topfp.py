@@ -7,6 +7,8 @@ import pandas as pd
 import os
 import sys
 import copy
+from collections import Counter
+
 from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem, Draw, MACCSkeys
 from rdkit.Chem.AtomPairs import Pairs
@@ -193,20 +195,93 @@ def remove_outer_square_brackets_tokens(text):
     text = re.sub(r'\[[^\]]+\]$', '', text, count=1)
     return text
 
-def check_self_reaction_network(symbols_list = None):
+def check_list_purity(symbols):
+    has_numbered = False
+    pure_pattern = re.compile(r'^\[\$]$|^\[>]$|^\[<]$')
+    numbered_pattern = re.compile(r'^\[\$[0-9]+]$|^\[>[0-9]+]$|^\[<[0-9]+]$')
     
-    num_dollar = symbols_list.count('[$]')
-    num_left = symbols_list.count('[<]')
-    num_right = symbols_list.count('[>]')
+    for item in symbols:
+        if pure_pattern.fullmatch(item):
+            continue
+        elif numbered_pattern.fullmatch(item):
+            has_numbered = True
+        else:
+            print(f"Warning: unexpected item '{item}'")
+            has_numbered = True  # treat unknown as impurity
     
-    if num_dollar >=2:
-        return True
-    
-    elif num_left >=1 and num_right>=1:
-        return True
-    
-    else: 
+    if has_numbered:
         return False
+        
+    else:
+        return True
+    
+def check_cases_with_number_specified(symbols):
+    dollar_pattern = re.compile(r'^\[\$([0-9]+)]$')
+    left_pattern = re.compile(r'^\[<([0-9]+)]$')
+    right_pattern = re.compile(r'^\[>([0-9]+)]$')
+    
+    dollar_numbers = []
+    left_numbers = set()
+    right_numbers = set()
+    
+    # Collect numbers
+    for item in symbols:
+        if m := dollar_pattern.fullmatch(item):
+            dollar_numbers.append(m.group(1))
+        elif m := left_pattern.fullmatch(item):
+            left_numbers.add(m.group(1))
+        elif m := right_pattern.fullmatch(item):
+            right_numbers.add(m.group(1))
+    
+    # Case 1: at least two same [$number]
+    dollar_counts = Counter(dollar_numbers)
+    for num, count in dollar_counts.items():
+        if count >= 2:
+            pass
+            return True
+    
+    # Case 2: at least one [<number] and one [>number], same number
+    shared_numbers = left_numbers & right_numbers
+    if shared_numbers:
+        for num in shared_numbers:
+            pass
+        return True
+    
+    return False
+
+
+def check_self_reaction_network(symbols_list = None):
+
+    if check_list_purity(symbols_list) == True:
+        num_dollar = symbols_list.count('[$]')
+        num_left = symbols_list.count('[<]')
+        num_right = symbols_list.count('[>]')
+    
+        if num_dollar >=2:
+            return True
+    
+        elif num_left >=1 and num_right>=1:
+            return True
+    
+        else: 
+            return False
+    else:
+        num_dollar = symbols_list.count('[$]')
+        num_left = symbols_list.count('[<]')
+        num_right = symbols_list.count('[>]')
+
+        if num_dollar >=2:
+            return True
+    
+        elif num_left >=1 and num_right>=1:
+            return True
+        
+        elif check_cases_with_number_specified(symbols_list):
+            return True
+        
+        else:
+            return False
+
 
 def build_network_vector(BigSMILES):
     """
@@ -486,5 +561,5 @@ def bigsmiles_topology_vector(bigsmiles):
     topology_vector = np.array(topology_vector_list)
     return topology_vector
 
-bigsmiles_example = "{[][<]CCCC[<],[>]CC([>])C([>])C[>][]}"
+bigsmiles_example = "{[][<]CCCC[<],[$1]CC([$2])C([$3])C[$4][]}"
 print(bigsmiles_topology_vector(bigsmiles_example), bigsmiles_topology_vector(bigsmiles_example).shape)
