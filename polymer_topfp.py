@@ -390,6 +390,7 @@ def build_network_vector(BigSMILES):
                 
                 
                 if len(first_maximum_list) >=3:
+                    network_vector[0] = 1
                     network_vector[1] = 1
                     
                     # first
@@ -464,6 +465,8 @@ def build_network_vector(BigSMILES):
                         pass
                     
                 if len(connectting_symbol_list_in_one_block) >=3 and len(first_maximum_list) >=3:
+                    network_vector[0] = 1
+                    network_vector[1] = 1
                     network_vector[2] = 1
             
     network_vector_list = network_vector.tolist()
