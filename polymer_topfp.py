@@ -281,7 +281,13 @@ def check_self_reaction_network(symbols_list = None):
         
         else:
             return False
-
+        
+def process_list(list_input=None):
+    list_processed = []
+    for i in range(0, len(list_input)):
+        if ("[<" in list_input[i]) or ("[>" in list_input[i]) or ("[$" in list_input[i]):
+            list_processed.append(list_input[i])
+    return list_processed
 
 def build_network_vector(BigSMILES):
     """
@@ -295,7 +301,7 @@ def build_network_vector(BigSMILES):
     """
     objects = get_objects(BigSMILES)
     
-    network_vector = np.zeros(19, dtype=int)
+    network_vector = np.zeros(18, dtype=int)
     
     for object in objects[0]:
         
@@ -323,7 +329,7 @@ def build_network_vector(BigSMILES):
                     
                     connectting_symbol_list_in_one_repeat_unit = re.findall(r'\[[^\]]+\]', cleaned_repeat_unit_string)
                     
-                    connectting_symbol_list_in_one_block.append(connectting_symbol_list_in_one_repeat_unit)
+                    connectting_symbol_list_in_one_block.append(process_list(connectting_symbol_list_in_one_repeat_unit))
                     
                     for k in range(0, len(inside_braces)):
                     
@@ -346,7 +352,7 @@ def build_network_vector(BigSMILES):
                     
                     connectting_symbol_list_in_one_repeat_unit = re.findall(r'\[[^\]]+\]', repeat_unit_string)
             
-                    connectting_symbol_list_in_one_block.append(connectting_symbol_list_in_one_repeat_unit)
+                    connectting_symbol_list_in_one_block.append(process_list(connectting_symbol_list_in_one_repeat_unit))
             
             if len(connectting_symbol_list_in_one_block) == 1:
                 
