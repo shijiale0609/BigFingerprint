@@ -87,7 +87,18 @@ python -m unittest test_bigfingerprint_preprocess.py
 
 ## ML Results
 
-Tg prediction results for MorganFP, p-ECFP, and BigFP with SVR, Gaussian process, and random forest models are collected in [`ml_results/tg/`](ml_results/tg/). That folder includes feature matrices, Tg labels, five-fold splits, R2/RMSE arrays, prediction plots, and a summary CSV.
+ML plotting scripts and prediction figures are collected in [`ml_results/`](ml_results/).
+
+The available property folders are:
+
+- [`ml_results/tg/`](ml_results/tg/): glass transition temperature prediction plots.
+- [`ml_results/ev/`](ml_results/ev/): electron affinity / EV prediction plots using `EA vs SHE (eV)`.
+- [`ml_results/ip/`](ml_results/ip/): ionization potential prediction plots using `IP vs SHE (eV)`.
+
+Each property folder contains:
+
+- `scripts/`: scripts used to generate the ML predictions and figures.
+- `prediction_plots/`: SVG prediction plots for MorganFP, p-ECFP, and BigFP with SVR, Gaussian process, and random forest models.
 
 ## Repository Layout
 
@@ -96,7 +107,9 @@ BigFingerprint/
 ├── README.md
 ├── requirements.txt
 ├── ml_results/
-│   └── tg/
+│   ├── tg/
+│   ├── ev/
+│   └── ip/
 └── script/
     ├── bigfingerprint.py
     ├── bigfingerprint_preprocess.py
