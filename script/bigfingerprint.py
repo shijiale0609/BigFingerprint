@@ -21,16 +21,17 @@ def generate_bigfingerprint_vector(bigsmiles):
  
 
 
-bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCC(CO[>])(CO[>])CO[>][]}"
-bigfingerprint_example = generate_bigfingerprint_vector(bigsmiles_example)
-print("BigSMILES:", bigsmiles_example)
-print("BigFingerprint:", bigfingerprint_example)
-print("BigFingerprint Shape:", bigfingerprint_example.shape)
-print("\n\n")
+if __name__ == "__main__":
+    bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCC(CO[>])(CO[>])CO[>][]}"
+    bigfingerprint_example = generate_bigfingerprint_vector(bigsmiles_example)
+    print("BigSMILES:", bigsmiles_example)
+    print("BigFingerprint:", bigfingerprint_example)
+    print("BigFingerprint Shape:", bigfingerprint_example.shape)
+    print("\n\n")
 
-bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"
-bigfingerprint_example = generate_bigfingerprint_vector(bigsmiles_example)
-print("BigSMILES:", bigsmiles_example)
-print("BigFingerprint:", bigfingerprint_example)
-print("BigFingerprint Shape:", bigfingerprint_example.shape)
-print("\n\n")
+    bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"
+    bigfingerprint_example = generate_bigfingerprint_vector(bigsmiles_example)
+    print("BigSMILES:", bigsmiles_example)
+    print("BigFingerprint:", bigfingerprint_example)
+    print("BigFingerprint Shape:", bigfingerprint_example.shape)
+    print("\n\n")
