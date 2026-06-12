@@ -59,5 +59,5 @@ ml_results/tg/
 
 ## Notes
 
-The per-model prediction plots are stored as PNG and SVG files in `prediction_plots/by_model/`. The SVG files include an explicit white background so axes and labels remain readable in dark-mode viewers.
+The per-model prediction plots are stored as PNG and SVG files in `prediction_plots/by_model/`.
 The aggregate plots compare models for each representation and are stored in `prediction_plots/aggregate/`.
