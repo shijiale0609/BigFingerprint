@@ -85,12 +85,18 @@ cd script
 python -m unittest test_bigfingerprint_preprocess.py
 ```
 
+## ML Results
+
+Tg prediction results for MorganFP, p-ECFP, and BigFP with SVR, Gaussian process, and random forest models are collected in [`ml_results/tg/`](ml_results/tg/). That folder includes feature matrices, Tg labels, five-fold splits, R2/RMSE arrays, prediction plots, and a summary CSV.
+
 ## Repository Layout
 
 ```text
 BigFingerprint/
 ├── README.md
 ├── requirements.txt
+├── ml_results/
+│   └── tg/
 └── script/
     ├── bigfingerprint.py
     ├── bigfingerprint_preprocess.py
