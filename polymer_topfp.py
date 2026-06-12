@@ -166,6 +166,8 @@ def build_stereochemistry_vector(smiles_list):
     for smiles in smiles_list:
         update_smiles = replace_bigsmiles_connectors(smiles)
         mol = Chem.MolFromSmiles(update_smiles)
+        if mol is None:
+            continue
 
         for bond in mol.GetBonds():
             if bond.GetBondType() == Chem.rdchem.BondType.DOUBLE:
@@ -570,5 +572,5 @@ def bigsmiles_topology_vector(bigsmiles):
     topology_vector = np.array(topology_vector_list)
     return topology_vector
 
-bigsmiles_example = "{[][<]CCCC[<],[$1]CC([$2])C([$3])C[$4][]}"
-print(bigsmiles_topology_vector(bigsmiles_example), bigsmiles_topology_vector(bigsmiles_example).shape)
+#bigsmiles_example = "{[][<]CCCC[<],[$1]CC([$2])C([$3])C[$4][]}"
+#print(bigsmiles_topology_vector(bigsmiles_example), bigsmiles_topology_vector(bigsmiles_example).shape)
