@@ -20,6 +20,7 @@
   <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
  </defs>
  <g id="figure_1">
+  <rect id="codex-white-background" width="100%" height="100%" fill="#ffffff"/>
   <g id="patch_1">
    <path d="M 0 302.4 
 L 302.4 302.4 
