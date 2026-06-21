@@ -7,11 +7,12 @@ import polymer_ecfp
 import polymer_topfp
 
 
-def generate_bigfingerprint_vector(bigsmiles):
+def generate_bigfingerprint_vector(bigsmiles, pecfp_iterations=2):
+    """Generate BigFingerprint with pECFP radius ``pecfp_iterations`` (default: 2)."""
 
     graphs = search_tools.generate_NetworkX_graphs(bigsmiles, is_bigsmarts = False)
     group_cycles, individual_clusters, treat_as_cycle = search_tools.identify_cycles(graphs)
-    pecfp_vector = polymer_ecfp.ECFP(graphs = graphs, individual_clusters = individual_clusters, iteration_input = 2, repeat_unit_property = False, backbone_property = False, fp_size = 2048, print_identifiers = True)
+    pecfp_vector = polymer_ecfp.ECFP(graphs = graphs, individual_clusters = individual_clusters, iteration_input = pecfp_iterations, repeat_unit_property = False, backbone_property = False, fp_size = 2048, print_identifiers = True)
 
     ptopfp_vector = polymer_topfp.bigsmiles_topology_vector(bigsmiles)
 
