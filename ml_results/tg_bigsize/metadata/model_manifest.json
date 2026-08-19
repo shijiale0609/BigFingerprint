@@ -1,0 +1,38 @@
+{
+  "training_target": "Tg in degrees Celsius",
+  "training_protocol": "Fold 1 held out; hyperparameters selected by folds 2-5; serialized RF/SVR estimators refit on folds 2-5 (5736 samples)",
+  "input_preprocessing": "none",
+  "serialization_environment": {
+    "scikit_learn": "1.6.1"
+  },
+  "models": {
+    "morgan__rf.joblib": {
+      "estimator": "RandomForestRegressor",
+      "input_dimensions": 2048,
+      "n_estimators": 300
+    },
+    "morgan__svr.joblib": {
+      "estimator": "SVR",
+      "input_dimensions": 2048
+    },
+    "pecfp__rf.joblib": {
+      "estimator": "RandomForestRegressor",
+      "input_dimensions": 2048,
+      "n_estimators": 300
+    },
+    "pecfp__svr.joblib": {
+      "estimator": "SVR",
+      "input_dimensions": 2048
+    },
+    "bigfp__rf.joblib": {
+      "estimator": "RandomForestRegressor",
+      "input_dimensions": 2088,
+      "n_estimators": 300
+    },
+    "bigfp__svr.joblib": {
+      "estimator": "SVR",
+      "input_dimensions": 2088
+    }
+  },
+  "gpr_models": "The exact five-fold SCC GPR runs saved predictions, learned kernels, and metrics, but did not serialize fitted estimator objects."
+}

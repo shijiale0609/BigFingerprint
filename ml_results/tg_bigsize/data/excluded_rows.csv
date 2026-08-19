@@ -1,0 +1,5 @@
+source_row,SMILES,tg,reason
+7047,*O[SiH](*)Nc1cccc(N[Si](*)(C)O*)c1,177.5,non_linear_connection_count
+7154,*c1cc(/C=N/c2ccc3c(c2)c2cc(/N=C/c4cc(*)c(O)c(*)c4)ccc2n3CCCC)ccc1O,306.0,non_linear_connection_count
+7155,*c1cc(/C=N/c2ccc3c(c2)c2cc(/N=C/c4cc(*)c(O)c(*)c4)ccc2n3CCCCCC)ccc1O,327.0,non_linear_connection_count
+7156,*c1cc(/C=N/c2ccc3c(c2)c2cc(/N=C/c4cc(*)c(O)c(*)c4)ccc2n3CCCCCCCCCCCC)ccc1O,310.0,non_linear_connection_count

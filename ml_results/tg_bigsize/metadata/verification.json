@@ -1,0 +1,58 @@
+{
+  "sample_count": 7170,
+  "fold_sizes": [
+    1434,
+    1434,
+    1434,
+    1434,
+    1434
+  ],
+  "train_per_fold": 5736,
+  "test_per_fold": 1434,
+  "same_rows_and_folds_for_rf_svr_gpr": true,
+  "fivefold_std_ddof": 0,
+  "fold1_plot_axis_celsius": [
+    -200,
+    600
+  ],
+  "fold1_plot_conversion": "none; plotted values are the stored model targets and predictions in °C",
+  "gpr_train_prediction_note": "Fold1 training predictions reconstructed with the SCC learned kernel shown in metrics JSON; exact saved SCC predictions are used for test points.",
+  "prediction_reconstruction": {
+    "svr_morgan": {
+      "test_reconstruction_max_abs_delta": 5.684341886080802e-14,
+      "test_reconstruction_mean_abs_delta": 2.4231740122894325e-15
+    },
+    "rf_morgan": {
+      "test_reconstruction_max_abs_delta": 5.684341886080802e-14,
+      "test_reconstruction_mean_abs_delta": 4.0548399133949594e-15
+    },
+    "gpr_morgan": {
+      "test_reconstruction_max_abs_delta": 0.050285544381949876,
+      "test_reconstruction_mean_abs_delta": 0.004571950575731262
+    },
+    "svr_pecfp": {
+      "test_reconstruction_max_abs_delta": 5.684341886080802e-14,
+      "test_reconstruction_mean_abs_delta": 2.2149878398196247e-15
+    },
+    "rf_pecfp": {
+      "test_reconstruction_max_abs_delta": 8.526512829121202e-14,
+      "test_reconstruction_mean_abs_delta": 4.815553658606435e-15
+    },
+    "gpr_pecfp": {
+      "test_reconstruction_max_abs_delta": 0.05192642651081769,
+      "test_reconstruction_mean_abs_delta": 0.005524908655678411
+    },
+    "svr_bigfp": {
+      "test_reconstruction_max_abs_delta": 5.684341886080802e-14,
+      "test_reconstruction_mean_abs_delta": 2.2873768585103165e-15
+    },
+    "rf_bigfp": {
+      "test_reconstruction_max_abs_delta": 1.1368683772161603e-13,
+      "test_reconstruction_mean_abs_delta": 3.962001964691776e-15
+    },
+    "gpr_bigfp": {
+      "test_reconstruction_max_abs_delta": 0.05192642651081769,
+      "test_reconstruction_mean_abs_delta": 0.005524908655678411
+    }
+  }
+}

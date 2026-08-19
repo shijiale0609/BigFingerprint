@@ -1,0 +1,20 @@
+{
+  "fingerprints": [
+    "morgan",
+    "pecfp",
+    "bigfp"
+  ],
+  "models": [
+    "rf",
+    "svr"
+  ],
+  "n_folds": 5,
+  "n_test_per_fold": 1434,
+  "n_train_per_fold": 5736,
+  "parameter_source": "/Users/jialeshi/Projects/BigFingerprint/Tg_PolyInfo/artifacts_fivefold/results/best_parameters_classical.json",
+  "parameters_held_fixed": true,
+  "protocol": "fixed optimized parameters; each fold1-fold5 is test once; other four folds train",
+  "sample_count": 7170,
+  "seed": 42,
+  "standard_deviation_ddof": 0
+}

@@ -1,0 +1,21 @@
+{
+  "bigfp": {
+    "alpha": 300.0,
+    "input_dimensions": 2088
+  },
+  "input_preprocessing": "none",
+  "kernel": "ConstantKernel(1.0, (1e-6, 1e6)) * RBF(1.0, (1e-6, 1e6))",
+  "morgan": {
+    "alpha": 500.0,
+    "input_dimensions": 2048
+  },
+  "n_restarts_optimizer": 20,
+  "pecfp": {
+    "alpha": 300.0,
+    "input_dimensions": 2048
+  },
+  "random_state": 42,
+  "small_dataset_reference": "ThermalProcess/final_prediction_tg_five_fold.py",
+  "split_reference": "Tg_PolyInfo/artifacts_fivefold/split_indices.npz",
+  "standard_deviation_ddof": 0
+}

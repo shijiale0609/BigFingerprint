@@ -1,0 +1,14 @@
+{
+  "fixed_alpha": {
+    "bigfp": 300.0,
+    "morgan": 500.0,
+    "pecfp": 300.0
+  },
+  "input_preprocessing": "none",
+  "kernel": "ConstantKernel * RBF",
+  "n_restarts_optimizer": 20,
+  "random_state": 42,
+  "small_dataset_reference": "ThermalProcess/final_prediction_tg_five_fold.py",
+  "split": "same five folders used by large-Tg SVR/RF",
+  "standard_deviation_ddof": 0
+}
