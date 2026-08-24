@@ -1,0 +1,26 @@
+{
+  "definition": "BigFingerprint similarity = p-ECFP Tanimoto * p-TFP Tanimoto",
+  "morgan_baseline": "OR-union of Morgan fingerprints for distinct pSMILES-style repeat-unit fragments. Random and block sequences have the same fingerprint. Star architectures are unsupported and recorded as N/A.",
+  "morgan_supported_polymer_ids": [
+    "L-EO",
+    "L-PO",
+    "R-EOPO",
+    "B-EOPO"
+  ],
+  "morgan_radius": 2,
+  "morgan_fp_size": 2048,
+  "pecfp_iterations": 2,
+  "pecfp_fp_size": 2048,
+  "ptfp_size": 40,
+  "rdkit_version": "2025.09.2",
+  "polymer_ids": [
+    "L-EO",
+    "L-PO",
+    "R-EOPO",
+    "B-EOPO",
+    "S3-EO",
+    "S4-EO",
+    "S3-PO",
+    "S4-PO"
+  ]
+}
