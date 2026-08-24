@@ -1,0 +1,9 @@
+id,label,BigSMILES,Morgan repeat-unit fragments,Morgan active bits,p-ECFP active bits,p-TFP active bits
+L-EO,Linear CCO,{[][<]CCO[>][]},*CCO*,11,6,1
+L-PO,Linear CC(C)O,{[][<]CC(C)O[>][]},*CC(C)O*,14,12,1
+R-EOPO,Random CCO/CC(C)O,"{[][<]CCO[>],[<]CC(C)O[>][]}",*CCO*; *CC(C)O*,20,20,2
+B-EOPO,Block CCO/CC(C)O,{[][<]CCO[>][<]}{[>][<]CC(C)O[>][]},*CCO*; *CC(C)O*,20,18,2
+S3-EO,3-arm CCO star,C(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})CO{[<][>]CCO[<][>]},N/A (star architecture unsupported),,12,3
+S4-EO,4-arm CCO star,C(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})CO{[<][>]CCO[<][>]},N/A (star architecture unsupported),,12,4
+S3-PO,3-arm CC(C)O star,C(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})CO{[<][>]CC(C)O[<][>]},N/A (star architecture unsupported),,18,3
+S4-PO,4-arm CC(C)O star,C(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})CO{[<][>]CC(C)O[<][>]},N/A (star architecture unsupported),,20,4

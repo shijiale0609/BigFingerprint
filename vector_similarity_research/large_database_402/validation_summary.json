@@ -1,0 +1,58 @@
+{
+  "source_count": 475,
+  "advanced_member_count": 42,
+  "extras_member_count": 36,
+  "advanced_extras_overlap_count": 5,
+  "removed_count": 73,
+  "filtered_count": 402,
+  "p424_removed": true,
+  "mapping_bigsmiles_unique": true,
+  "mapping_polymer_ids_unique": true,
+  "no_removed_ids_remain": true,
+  "fingerprint_shapes": {
+    "p-ECFP": [
+      402,
+      2048
+    ],
+    "p-TFP": [
+      402,
+      40
+    ]
+  },
+  "similarity_matrices": {
+    "p-ECFP": {
+      "shape": [
+        402,
+        402
+      ],
+      "symmetric": true,
+      "diagonal_one": true,
+      "bounded_0_1": true,
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "p-TFP": {
+      "shape": [
+        402,
+        402
+      ],
+      "symmetric": true,
+      "diagonal_one": true,
+      "bounded_0_1": true,
+      "minimum": 0.07692307692307693,
+      "maximum": 1.0
+    },
+    "BigFingerprint": {
+      "shape": [
+        402,
+        402
+      ],
+      "symmetric": true,
+      "diagonal_one": true,
+      "bounded_0_1": true,
+      "minimum": 0.0,
+      "maximum": 1.0
+    }
+  },
+  "bigfingerprint_exact_product": true
+}

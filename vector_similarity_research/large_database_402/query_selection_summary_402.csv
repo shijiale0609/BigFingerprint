@@ -1,0 +1,413 @@
+query_id,query_topology,query_primary_topology,Name,BigSMILES,BigSMILES_length,unique_primary_topology_count,unique_topology_signature_count,primary_topology_composition,topology_signature_composition,rank1_similarity,rank5_similarity,mean_top5_similarity,distinct_top5_score_count,cutoff_tie_count,cutoff_slots_available,cutoff_is_ambiguous,max_candidate_length
+P2,single,single,Poly(dimethyl siloxane),{[][<][Si](C)(C)O[>][]},23,1,1,single,single,0.6923076923076923,0.20833333333333334,0.3901282051282051,5,1,1,False,65
+P3,single,single,"Poly(cis-1,4-butadiene)",{[][$]C\C=C/C[$][]},19,1,1,single,single,0.07894736842105263,0.06818181818181818,0.0731373889268626,3,3,2,True,24
+P4,single,single,Poly(dimethylsilylenemethylene),{[][<]C[Si](C)(C)[>][]},23,1,1,single,single,0.20833333333333334,0.15789473684210525,0.1852456140350877,4,1,1,False,59
+P6,single,single,Poly(3-hexoxypropylene oxide),"{[][<]CC(COCCCCCC)O[>],[<]C(COCCCCCC)CO[>][]}",45,1,1,single,single,0.8571428571428571,0.21212121212121213,0.3881443118285224,5,1,1,False,63
+P8,single,single,"Poly(1,1-dimethylsilazane)",{[][<][Si](C)(C)N[>][]},23,1,1,single,single,0.2,0.14285714285714285,0.16872180451127816,3,2,2,False,59
+P9,single,single,"Poly(2-n-butyl-1,4-butadiene)",{[][$]CC=C(CCCC)C[$][]},23,1,1,single,single,0.7391304347826086,0.27586206896551724,0.4311275330076897,4,2,1,True,27
+P10,single,single,Poly(vinyl n-octyl ether),{[][$]CC(OCCCCCCCC)[$][]},25,1,1,single,single,1.0,0.5294117647058824,0.7892156862745099,4,1,1,False,27
+P11,single,single,Poly(3-butoxypropylene oxide),"{[][<]CC(COCCCC)O[>],[<]C(COCCCC)CO[>][]}",41,1,1,single,single,0.8571428571428571,0.21875,0.39920082898024073,5,1,1,False,63
+P12,single,single,Polyethylene,{[][$]CC[$][]},14,1,1,single,single,0.3333333333333333,0.1875,0.25277777777777777,3,2,2,False,41
+P13,single,single,Polyoxytrimethylene,{[][<]CCCO[>][]},16,1,1,single,single,0.7,0.3125,0.5161111111111112,3,2,2,False,23
+P14,single,single,"Poly(2-n-propyl-1,4-butadiene)",{[][$]CC=C(CCC)C[$][]},22,1,1,single,single,0.7391304347826086,0.2962962962962963,0.45296240768504636,4,2,1,True,27
+P15,single,single,Poly(vinyl n-decyl ether),{[][$]CC(OCCCCCCCCCC)[$][]},27,1,1,single,single,1.0,0.5294117647058824,0.7892156862745099,4,1,1,False,27
+P16,single,single,"Poly(2-ethyl-1,4-butadiene)",{[][$]CC=C(CC)C[$][]},21,1,1,single,single,0.6086956521739131,0.3076923076923077,0.42384902054467266,4,2,1,True,27
+P17,single,single,Poly[oxy(methyl γ-trifluoropropylsilylene)],{[][<][Si](C)(CCC(F)(F)F)O[>][]},32,1,1,single,single,0.20833333333333334,0.17857142857142858,0.1943854568854569,4,1,1,False,59
+P18,single,single,Polyisobutylene,{[][$]CC(C)(C)[$][]},20,1,1,single,single,0.3695652173913043,0.16129032258064516,0.2520688918026215,5,1,1,False,54
+P20,single,single,Polyoxyoctamethylene,{[][<]CCCCCCCCO[>][]},21,1,1,single,single,1.0,0.29411764705882354,0.5654901960784314,5,2,1,True,19
+P21,single,single,Polyisoprene,"{[][$]CC=C(C)C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][]}",54,1,1,block,block,0.27759562841530055,0.2565656565656566,0.26708139373263784,5,2,1,True,101
+P22,single,single,Polyoxyhexamethylene,{[][<]CCCCCCO[>][]},19,1,1,single,single,1.0,0.29411764705882354,0.5654901960784314,5,2,1,True,21
+P24,single,single,Polyoxyethylene,{[][<]CCO[>][]},15,1,1,single,single,0.5555555555555556,0.46153846153846156,0.49572649572649574,3,2,2,False,23
+P25,single,single,Poly(propylene oxide),"{[][<]CC(C)O[>],[<]C(C)CO[>][]}",31,2,2,block|single,block|single,0.3103448275862069,0.2121212121212121,0.25067762765531526,5,1,1,False,49
+P27,single,single,Poly(vinyl 2-ethylhexyl ether),{[][$]CC(OCC(CC)CCCC)[$][]},27,1,1,single,single,0.5789473684210527,0.5263157894736842,0.5510526315789473,3,1,1,False,27
+P28,single,single,Poly(n-octyl acrylate),{[][$]CC(C(=O)OCCCCCCCC)[$][]},30,1,1,single,single,1.0,0.7837837837837838,0.9345345345345345,3,1,1,False,31
+P29,single,single,Poly(vinyl n-hexyl ether),{[][$]CC(OCCCCCC)[$][]},23,1,1,single,single,1.0,0.5294117647058824,0.7892156862745099,4,1,1,False,27
+P30,single,single,Poly(3-methoxypropylene oxide),"{[][<]CC(OC)O[>],[<]C(OC)CO[>][]}",33,2,2,graft|single,graft|single,0.3103448275862069,0.13095238095238093,0.22665350378599017,5,1,1,False,65
+P31,single,single,Polypentadiene,"{[][$]CC=CC(C)[$],[$]CC(C=CC)[$],[$]C(C)C(C=C)[$][]}",52,2,2,block|single,block|single,0.08064516129032258,0.06310679611650485,0.07188348193946952,5,1,1,False,73
+P32,single,single,Poly(n-heptyl acrylate),{[][$]CC(C(=O)OCCCCCCC)[$][]},29,1,1,single,single,1.0,0.7837837837837838,0.9345345345345345,3,1,1,False,31
+P34,single,single,Poly(n-nonyl acrylate),{[][$]CC(C(=O)OCCCCCCCCC)[$][]},31,1,1,single,single,1.0,0.7837837837837838,0.9345345345345345,3,1,1,False,30
+P35,single,single,Poly(n-hexyl acrylate),{[][$]CC(C(=O)OCCCCCC)[$][]},28,1,1,single,single,1.0,0.7837837837837838,0.9345345345345345,3,1,1,False,31
+P36,single,single,Poly(decamethylene adipate),"{[][<]OCCCCCCCCCCO[<],[>]C(=O)CCCCC(=O)[>][]}",45,1,1,single,single,0.8888888888888888,0.41379310344827586,0.7312966323855615,4,1,1,False,41
+P37,single,single,Polyoxymethylene,{[][<]CO[>][]},14,1,1,single,single,0.3333333333333333,0.25,0.27454545454545454,4,2,2,False,23
+P39,single,single,Poly(n-butyl acrylate),{[][$]CC(C(=O)OCCCC)[$][]},26,1,1,single,single,0.8888888888888888,0.8285714285714286,0.8768253968253967,2,1,1,False,31
+P40,single,single,Poly(1-heptene),{[][$]CC(CCCCC)[$][]},21,1,1,single,single,0.88,0.40625,0.6191598143236074,5,1,1,False,24
+P41,single,single,Poly(oxycarbonyl-3-methylpentamethylene),{[][<]OCCC(C)CCC(=O)[>][]},26,1,1,single,single,0.5,0.41379310344827586,0.4528440907751253,4,1,1,False,45
+P42,single,single,Poly(vinyl n-butyl ether),{[][$]CC(OCCCC)[$][]},21,1,1,single,single,0.8666666666666667,0.5625,0.7482894736842105,3,1,1,False,27
+P43,single,single,"Poly(2-isopropyl-1,4-butadiene)",{[][$]CC=C(C(C)C)C[$][]},24,1,1,single,single,0.32142857142857145,0.2962962962962963,0.3069421638387156,3,2,2,False,27
+P44,single,single,Poly(l-hexene),{[][$]CC(CCCC)[$][]},20,1,1,single,single,0.88,0.41935483870967744,0.6351517559192754,5,1,1,False,24
+P45,single,single,Poly(l-pentene),{[][$]CC(CCC)[$][]},19,1,1,single,single,0.72,0.4642857142857143,0.5987669571807503,5,1,1,False,24
+P46,single,single,Polychloroprene,{[][$]CC=C(Cl)C[$][]},21,1,1,single,single,0.3333333333333333,0.2962962962962963,0.30598290598290595,3,3,3,False,27
+P47,single,single,Poly(propylene sulfide),"{[][<]CC(C)S[>],[<]C(C)CS[>][]}",31,1,1,single,single,0.125,0.07142857142857142,0.08658008658008658,5,1,1,False,63
+P48,single,single,Poly(1-butene),{[][$]CC(CC)[$][]},18,1,1,single,single,0.42857142857142855,0.36666666666666664,0.387329042851846,5,1,1,False,23
+P49,single,single,Poly(ethylene azelate),"{[][<]OCCO[<],[>]C(=O)CCCCCCCC(=O)[>][]}",40,1,1,single,single,1.0,0.4444444444444444,0.7953431372549019,5,1,1,False,45
+P50,single,single,Poly(2-octyl acrylate),{[][$]CC(C(=O)OC(C)CCCCCC)[$][]},32,1,1,single,single,0.9736842105263158,0.6222222222222222,0.7061654135338346,3,4,3,True,31
+P51,single,single,Poly(n-propyl acrylate),{[][$]CC(C(=O)OCCC)[$][]},25,1,1,single,single,0.8285714285714286,0.7837837837837838,0.7927413127413128,2,4,4,False,31
+P52,single,single,Polypropylene,{[][$]CC(C)[$][]},17,1,1,single,single,0.20588235294117646,0.17142857142857143,0.18682582123758595,4,1,1,False,26
+P53,single,single,Poly(vinylidene fluoride),{[][$]CC(F)(F)[$][]},20,1,1,single,single,0.1875,0.12903225806451613,0.15503936099287147,5,1,1,False,32
+P54,single,single,Poly(ethylene adipate),"{[][<]OCCO[<],[>]C(=O)CCCCC(=O)[>][]}",37,1,1,single,single,0.9375,0.46153846153846156,0.7839743589743591,4,1,1,False,45
+P55,single,single,Poly(2-heptyl acrylate),{[][$]CC(C(=O)OC(C)CCCCC)[$][]},31,1,1,single,single,0.9736842105263158,0.6,0.6962002567394096,3,4,3,True,32
+P56,single,single,Poly(6-methyl-1-heptene),{[][$]CC(CCCC(C)C)[$][]},24,1,1,single,single,0.76,0.5172413793103449,0.6099310344827586,5,1,1,False,23
+P57,single,single,"Poly(oxycarbonyl-1,5-dimethylpentamethylene)",{[][<]OC(C)CCCC(C)C(=O)[>][]},29,1,1,single,single,0.4186046511627907,0.2702702702702703,0.3468356910217375,5,1,1,False,32
+P58,single,single,"Poly(2-bromo-1,4-butadiene)",{[][$]CC=C(Br)C[$][]},21,1,1,single,single,0.3333333333333333,0.2962962962962963,0.30598290598290595,3,3,3,False,27
+P59,single,single,Poly(ethylene sebacate),"{[][<]OCCO[<],[>]C(=O)CCCCCCCCC(=O)[>][]}",41,1,1,single,single,1.0,0.4444444444444444,0.7953431372549019,5,1,1,False,45
+P60,single,single,Poly[(methyl)phenylsilylenetrimethylene],{[][<]CCC[Si](C)(c1ccccc1)[>][]},32,1,1,single,single,0.5517241379310345,0.3333333333333333,0.424494387703509,5,1,1,False,68
+P61,single,single,Poly(isobutyl acrylate),{[][$]CC(C(=O)OCC(C)C)[$][]},28,1,1,single,single,0.6666666666666666,0.5714285714285714,0.608220551378446,4,4,2,True,30
+P62,single,single,Poly(vinyl isobutyl ether),{[][$]CC(OCC(C)C)[$][]},23,1,1,single,single,0.5483870967741935,0.4594594594594595,0.49586721817621654,4,3,2,True,27
+P63,single,single,Poly(ethyl acrylate),{[][$]CC(C(=O)OCC)[$][]},24,1,1,single,single,0.7142857142857143,0.6410256410256411,0.6677358677358677,4,4,2,True,30
+P64,single,single,Poly(n-octyl methacrylate),{[][$]CC(C)(C(=O)OCCCCCCCC)[$][]},33,1,1,single,single,1.0,0.6904761904761905,0.8141122035858878,4,3,2,True,35
+P65,single,single,Poly(vinyl sec-butyl ether),{[][$]CC(OC(C)CC)[$][]},23,1,1,single,single,0.5625,0.3333333333333333,0.3827702702702702,3,3,3,False,27
+P66,single,single,Poly(sec-butyl acrylate),{[][$]CC(C(=O)OC(C)CC)[$][]},28,1,1,single,single,0.7297297297297297,0.5384615384615384,0.643196906367638,5,1,1,False,32
+P67,single,single,Poly(vinyl ethyl ether),{[][$]CC(OCC)[$][]},19,1,1,single,single,0.5625,0.5294117647058824,0.5398244781783681,3,3,3,False,27
+P69,single,single,Poly(vinylidene chloride),{[][$]CC(Cl)(Cl)[$][]},22,1,1,single,single,0.14583333333333334,0.12903225806451613,0.13381369798971482,4,1,1,False,34
+P70,single,single,Poly(3-pentyl acrylate),{[][$]CC(C(=O)OC(CC)CC)[$][]},29,1,1,single,single,0.7297297297297297,0.5675675675675675,0.6051643665474755,5,1,1,False,32
+P71,single,single,Poly(5-methyl-1-hexene),{[][$]CC(CCC(C)C)[$][]},23,1,1,single,single,0.76,0.5172413793103449,0.6105911330049261,5,1,1,False,24
+P72,single,single,Perfluoropolymer,{[][<]C(C(F)(F)F)OC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)OC(C(F)(F)F)c1nc(nc(C(F)(F)F)n1)[>][]},105,1,1,single,single,0.2727272727272727,0.125,0.1595718050065876,5,2,1,True,75
+P73,single,single,"Poly(oxy-2,2-dichloromethyltrimethylene)",{[][<]CC(CCl)(CCl)CO[>][]},26,1,1,single,single,0.22727272727272727,0.15625,0.17887172811708413,4,1,1,False,23
+P74,single,single,Poly[(4-dimethylaminophenyl)methylsilylenetrimethylene],{[][<]CCC[Si](C)(c1ccc(N(C)C)cc1)[>][]},39,1,1,single,single,0.5757575757575758,0.20512820512820512,0.3736521085405467,5,1,1,False,68
+P75,single,single,Poly(n-hexyl methacrylate),{[][$]CC(C)(C(=O)OCCCCCC)[$][]},31,1,1,single,single,1.0,0.6904761904761905,0.8141122035858878,4,3,2,True,35
+P76,single,single,"Poly(1,2-butadiene)",{[][$]CC(C=C)[$][]},19,2,2,block|single,block|single,0.2127659574468085,0.1388888888888889,0.1560452549814252,3,2,1,True,45
+P77,single,single,Poly(vinyl isopropyl ether),{[][$]CC(OC(C)C)[$][]},22,1,1,single,single,0.5625,0.3157894736842105,0.3836897390535162,4,2,2,False,23
+P78,single,single,Poly(ethylene succinate),"{[][<]OCCO[<],[>]C(=O)CCC(=O)[>][]}",35,1,1,single,single,0.75,0.5,0.6586687306501549,4,1,1,False,45
+P79,single,single,Poly(vinyl methyl sulfide),{[][$]CC(SC)[$][]},18,1,1,single,single,0.17073170731707318,0.16279069767441862,0.16596710153148045,2,3,3,False,27
+P80,single,single,"Poly(oxydiphenylsilylene
+oxydimethylsilylene-1,4-
+phenylenedimethylsilylene)",{[][<][Si](c1ccccc1)(c1ccccc1)O[Si](C)(C)c1ccc(cc1)[Si](C)(C)O[>][]},68,1,1,single,single,0.4230769230769231,0.20512820512820512,0.29588281476344236,5,1,1,False,46
+P81,single,single,Poly(vinyl butyrate),{[][$]CC(OC(=O)CCC)[$][]},25,1,1,single,single,0.7142857142857143,0.3488372093023256,0.5397730425464252,5,1,1,False,30
+P82,single,single,Poly(p-n-hexoxymethyl styrene),{[][$]CC(c1ccc(COCCCCCC)cc1)[$][]},34,1,1,single,single,0.8095238095238095,0.574468085106383,0.6520208160633694,5,1,1,False,31
+P83,single,single,Poly(p-n-butyl styrene),{[][$]CC(c1ccc(CCCC)cc1)[$][]},30,1,1,single,single,0.6590909090909091,0.5952380952380952,0.6377383877383878,4,1,1,False,34
+P84,single,single,Poly(methyl acrylate),{[][$]CC(C(=O)OC)[$][]},23,1,1,single,single,0.6,0.5675675675675675,0.5772072072072072,3,3,3,False,30
+P85,single,single,Poly(vinyl propionate),{[][$]CC(OC(=O)CC)[$][]},24,1,1,single,single,0.7142857142857143,0.3333333333333333,0.547063492063492,5,2,1,True,30
+P86,single,single,Poly(2-ethylbutyl methacrylate),{[][$]CC(C)(C(=O)OCC(CC)CC)[$][]},33,1,1,single,single,0.6829268292682927,0.627906976744186,0.6561061551418896,4,1,1,False,34
+P87,single,single,Poly(o-n-octoxy styrene),{[][$]CC(c1c(OCCCCCCCC)cccc1)[$][]},35,1,1,single,single,0.4791666666666667,0.4375,0.46036329425387185,4,1,1,False,28
+P88,single,single,"Poly(2-t-butyl-1,4-butadiene)",{[][$]CC=C(C(C)(C)C)C[$][]},27,1,1,single,single,0.32142857142857145,0.2962962962962963,0.3069421638387156,3,2,2,False,24
+P89,single,single,Poly(n-butyl methacrylate),{[][$]CC(C)(C(=O)OCCCC)[$][]},29,1,1,single,single,0.8947368421052632,0.725,0.8154623044096729,3,3,2,True,35
+P90,single,single,Poly(2-methoxyethyl methacrylate),{[][$]CC(C)(C(=O)OCCOC)[$][]},29,1,1,single,single,0.7631578947368421,0.725,0.7400674763832659,3,2,2,False,35
+P91,single,single,Poly(p-n-propoxymethyl styrene),{[][$]CC(c1ccc(COCCC)cc1)[$][]},31,1,1,single,single,0.8095238095238095,0.6,0.6755168408826946,5,1,1,False,34
+P92,single,single,Poly(ethyl-p-xylylene),{[][$]Cc1c(CC)cc(cc1)C[$][]},28,1,1,single,single,0.5185185185185185,0.36363636363636365,0.44601622988719763,4,1,1,False,29
+P93,single,single,"Poly(3,3,3-trifuoropropylene)",{[][$]CC(C(F)(F)F)[$][]},24,1,1,single,single,0.40625,0.1388888888888889,0.24993455909495582,5,1,1,False,38
+P94,single,single,Poly(vinyl acetate),{[][$]CC(OC(=O)C)[$][]},23,1,1,single,single,0.5555555555555556,0.3157894736842105,0.4822348664453928,5,2,1,True,30
+P95,single,single,Poly(4-methyl-1-pentene),{[][$]CC(CC(C)C)[$][]},22,1,1,single,single,0.64,0.40625,0.4963229381852853,5,1,1,False,24
+P96,single,single,Poly(vinyl formate),{[][$]CC(OC=O)[$][]},20,1,1,single,single,0.3076923076923077,0.2926829268292683,0.3008338544923911,3,2,2,False,25
+P97,single,single,Poly(vinyl chloroacetate),{[][$]CC(OC(=O)CCl)[$][]},25,1,1,single,single,0.6571428571428571,0.2926829268292683,0.5119921838214521,5,1,1,False,30
+P98,single,single,Poly(neopentyl methacrylate),{[][$]CC(C)(C(=O)OCC(C)(C)C)[$][]},34,1,1,single,single,0.7631578947368421,0.675,0.7031983805668016,4,2,2,False,35
+P99,single,single,Poly(n-propyl methacrylate),{[][$]CC(C)(C(=O)OCCC)[$][]},28,1,1,single,single,0.8378378378378378,0.7631578947368421,0.7907794434110224,3,3,2,True,35
+P100,single,single,Poly(12-aminododecanoic acid),{[][<]NCCCCCCCCCCCC(=O)[>][]},29,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P101,single,single,Poly[di(p-tolyl)silylenetrimethylene],{[][<]CCC[Si](c1ccc(C)cc1)(c2ccc(C)cc2)[>][]},45,1,1,single,single,0.46875,0.2702702702702703,0.33558685948391825,5,1,1,False,46
+P102,single,single,Poly(hexamethylene sebacamide),"{[][<]NCCCCCCN[<],[>]C(=O)CCCCCCCCC(=O)[>][]}",45,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P103,single,single,Poly(4-cyclohexyl-1-butene),{[][$]CC(CCC1CCCCC1)[$][]},26,1,1,single,single,0.5142857142857142,0.3888888888888889,0.44747474747474747,4,1,1,False,25
+P104,single,single,Poly[(pentafluoroethyl)ethylene],{[][$]CC(C(F)(F)C(F)(F)F)[$][]},31,1,1,single,single,0.7,0.15,0.32353260869565215,5,1,1,False,38
+P105,single,single,Poly(11-aminoundecanoic acid),{[][<]NCCCCCCCCCCC(=O)[>][]},28,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P106,single,single,Poly(t-butyl acrylate),{[][$]CC(C(=O)OC(C)(C)C)[$][]},30,1,1,single,single,0.5833333333333334,0.525,0.5500134952766531,4,2,2,False,29
+P107,single,single,Poly(3-phenoxypropylene oxide),"{[][<]CC(COc1ccccc1)O[>],[<]C(COc1ccccc1)CO[>][]}",49,1,1,single,single,0.40540540540540543,0.20512820512820512,0.29624129624129625,5,1,1,False,63
+P108,single,single,"Poly(2,3,3,3-tetrafluoropropylene)",{[][$]CC(F)(C(F)(F)F)[$][]},27,1,1,single,single,0.17647058823529413,0.13513513513513514,0.15248618593440094,5,1,1,False,38
+P109,single,single,Poly(10-aminodecanoic acid),{[][<]NCCCCCCCCCC(=O)[>][]},27,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P110,single,single,Poly[oxy(m-phenylene)],{[][<]c1cccc(c1)O[>][]},23,1,1,single,single,0.4666666666666667,0.3142857142857143,0.38179761904761905,5,1,1,False,96
+P111,single,single,"Poly(3,3-dimethylbutyl methacrylate)",{[][$]CC(C)(C(=O)OCCC(C)(C)C)[$][]},35,1,1,single,single,0.7631578947368421,0.725,0.7476990553306343,3,2,1,True,34
+P112,single,single,Poly(decamethylene sebacamide),"{[][<]NCCCCCCCCCCN[<],[>]C(=O)CCCCCCCCC(=O)[>][]}",49,1,1,single,single,1.0,1.0,1.0,1,9,5,True,45
+P113,single,single,Poly(n-butyl acrylamide),{[][$]CC(C(=O)NCCCC)[$][]},26,1,1,single,single,0.40425531914893614,0.3877551020408163,0.3910551454624403,2,4,4,False,31
+P114,single,single,Poly(vinyl trifluoroacetate),{[][$]CC(OC(=O)C(F)(F)F)[$][]},30,1,1,single,single,0.5,0.2857142857142857,0.44470383275261327,4,1,1,False,25
+P115,single,single,Poly(p-n-butoxy styrene),{[][$]CC(c1ccc(OCCCC)cc1)[$][]},31,1,1,single,single,0.8421052631578947,0.6170212765957447,0.7072099233353433,5,1,1,False,34
+P116,single,single,Poly(isobutyl methacrylate),{[][$]CC(C)(C(=O)CC(C)C)[$][]},30,1,1,single,single,0.41304347826086957,0.3695652173913043,0.3825870986075589,5,1,1,False,33
+P117,single,single,Poly(3-methyl-1-butene),{[][$]CC(C(C)C)[$][]},21,1,1,single,single,0.25,0.21212121212121213,0.22777777777777777,4,2,2,False,24
+P118,single,single,Poly(9-aminononanoic acid),{[][<]NCCCCCCCCC(=O)[>][]},26,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P119,single,single,Poly(8-aminocaprylic acid),{[][<]NCCCCCCCC(=O)[>][]},25,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P120,single,single,Poly(vinyl butyral),{[][<]C1CC(OC(O1)CCC)C[>][]},28,1,1,single,single,0.41379310344827586,0.1388888888888889,0.24363271391668956,5,1,1,False,34
+P121,single,single,Poly(ethylene isophthalate),"{[][<]OCCO[<],[>]C(=O)c1cc(ccc1)C(=O)[>][]}",43,1,1,single,single,0.6538461538461539,0.4827586206896552,0.5683468705207836,5,1,1,False,51
+P122,single,single,Poly(ethyl methacrylate),{[][$]CC(C)(C(=O)OCC)[$][]},27,1,1,single,single,0.7567567567567568,0.6923076923076923,0.7139694350220667,4,3,2,True,35
+P123,single,single,Poly[(4-dimethylaminophenyl)phenylsilylenetrimethylene)],{[][<]CCC[Si](c1ccccc1)(c2ccc(N(C)C)cc2)[>][]},46,1,1,single,single,0.5757575757575758,0.2894736842105263,0.4141447368421053,5,1,1,False,68
+P124,single,single,Poly(isopropyl methacrylate),{[][$]CC(C)(C(=O)OC(C)C)[$][]},30,1,1,single,single,0.7073170731707317,0.5777777777777777,0.6171690639983323,5,1,1,False,33
+P125,single,single,Poly(methyl-p-xylylene),{[][$]Cc1c(C)cc(cc1)C[$][]},27,1,1,single,single,0.5454545454545454,0.43333333333333335,0.4920538720538721,4,1,1,False,30
+P126,single,single,Poly(vinyl isobutylral),{[][<]CC1CC(OC(O1)C(C)C)[>][]},30,1,1,single,single,0.41379310344827586,0.11538461538461539,0.23772859189492052,5,1,1,False,34
+P127,single,single,Poly(n-butyl α-chloroacrylate),{[][$]CC(C(=O)OCCCC)(Cl)[$][]},30,1,1,single,single,0.8421052631578947,0.5208333333333334,0.6370321637426901,5,1,1,False,34
+P128,single,single,Poly(7-aminoheptanoic acid),{[][<]NCCCCCCC(=O)[>][]},24,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P129,single,single,Poly(sec-butyl methacrylate),{[][$]CC(C)(C(=O)OC(C)CC)[$][]},31,1,1,single,single,0.7073170731707317,0.5555555555555556,0.5995779267931478,5,1,1,False,33
+P130,single,single,Poly(hexamethylene adipamide),"{[][<]NCCCCCCN[<],[>]C(=O)CCCCC(=O)[>][]}",41,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P131,single,single,Poly(p-isopentoxy styrene),{[][$]CC(c1ccc(OCCC(C)C)cc1)[$][]},34,1,1,single,single,0.725,0.5897435897435898,0.661043956043956,5,1,1,False,31
+P132,single,single,Poly[(heptafluoropropyl)ethylene],{[][$]CC(C(F)(F)C(F)(F)C(F)(F)F)[$][]},38,1,1,single,single,0.7,0.13953488372093023,0.31867753951474886,5,1,1,False,33
+P134,single,single,Poly(p-xylylene),{[][$]Cc1ccc(cc1)C[$][]},24,1,1,single,single,0.38095238095238093,0.3333333333333333,0.36796536796536794,3,1,1,False,29
+P135,single,single,Poly(3-cyclopentyl-1-propene),{[][$]CC(CC1CCCC1)[$][]},24,1,1,single,single,0.9615384615384616,0.2857142857142857,0.46087912087912086,3,3,3,False,26
+P136,single,single,Poly(3-phenyl-1-propene),{[][$]CC(Cc1ccccc1)[$][]},25,1,1,single,single,0.2857142857142857,0.2777777777777778,0.2827980804724991,3,1,1,False,58
+P137,single,single,Poly(ε-caprolactam),{[][<]NCCCCCC(=O)[>][]},23,1,1,single,single,1.0,1.0,1.0,1,9,5,True,49
+P138,single,single,"Poly(ethylene-1,4-
+naphthalenedicarboxylate)","{[][<]OCCO[<],[>]C(=O)c1c2ccccc2c(cc1)C(=O)[>][]}",49,1,1,single,single,0.8333333333333334,0.40625,0.5283393585465332,5,1,1,False,51
+P139,single,single,Poly(p-n-propoxy styrene),{[][$]CC(c1ccc(OCCC)cc1)[$][]},30,1,1,single,single,0.8421052631578947,0.6410256410256411,0.722327935222672,5,1,1,False,34
+P140,single,single,Poly(n-propyl α-chloroacrylate),{[][$]CC(C(=O)OCCC)(Cl)[$][]},29,1,1,single,single,0.8421052631578947,0.5434782608695652,0.6590708317811718,5,1,1,False,34
+P141,single,single,"Poly(ethylene-1,5-naphthalenedicarboxylate)","{[][<]OCCO[<],[>]C(=O)c1cccc2c1cccc2C(=O)[>][]}",47,1,1,single,single,0.8333333333333334,0.40625,0.5389304915514593,5,1,1,False,51
+P143,single,single,Poly(ethylene terephthalate),"{[][<]OCCO[<],[>]C(=O)c1ccc(cc1)C(=O)[>][]}",43,1,1,single,single,0.7391304347826086,0.5217391304347826,0.637123745819398,5,1,1,False,53
+P144,single,single,Poly(sec-butyl α-chloroacrylate),{[][$]CC(C(=O)OC(C)CC)(Cl)[$][]},32,1,1,single,single,0.7142857142857143,0.47058823529411764,0.5739071570657248,5,1,1,False,34
+P145,single,single,Poly(vinyl chloride),{[][$]CC(Cl)[$][]},18,1,1,single,single,0.5,0.1282051282051282,0.20985759515171282,5,1,1,False,31
+P146,single,single,Poly(3-cyclohexyl-1-propene),{[][$]CC(CC1CCCCC1)[$][]},25,1,1,single,single,0.9615384615384616,0.2777777777777778,0.46417068311805154,4,3,2,True,26
+P147,single,single,Poly(vinyl cyclopentane),{[][$]CC(C1CCCC1)[$][]},23,1,1,single,single,0.9565217391304348,0.15625,0.3742399808275095,5,1,1,False,29
+P148,single,single,Poly(2-hydroxypropyl methacrylate),{[][$]CC(C)(C(=O)OCC(O)C)[$][]},31,1,1,single,single,0.6666666666666666,0.6136363636363636,0.6316420014094433,4,2,2,False,34
+P149,single,single,Poly(p-methoxymethyl styrene),{[][$]CC(c1ccc(COC)cc1)[$][]},29,1,1,single,single,0.6585365853658537,0.5945945945945946,0.6212663497900982,5,2,1,True,34
+P150,single,single,Poly(chloro-p-xylylene),{[][$]Cc1c(Cl)cc(cc1)C[$][]},28,1,1,single,single,0.48148148148148145,0.38095238095238093,0.44830687830687826,4,1,1,False,29
+P151,single,single,Poly(bromo-p-xylylene),{[][$]Cc1c(Br)cc(cc1)C[$][]},28,1,1,single,single,0.48148148148148145,0.38095238095238093,0.44830687830687826,4,1,1,False,29
+P152,single,single,Poly(ethylene oxybenzoate),{[][<]OCCOc1ccc(cc1)C(=O)[>][]},31,1,1,single,single,0.7391304347826086,0.46875,0.5590728941085013,5,1,1,False,53
+P154,single,single,Poly[oxy(p-phenylene)],{[][<]c1ccc(cc1)O[>][]},23,1,1,single,single,0.5,0.375,0.4683333333333334,3,1,1,False,79
+P155,single,single,Poly(p-sec-butyl styrene),{[][$]CC(c1ccc(C(C)CC)cc1)[$][]},32,1,1,single,single,0.6571428571428571,0.5675675675675675,0.5964500214500215,5,3,1,True,31
+P156,single,single,Poly(p-ethoxy styrene),{[][$]CC(c1ccc(OCC)cc1)[$][]},29,1,1,single,single,0.7435897435897436,0.5945945945945946,0.6851404238246344,5,2,1,True,34
+P157,single,single,Poly(2-hydroxyethyl methacrylate),{[][$]CC(C)(C(=O)OCCO)[$][]},28,1,1,single,single,0.7631578947368421,0.725,0.7400674763832659,3,2,2,False,35
+P158,single,single,Poly[thio(p-phenylene)],{[][<]c1ccc(cc1)S[>][]},23,1,1,single,single,0.42857142857142855,0.2,0.2605258156477669,5,2,1,True,111
+P159,single,single,Poly(p-isopropyl styrene),{[][$]CC(c1ccc(C(C)C)cc1)[$][]},31,1,1,single,single,0.6875,0.6363636363636364,0.652506284038542,4,3,2,True,32
+P160,single,single,Poly(2-methyl-5-t-butyl styrene),{[][$]CC(c1c(C)ccc(C(C)(C)C)c1)[$][]},37,1,1,single,single,0.65,0.4791666666666667,0.5425739098300073,5,1,1,False,31
+P161,single,single,Poly(p-methoxy styrene),{[][$]CC(c1ccc(OC)cc1)[$][]},28,1,1,single,single,0.6756756756756757,0.6285714285714286,0.641084624242519,4,2,2,False,31
+P162,single,single,Poly(isopropyl α-chloroacrylate),{[][$]CC(C(=O)OC(C)C)(Cl)[$][]},31,1,1,single,single,0.7142857142857143,0.5106382978723404,0.5914226023577829,5,1,1,False,34
+P163,single,single,Poly(4-methoxy-2-methyl styrene),{[][$]CC(c1c(C)cc(OC)cc1)[$][]},31,1,1,single,single,0.6585365853658537,0.4791666666666667,0.5747406710325031,5,1,1,False,37
+P164,single,single,Poly(vinyl cyclohexane),{[][$]CC(C1CCCCC1)[$][]},24,1,1,single,single,0.9565217391304348,0.1875,0.3893306636155606,5,1,1,False,29
+P165,single,single,Poly(cyano-p-xylylene),{[][$]Cc1c(C#N)cc(cc1)C[$][]},29,1,1,single,single,0.43333333333333335,0.3333333333333333,0.41053763440860214,3,1,1,False,28
+P166,single,single,"Poly((α,α,α,α-tetratluoro-p-xylylene)",{[][$]C(F)(F)c1ccc(cc1)C(F)(F)[$][]},36,1,1,single,single,0.28,0.1935483870967742,0.23652785923753666,5,1,1,False,75
+P167,single,single,Poly(m-xylylene adipamide),"{[][<]NCc1cccc(c1)CN[<],[>]C(=O)CCCCC(=O)[>][]}",47,1,1,single,single,0.6896551724137931,0.41935483870967744,0.47341490545050063,2,10,4,True,51
+P168,single,single,Poly(m-chloro styrene),{[][$]CC(c1cc(Cl)ccc1)[$][]},28,1,1,single,single,0.6756756756756757,0.5789473684210527,0.6205152520941994,5,1,1,False,32
+P169,single,single,Poly(2-chloroethyl methacrylate),{[][$]CC(C)(C(=O)OCCCl)[$][]},29,1,1,single,single,0.7435897435897436,0.7073170731707317,0.7251813633520952,3,1,1,False,35
+P170,single,single,Poly(ethyl α-chloroacrylate),{[][$]CC(C(=O)OCC)(Cl)[$][]},28,1,1,single,single,0.7631578947368421,0.5555555555555556,0.6433458646616541,5,1,1,False,34
+P171,single,single,Poly(cyclohexylmethylsilane),{[][$][Si](C1CCCCC1)(C)[$][]},29,1,1,single,single,0.1875,0.15555555555555556,0.16748015873015873,5,1,1,False,33
+P172,single,single,"Poly(1,4-cyclohexylidene dimethylene
+terephthalate)","{[][<]OCC1CCC(CC1)CO[<],[>]C(=O)c1ccc(cc1)C(=O)[>][]}",53,1,1,single,single,0.5769230769230769,0.4,0.4578846153846154,5,1,1,False,51
+P173,single,single,Poly(m-methyl styrene),{[][$]CC(c1cc(C)ccc1)[$][]},27,1,1,single,single,0.6571428571428571,0.6052631578947368,0.6273350041771095,4,1,1,False,30
+P174,single,single,"Poly(2,5-dimethyl-p-xylylene)",{[][$]Cc1c(C)cc(c(C)c1)C[$][]},30,1,1,single,single,0.5454545454545454,0.25925925925925924,0.3447811447811448,4,2,2,False,29
+P175,single,single,Polychlorotrifluoroethylene,{[][$]C(Cl)(F)C(F)(F)[$][]},27,1,1,single,single,0.2222222222222222,0.16216216216216217,0.1995759169672213,5,1,1,False,69
+P176,single,single,Polystyrene,{[][$]CC(c1ccccc1)[$][]},24,1,1,single,single,0.7931034482758621,0.6451612903225806,0.6790507971820541,3,5,3,True,34
+P177,single,single,Poly(p-methyl styrene),{[][$]CC(c1ccc(C)cc1)[$][]},27,1,1,single,single,0.6875,0.6363636363636364,0.6483504398826978,3,4,3,True,31
+P178,single,single,"Poly(2,5-difluoro styrene)",{[][$]CC(c1c(F)ccc(F)c1)[$][]},30,1,1,single,single,0.6923076923076923,0.43902439024390244,0.5287143969264756,5,1,1,False,30
+P179,single,single,Poly(o-ethyl styrene),{[][$]CC(c1c(CC)cccc1)[$][]},28,1,1,single,single,0.6756756756756757,0.525,0.571309224203961,4,1,1,False,30
+P180,single,single,"Poly(3,5-dimethyl styrene)",{[][$]CC(c1cc(C)cc(C)c1)[$][]},30,1,1,single,single,0.6571428571428571,0.5,0.5668094068094068,4,2,2,False,31
+P181,single,single,Poly(cyclohexyl methacrylate),{[][$]CC(C)(C(=O)OC1CCCCC1)[$][]},33,1,1,single,single,0.5581395348837209,0.5217391304347826,0.5360811349082331,4,3,2,True,34
+P182,single,single,Poly(o-vinyl pyridine),{[][$]CC(c1ncccc1)[$][]},24,2,2,block|single,block|single,0.40540540540540543,0.358974358974359,0.37864543718202254,5,1,1,False,50
+P183,single,single,Poly(methyl methacrylate),{[][$]CC(C)(C(=O)OC)[$][]},26,1,1,single,single,0.6486486486486487,0.6153846153846154,0.6304044935623883,4,3,2,True,34
+P184,single,single,Polyacrylonitrile,{[][$]CC(C#N)[$][]},19,1,1,single,single,0.15384615384615385,0.1388888888888889,0.14351432880844647,3,3,3,False,23
+P185,single,single,Poly(vinyl formal),{[][<]C1CC(OCO1)C[>][]},23,1,1,single,single,0.36,0.08823529411764706,0.22150409068056126,5,1,1,False,34
+P186,single,single,Poly(o-fluoro styrene),{[][$]CC(c1c(F)cccc1)[$][]},27,1,1,single,single,0.6052631578947368,0.5526315789473685,0.5736059743954481,4,1,1,False,30
+P187,single,single,"Poly(2,3,4,5,6-pentafluoro styrene)",{[][$]CC(c1c(F)c(F)c(F)c(F)c1F)[$][]},37,1,1,single,single,0.358974358974359,0.3023255813953488,0.3288861689106487,5,1,1,False,31
+P188,single,single,Poly(acrylic acid),{[][$]CC(C(=O)O)[$][]},22,1,1,single,single,0.34210526315789475,0.30952380952380953,0.3238567277524498,5,3,1,True,30
+P189,single,single,Poly(p-fluoro styrere),{[][$]CC(c1ccc(F)cc1)[$][]},27,1,1,single,single,0.6451612903225806,0.6363636363636364,0.6381231671554252,2,4,4,False,31
+P190,single,single,Poly(t-butyl methacrylate),{[][$]CC(C)(C(=O)OC(C)(C)C)[$][]},33,1,1,single,single,0.6486486486486487,0.6,0.6128066528066529,3,3,3,False,34
+P191,single,single,"Poly(3,4-dimethyl styrene)",{[][$]CC(c1cc(C)c(C)cc1)[$][]},30,1,1,single,single,0.7297297297297297,0.5789473684210527,0.6183736367946895,5,1,1,False,32
+P192,single,single,Poly(2-fluoro-5-methyl styrene),{[][$]CC(c1c(F)ccc(C)c1)[$][]},30,1,1,single,single,0.6923076923076923,0.46511627906976744,0.6017693471210205,5,1,1,False,30
+P193,single,single,"Poly(2,4 dimethyl styrene)",{[][$]CC(c1c(C)cc(C)cc1)[$][]},30,1,1,single,single,0.75,0.6097560975609756,0.671849804776634,5,1,1,False,31
+P194,single,single,Poly(p-methoxycarbonyl styrene),{[][$]CC(c1ccc(C(=O)OC)cc1)[$][]},33,1,1,single,single,0.5714285714285714,0.5111111111111111,0.540232991940309,4,1,1,False,31
+P195,single,single,Poly(3-methyl-4-chloro styrene),{[][$]CC(c1cc(C)c(Cl)cc1)[$][]},31,1,1,single,single,0.7297297297297297,0.5476190476190477,0.6426468280126816,3,2,2,False,32
+P196,single,single,Poly(cyclohexyl α-chloroacrylate),{[][$]CC(C(=O)OC1CCCCC1)(Cl)[$][]},34,1,1,single,single,0.5555555555555556,0.47058823529411764,0.5202187365849824,5,1,1,False,32
+P197,single,single,Poly(p-xylylene sebacamide),"{[][<]NCc1ccc(cc1)CN[<],[>]C(=O)CCCCCCCCC(=O)[>][]}",51,1,1,single,single,0.6896551724137931,0.5185185185185185,0.5527458492975735,2,10,4,True,47
+P198,single,single,Poly[thio bis(4-phenyl)carbonate],"{[][<]Oc1ccc(cc1)Sc2ccc(cc2)O[<],[>]C(=O)[>][]}",47,1,1,single,single,0.5555555555555556,0.46875,0.5016353046594982,4,3,1,True,57
+P199,single,single,Poly(p-chloro styrene),{[][$]CC(c1ccc(Cl)cc1)[$][]},28,1,1,single,single,0.6666666666666666,0.6363636363636364,0.6441837732160313,3,4,3,True,31
+P200,single,single,Perfluoropolymer,{[][<]C(F)(F)C(F)(F)C(F)(F)C(F)(F)c1nc(nc(n1)C(F)(F)C(F)(F)OC(F)(F)F)[>][]},75,1,1,single,single,0.2727272727272727,0.14705882352941177,0.18501507480834356,5,2,1,True,105
+P201,single,single,Poly(phenylmethylsilane),{[][$][Si](C)(c1ccccc1)[$][]},29,1,1,single,single,0.4583333333333333,0.21212121212121213,0.32692057942057945,5,1,1,False,68
+P202,single,single,Poly(o-chloro styrene),{[][$]CC(c1c(Cl)cccc1)[$][]},28,1,1,single,single,0.6486486486486487,0.5675675675675675,0.5935988620199146,4,2,2,False,32
+P203,single,single,"Poly[2,2-butane bis (4-(2-methylphenyl)) carbonate]","{[][<]Oc1c(C)cc(cc1)C(C)(CC)c2cc(C)c(cc2)O[<],[>]C(=O)[>][]}",60,1,1,single,single,0.7073170731707317,0.4523809523809524,0.5683498615205933,5,1,1,False,74
+P204,single,single,"Poly(2,5-dichloro styrene)",{[][$]CC(c1c(Cl)ccc(Cl)c1)[$][]},32,1,1,single,single,0.7297297297297297,0.4418604651162791,0.5773218900603443,5,1,1,False,32
+P205,single,single,Poly(phenyl methacrylate),{[][$]CC(C)(C(=O)Oc1ccccc1)[$][]},33,1,1,single,single,0.5714285714285714,0.5333333333333333,0.5483378636867008,4,3,2,True,34
+P206,single,single,Polymethacrylonitrile,{[][$]CC(C#N)(C)[$][]},22,1,1,single,single,0.20408163265306123,0.125,0.1587511091393079,5,1,1,False,32
+P207,single,single,Poly(α-p-dimethyl styrene),{[][$]CC(C)(c1ccc(C)cc1)[$][]},30,1,1,single,single,0.7058823529411765,0.19607843137254902,0.32009634550310395,5,1,1,False,55
+P208,single,single,Poly(3-fluoro-4-chloro styrene),{[][$]CC(c1cc(F)c(Cl)cc1)[$][]},31,1,1,single,single,0.7297297297297297,0.525,0.5994941457136579,5,2,1,True,32
+P209,single,single,"Poly[1,1-butane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(CCC)c2ccc(cc2)O[<],[>]C(=O)[>][]}",52,1,1,single,single,0.5588235294117647,0.5,0.533109735122119,5,1,1,False,58
+P210,single,single,"Poly(ethylene-2,6-naphthalenedicarboxylate)","{[][<]OCCO[<],[>]C(=O)c1ccc2c(c1)ccc(c2)C(=O)[>][]}",51,1,1,single,single,0.6956521739130435,0.41935483870967744,0.5516154608799819,5,2,1,True,53
+P211,single,single,Poly(m-hydroxymethyl styrene),{[][$]CC(c1cc(CO)ccc1)[$][]},28,1,1,single,single,0.6756756756756757,0.5714285714285714,0.6193038903565219,5,1,1,False,32
+P212,single,single,"Poly(3,4-dichlorostyrene)",{[][$]CC(c1cc(Cl)c(Cl)cc1)[$][]},32,1,1,single,single,0.7297297297297297,0.6052631578947368,0.6608810314073471,4,1,1,False,31
+P214,single,single,Poly(hexamethylene isophthalamide),"{[][<]NCCCCCCN[<],[>]C(=O)c1cccc(c1)C(=O)[>][]}",47,1,1,single,single,0.5,0.34375,0.3850378787878788,3,10,3,True,51
+P215,single,single,"Poly[1,1-ethane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(C)c2ccc(cc2)O[<],[>]C(=O)[>][]}",50,1,1,single,single,0.6666666666666666,0.5,0.5450980392156863,3,4,3,True,54
+P216,single,single,"Poly(2,4-dichloro styrene)",{[][$]CC(c1c(Cl)cc(Cl)cc1)[$][]},32,1,1,single,single,0.7297297297297297,0.45454545454545453,0.5896080223987201,5,1,1,False,32
+P217,single,single,"Poly[2,2 butane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(C)(CC)c2ccc(cc2)O[<],[>]C(=O)[>][]}",54,1,1,single,single,0.7142857142857143,0.5675675675675675,0.617732871391408,5,1,1,False,62
+P218,single,single,Poly(o-methyl styrene),{[][$]CC(c1c(C)cccc1)[$][]},27,1,1,single,single,0.6486486486486487,0.5789473684210527,0.609993621546895,5,1,1,False,31
+P219,single,single,Poly(α-methyl styrene),{[][$]CC(C)(c1ccccc1)[$][]},27,1,1,single,single,0.7058823529411765,0.22857142857142856,0.3253522947640595,3,1,1,False,33
+P220,single,single,"Poly[2,2-pentane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(C)(CCC)c2ccc(cc2)O[<],[>]C(=O)[>][]}",55,1,1,single,single,0.7142857142857143,0.46153846153846156,0.5923076923076923,4,1,1,False,67
+P221,single,single,Poly(m-phenylene isophthalate),"{[][<]Nc1cc(ccc1)N[<],[>]C(=O)c1cc(ccc1)C(=O)[>][]}",51,1,1,single,single,0.5185185185185185,0.28846153846153844,0.4016134027003592,5,1,1,False,109
+P222,single,single,Poly(p-phenyl styrene),{[][$]CC(c1ccc(cc1)c2ccccc2)[$][]},34,1,1,single,single,0.7931034482758621,0.6176470588235294,0.652738336713996,2,5,4,True,31
+P223,single,single,"Poly(oxycarbonyloxy-2-chloro-1,4-phenyleneisopropylidene-2-methyl-1,4-phenylene)","{[][<]Oc1c(C)cc(cc1)C(C)(C)c2cc(Cl)c(cc2)O[<],[>]C(=O)[>][]}",60,1,1,single,single,0.8378378378378378,0.5777777777777777,0.6769688979445077,5,1,1,False,74
+P224,single,single,Poly(p-hydroxymethyl styrene),{[][$]CC(c1ccc(CO)cc1)[$][]},28,1,1,single,single,0.6666666666666666,0.6216216216216216,0.6401651651651651,5,1,1,False,30
+P225,single,single,Poly(p-vinyl pyridine),{[][$]CC(c1ccncc1)[$][]},24,1,1,single,single,0.6666666666666666,0.6060606060606061,0.6181818181818182,2,5,4,True,31
+P226,single,single,"Poly[2,2-butane bis{4-(2-chlorophenyl)} carbonate]","{[][<]Oc1c(Cl)cc(cc1)C(C)(CC)c2cc(Cl)c(cc2)O[<],[>]C(=O)[>][]}",62,1,1,single,single,0.7073170731707317,0.5853658536585366,0.6407083025375708,5,1,1,False,61
+P227,single,single,"Poly(2,5-dimethyl styrene)",{[][$]CC(c1c(C)ccc(C)c1)[$][]},30,1,1,single,single,0.75,0.5476190476190477,0.6471814671814672,5,1,1,False,37
+P228,single,single,Poly(p-bromo styrene),{[][$]CC(c1ccc(Br)cc1)[$][]},28,1,1,single,single,0.6451612903225806,0.6363636363636364,0.6381231671554252,2,4,4,False,31
+P229,single,single,Poly(2-methyl-4-chloro styrene),{[][$]CC(c1c(C)cc(Cl)cc1)[$][]},31,1,1,single,single,0.6923076923076923,0.6097560975609756,0.639071076399494,5,1,1,False,32
+P230,single,single,Poly(N-vinyl pyrrolidone),{[][$]CC(N1C(=O)CCC1)[$][]},27,1,1,single,single,0.25,0.1276595744680851,0.15955432385720245,5,1,1,False,39
+P231,single,single,Trichlorostyrene (mixed isomer),"{[][$]CC(c1c(Cl)c(Cl)c(Cl)cc1)[$],[$]CC(c1c(Cl)c(Cl)cc(Cl)c1)[$],[$]CC(c1c(Cl)c(Cl)ccc1(Cl))[$],[$]CC(c1cc(Cl)c(Cl)c(Cl)c1)[$],[$]CC(c1c(Cl)cc(Cl)cc1(Cl))[$][]}",160,1,1,single,single,0.20149253731343283,0.16666666666666666,0.18506731050629208,4,3,1,True,32
+P232,single,single,"Poly(oxycarbonyloxy-2-chloro-1,4-phenyleneisopropylidene-1,4-phenylene)","{[][<]Oc1c(Cl)cc(cc1)C(C)(C)c2ccc(cc2)O[<],[>]C(=O)[>][]}",57,1,1,single,single,0.8857142857142857,0.6136363636363636,0.733232499208109,5,1,1,False,62
+P233,single,single,"Poly[2,2-propane bis{4-(2-chlorophenyl)}carbonate]","{[][<]Oc1c(Cl)cc(cc1)C(C)(C)c2cc(Cl)c(cc2)O[<],[>]C(=O)[>][]}",61,1,1,single,single,0.8857142857142857,0.625,0.7324882024882025,5,1,1,False,67
+P234,single,single,"Poly(oxy-1,4-phenylene-oxy-1,4-phenylene-carbonyl-1,4-phenylene)","{[][<]Oc1ccc(cc1)O[<],[>]c2ccc(cc2)C(=O)c3ccc(cc3)[>][]}",56,1,1,single,single,0.5,0.38461538461538464,0.44746479707712056,5,2,1,True,111
+P235,single,single,Poly[methane bis(4-phenyl)carbonate],"{[][<]Oc1ccc(cc1)Cc2ccc(cc2)O[<],[>]C(=O)[>][]}",47,1,1,single,single,0.5555555555555556,0.5,0.5141414141414142,3,3,3,False,67
+P236,single,single,Poly(p-hydroxybenzoate),{[][<]Oc1ccc(cc1)C(=O)[>][]},28,1,1,single,single,0.6666666666666666,0.44,0.5241217052292567,5,1,1,False,109
+P237,single,single,"Poly[4,4-heptane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(CCC)(CCC)c2ccc(cc2)O[<],[>]C(=O)[>][]}",57,1,1,single,single,0.7142857142857143,0.4864864864864865,0.5706958174450435,5,1,1,False,67
+P238,single,single,"Poly[1,1-(2-methyl propane) bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(C(C)C)c2ccc(cc2)O[<],[>]C(=O)[>][]}",54,1,1,single,single,0.6666666666666666,0.46875,0.5214933780529756,5,2,1,True,58
+P239,single,single,Bisphenol-A polycarbonate,"{[][<]Oc1ccc(cc1)C(C)(C)c2ccc(cc2)O[<],[>]C(=O)[>][]}",53,1,1,single,single,0.7058823529411765,0.5714285714285714,0.642849421293444,5,2,1,True,68
+P240,single,single,Poly(N-vinyl carbazole),{[][$]CC(N1c2c(cccc2)c3c1(cccc3))[$][]},39,1,1,single,single,0.25,0.1875,0.21424242424242426,5,2,1,True,30
+P241,single,single,Poly(β-vinyl naphthalene),{[][$]CC(c1cc2c(cccc2)cc1)[$][]},32,1,1,single,single,0.6060606060606061,0.5789473684210527,0.5915060994008363,4,3,1,True,34
+P242,single,single,Polyhexafluoropropylene,{[][$]C(F)(F)C(F)(C(F)(F)F)[$][]},33,1,1,single,single,0.24242424242424243,0.17647058823529413,0.20047151271575822,5,1,1,False,67
+P243,single,single,"Poly[1,1-dichloroethylene bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(=C(Cl)Cl)c2ccc(cc2)O[<],[>]C(=O)[>][]}",57,1,1,single,single,0.4838709677419355,0.43333333333333335,0.45668564199873496,3,1,1,False,53
+P244,single,single,Poly(α-vinyl naphthalene),{[][$]CC(c1cccc2c1cccc2)[$][]},30,1,1,single,single,0.5526315789473685,0.525,0.541578947368421,2,2,2,False,28
+P245,single,single,Poly(o-hydroxymethyl styrene),{[][$]CC(c1c(CO)cccc1)[$][]},28,1,1,single,single,0.6756756756756757,0.525,0.571309224203961,4,1,1,False,30
+P246,single,single,Poly(methyl α-cyanoacrylate),{[][$]CC(C#N)(C(=O)OC)[$][]},28,1,1,single,single,0.30612244897959184,0.20408163265306123,0.23139146567717997,4,1,1,False,31
+P247,single,single,"Poly[1,1-cyclopentane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C2(CCCC2)c3ccc(cc3)O[<],[>]C(=O)[>][]}",55,1,1,single,single,0.9629629629629629,0.45454545454545453,0.5636846103309517,4,1,1,False,64
+P248,single,single,"Poly(oxyterephthaloyloxy-2-methyl-1,4-phenyleneisopropylidene-3-methyl-
+1,4-phenylene)","{[][<]Oc1c(C)cc(cc1)C(C)(C)c2cc(C)c(cc2)O[<],[>]C(=O)c3ccc(cc3)C(=O)[>][]}",74,1,1,single,single,0.6842105263157895,0.4634146341463415,0.5698089523763465,5,1,1,False,78
+P249,single,single,"Poly[1,1-cyclohexane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C2(CCCCC2)c3ccc(cc3)O[<],[>]C(=O)[>][]}",56,1,1,single,single,0.9629629629629629,0.4444444444444444,0.5537758537758538,4,1,1,False,64
+P250,single,single,"Poly[2,2-hexafluoropropane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(C(F)(F)F)(C(F)(F)F)c2ccc(cc2)O[<],[>]C(=O)[>][]}",67,1,1,single,single,0.6666666666666666,0.46875,0.5341779279279278,4,2,1,True,69
+P251,single,single,"Poly[1,1-(1-phenylethane) bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(Cc2ccccc2)c3ccc(cc3)O[<],[>]C(=O)[>][]}",58,1,1,single,single,0.5526315789473685,0.43902439024390244,0.4930680359435174,4,1,1,False,67
+P252,single,single,"Poly[2,2-(1,3-dichloro-1,1,3,3-tetrafluoro)propane bis(4-phenyl)carbonate]","{[][<]Oc1ccc(cc1)C(C(F)(F)Cl)(C(F)(F)Cl)c2ccc(cc2)O[<],[>]C(=O)[>][]}",69,1,1,single,single,0.6666666666666666,0.4318181818181818,0.5025541125541124,4,1,1,False,67
+P253,single,single,"Poly[4,4'-isopropylidene diphenoxydi(4-phenylene) sulfone]","{[][<]Oc1ccc(cc1)C(C)(C)c2ccc(cc2)O[<],[>]c1ccc(cc1)S(=O)(=O)c1ccc(cc1)[>][]}",77,1,1,single,single,0.6666666666666666,0.41304347826086957,0.5249144600632014,4,1,1,False,102
+P254,single,single,"Poly(oxycarbonyloxy-2,6-dichloro-1,4-phenyleneisopropylidene-1,4-
+phenylene)","{[][<]Oc1ccc(cc1)C(C)(C)c2cc(Cl)c(c(Cl)c2)O[<],[>]C(=O)[>][]}",61,1,1,single,single,0.8235294117647058,0.5434782608695652,0.6845780051150895,5,1,1,False,67
+P255,single,single,Poly(perfluorostyrene),{[][$]C(F)(F)C(F)(c1c(F)c(F)c(F)c(F)c1F)[$][]},46,1,1,single,single,0.3448275862068966,0.15789473684210525,0.21313562720096296,5,1,1,False,75
+P256,single,single,"Poly[2,2-propane bis(4-(2,6-dimethylphenyl)} carbonate]","{[][<]Oc1c(C)cc(cc1C)C(C)(C)c2cc(C)c(c(C)c2)O[<],[>]C(=O)[>][]}",63,1,1,single,single,0.6571428571428571,0.525,0.5925783040488922,4,1,1,False,78
+P257,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)Sc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cc(ccc1)C(=O)c2cc(ccc2)[>][]}",111,1,1,single,single,0.9166666666666666,0.6521739130434783,0.7724265083770172,5,1,1,False,113
+P258,single,single,"Poly(α,β,β-trifluoro styrene)",{[][$]C(F)(F)C(F)(c1ccccc1)[$][]},33,1,1,single,single,0.3448275862068966,0.20689655172413793,0.2553558165971959,5,1,1,False,46
+P259,single,single,Poly(bisphenol-A terephthalate),"{[][<]Oc1ccc(cc1)C(C)(C)c2ccc(cc2)O[<],[>]C(=O)c3ccc(cc3)C(=O)[>][]}",68,1,1,single,single,0.6666666666666666,0.4878048780487805,0.6064731135541521,5,1,1,False,78
+P260,single,single,"Poly[oxy(2,6-dimethyl-1,4-phenylene)]",{[][<]c1cc(C)c(c(C)c1)O[>][]},29,1,1,single,single,0.36363636363636365,0.2702702702702703,0.3111969111969112,5,1,1,False,78
+P261,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)Sc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cc(ccc1)[>][]}",96,1,1,single,single,0.8333333333333334,0.6818181818181818,0.7552891552891553,5,2,1,True,113
+P262,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)Sc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1c(cccc1)C(=O)c2ccc(cc2)[>][]}",111,1,1,single,single,0.7843137254901961,0.5925925925925926,0.6690654741428734,5,1,1,False,113
+P263,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1(=O))Oc3ccc(cc3)Sc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cc(ccc1)C(=O)c2ccc(cc2)[>][]}",113,1,1,single,single,0.9166666666666666,0.7142857142857143,0.7919038668098819,5,1,1,False,111
+P264,single,single,"Poly[oxy(2,6-diphenyl-1,4-phenylene)]",{[][<]c1c(c2ccccc2)cc(cc1c3ccccc3)O[>][]},41,1,1,single,single,0.3783783783783784,0.3333333333333333,0.3563774300616406,3,2,2,False,93
+P265,single,single,"Poly[4,4'-diphenoxy di(4-phenylene)sulfone]","{[][<]Oc1ccc(cc1)O[<],[>]c1ccc(cc1)S(=O)(=O)c2ccc(cc2)[>][]}",60,1,1,single,single,1.0,0.3125,0.5727564102564102,5,1,1,False,79
+P266,single,single,"Poly[4,4'-sulfone diphenoxy di(4-
+phenylene)sulfone]","{[][<]Oc1ccc(cc1)S(=O)(=O)c2ccc(cc2)O[<],[>]c1ccc(cc1)S(=O)(=O)c2ccc(cc2)[>][]}",79,1,1,single,single,1.0,0.3125,0.5727564102564102,5,1,1,False,77
+P267,single,single,Ultem,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)C(C)(C)c4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cccc(c1)[>][]}",102,1,1,single,single,0.7894736842105263,0.6,0.6910346192290715,5,1,1,False,100
+P268,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)Sc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1ccc(cc1)C(=O)c2ccc(cc2)[>][]}",111,1,1,single,single,0.8541666666666666,0.6739130434782609,0.7601236146632566,5,1,1,False,113
+P269,single,single,"Poly[N,N'-(m,m'-oxydiphenylene-oxym-
+phenylene) pyromellitimide]","{[][<]N1C(=O)c2cc3C(=O)N(C(=O)c3cc2C1=O)[<],[>]c1cccc(c1)Oc2cccc(c2)Oc3cccc(c3)[>][]}",85,1,1,single,single,0.625,0.35555555555555557,0.44936925647451964,5,1,1,False,96
+P270,single,single,"Poly(oxyterephthaloyloxy-2,6-dimethyl-1,4-phenyleneisopropylidene-
+3,5-dimethyl-1,4-phenylene)","{[][<]Oc1c(C)cc(cc1C)C(C)(C)c2cc(C)c(c(C)c2)O[<],[>]C(=O)c1ccc(cc1)C(=O)[>][]}",78,1,1,single,single,0.6842105263157895,0.41025641025641024,0.5558775142985669,5,1,1,False,74
+P271,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)Oc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cc(ccc1)[>][]}",96,1,1,single,single,0.9090909090909091,0.75,0.814274322169059,4,1,1,False,102
+P272,single,single,"Poly[2,2-propane bis{4-(2,6-dichlorophenyl)} carbonate]","{[][<]Oc1c(Cl)cc(cc1Cl)C(C)(C)c2cc(Cl)c(c(Cl)c2)O[<],[>]C(=O)[>][]}",67,1,1,single,single,0.8235294117647058,0.575,0.6510130718954248,5,1,1,False,67
+P273,single,single,Polycarbonate,"{[][<]Oc1ccc(cc1)C2(CC3CCC2C3)c4ccc(cc4)O[<],[>]C(=O)[>][]}",59,1,1,single,single,0.5319148936170213,0.375,0.43954209602886307,4,2,2,False,64
+P274,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)C(=O)c4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cc(ccc1)[>][]}",100,1,1,single,single,0.7894736842105263,0.717391304347826,0.7476710395023358,5,1,1,False,113
+P275,single,single,Polyimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)C(=O)c3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1cc(ccc1)C(=O)c2cc(ccc2)[>][]}",93,1,1,single,single,0.7647058823529411,0.6521739130434783,0.6849878223932748,5,1,1,False,111
+P276,single,single,Polycarbonate,"{[][<]Oc1ccc(cc1)C2(CC3C4CCCC4C2C3)c5ccc(cc5)O[<],[>]C(=O)[>][]}",64,1,1,single,single,0.5319148936170213,0.3409090909090909,0.42254459488502044,4,2,2,False,59
+P277,single,single,Polyetherimide,"{[][<]N1C(=O)c2ccc(cc2C1=O)Oc3ccc(cc3)c4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[<],[>]c1cc(ccc1)[>][]}",95,1,1,single,single,0.9090909090909091,0.6857142857142857,0.7654901196364611,4,1,1,False,102
+P278,single,single,"Poly[2,2-propane bis{4-(2,6-dibromophenyl)} carbonate]","{[][<]Oc1c(Br)cc(cc1Br)C(C)(C)c2cc(Br)c(c(Br)c2)O[<],[>]C(=O)[>][]}",67,1,1,single,single,0.6176470588235294,0.43902439024390244,0.5396556671449068,5,1,1,False,67
+P279,single,single,Polyimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)C(C(F)(F)F)(C(F)(F)F)c3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1cc(ccc1)C(=O)c2cc(ccc2)[>][]}",109,1,1,single,single,0.9130434782608695,0.5357142857142857,0.7055618294748729,5,1,1,False,111
+P280,single,single,Polyquinoline,"{[][<]c1cc(c2ccccc2)c3cc(ccc3n1)Oc4cc5c(c6ccccc6)cc(nc5cc4)[<],[>]c1ccc(cc1)Oc2ccc(cc2)[>][]}",93,1,1,single,single,0.96875,0.575,0.7820423217133744,5,1,1,False,102
+P281,single,single,Polyquinoline,"{[][<]c1cc(c2ccccc2n1)c3ccc(cc3)Oc4ccc(cc4)c5cc(nc6ccccc65)[<],[>]c1cc(ccc1)[>][]}",82,1,1,single,single,0.8484848484848485,0.5853658536585366,0.6833963212653842,5,1,1,False,102
+P282,single,single,Polyquinoline,"{[][<]c1c(c2ccccc2)c(c3ccccc3n1)c4ccc(cc4)Oc5ccc(cc5)c6c(c7ccccc7)c(nc8ccccc86)[<],[>]c1cc(ccc1)[>][]}",102,1,1,single,single,0.6842105263157895,0.4772727272727273,0.5851421791729878,5,1,1,False,112
+P283,single,single,Poly[o-biphenylenemethane bis(4-phenyl)carbonate],"{[][<]Oc1ccc(cc1)c2c(cccc2)Cc3c(cccc3)c4ccc(cc4)O[<],[>]C(=O)[>][]}",67,1,1,single,single,0.5151515151515151,0.39473684210526316,0.4344442036354745,4,2,2,False,58
+P284,single,single,Polyimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)C(C(F)(F)F)(C(F)(F)F)c3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1cc(ccc1)C(=O)c2ccc(cc2)[>][]}",109,1,1,single,single,0.9130434782608695,0.574468085106383,0.7408006054999579,5,1,1,False,109
+P285,single,single,Polyimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)C(C(F)(F)F)(C(F)(F)F)c3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1ccccc1C(=O)c2ccc(cc2)[>][]}",107,1,1,single,single,0.7755102040816326,0.49019607843137253,0.6383611978515746,5,1,1,False,111
+P286,single,single,Polyquinoline,"{[][<]c1cc(c2ccccc2)c3cc(ccc3n1)Oc4cc5c(c6ccccc6)cc(nc5cc4)[<],[>]c1ccc(cc1)[>][]}",82,1,1,single,single,0.96875,0.5897435897435898,0.779884808174282,4,1,1,False,102
+P287,single,single,"Poly(quinoxaline-2,7-diylquinoxaline-7,2-diyl-p-terphenyl-4,4'-ylene)","{[][<]c1nc2cc(ccc2nc1)c3cc4nc(cnc4cc3)[<],[>]c1ccc(cc1)c2ccc(cc2)c3c(cccc3)[>][]}",81,1,1,single,single,0.7096774193548387,0.4,0.5223205929852168,4,1,1,False,92
+P288,single,single,"Poly(quinoxaline-2, 7-diyloxyquinoxaline-7,2-diyl-1,4-phenylene)","{[][<]c1nc2cc(ccc2nc1)Oc3cc4nc(cnc4cc3)[<],[>]c1ccc(cc1)[>][]}",62,1,1,single,single,0.6896551724137931,0.48717948717948717,0.5568463060296092,4,1,1,False,82
+P289,single,single,Polyphenolphthalein,"{[][<]Oc1ccc(cc1)c2ccc(cc2)O[<],[>]C(=O)c1ccc(cc1)C2(OC(=O)c3ccccc23)c4ccc(cc4)C(=O)[>][]}",90,1,1,single,single,0.926829268292683,0.36,0.5697894680907594,5,1,1,False,109
+P290,single,single,Polyquinoline,"{[][<]c1cc(c2ccccc2)c3cc(ccc3n1)Oc4cc5c(c6ccccc6)cc(nc5cc4)[<],[>]c1ccc(cc1)c2ccc(cc2)[>][]}",92,1,1,single,single,0.96875,0.6,0.768722804972805,5,1,1,False,112
+P291,single,single,Polypthenolphthalein,"{[][<]C(=O)c1ccc(cc1)C2(OC(=O)c3ccccc23)c4ccc(cc4)C(=O)[<],[>]Oc1ccc(cc1)C2(OC(=O)c3ccccc23)c4ccc(cc4)O[>][]}",109,1,1,single,single,0.926829268292683,0.3829787234042553,0.5949337345622979,5,1,1,False,109
+P292,single,single,Polyimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)C(C(F)(F)F)(C(F)(F)F)c3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1ccc(cc1)C(=O)c2ccc(cc2)[>][]}",109,1,1,single,single,0.8478260869565217,0.5106382978723404,0.7057980991182602,5,1,1,False,109
+P293,single,single,"Poly(quinoxaiine-2, 7-diylcarbonylquinoxaline-7,2-diyl-l ,4-phenylene)","{[][<]c1nc2cc(ccc2nc1)C(=O)c3cc4nc(cnc4cc3)[<],[>]c1ccc(cc1)[>][]}",66,1,1,single,single,0.625,0.2972972972972973,0.4978208508696314,5,1,1,False,81
+P294,single,single,Polyphenolphthalein,"{[][<]C(=O)c1ccc(cc1)C2(OC(=O)c3ccccc23)c4ccc(cc4)C(=O)[<],[>]Nc1ccc(cc1)Oc2ccc(cc2)N[>][]}",91,1,1,single,single,0.8636363636363636,0.36666666666666664,0.5642622301445831,5,1,1,False,109
+P295,single,single,Polyquinoline,"{[][<]c1cc(c2ccccc2n1)c3ccc(cc3)Oc4ccc(cc4)c5cc(nc6ccccc65)[<],[>]c1ccc(cc1)Oc2ccc(cc2)[>][]}",93,1,1,single,single,0.8484848484848485,0.5121951219512195,0.702453454404674,5,1,1,False,102
+P296,single,single,Poly(p-phenylene terephthalamide),"{[][<]Nc1ccc(cc1)N[<],[>]C(=O)c1ccc(cc1)C(=O)[>][]}",51,1,1,single,single,0.5185185185185185,0.30303030303030304,0.40753145489987597,5,1,1,False,109
+P297,single,single,Polyimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)C(=O)c3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1ccc(cc1)[>][]}",78,1,1,single,single,0.7647058823529411,0.5714285714285714,0.6298800086284014,5,1,1,False,111
+P298,single,single,"Poly(quinoxaline-2,7-diylsulfonylquinoxaline-7,2-diyl-1,4-phenylene)","{[][<]c1nc2cc(ccc2nc1)S(=O)(=O)c3cc4nc(cnc4cc3)[<],[>]c1ccc(cc1)[>][]}",70,1,1,single,single,0.625,0.2972972972972973,0.4978208508696314,5,2,1,True,81
+P299,single,single,Polyetherimide,"{[][<]N1C(=O)c2cc(ccc2C1=O)Oc3cc4C(=O)N(C(=O)c4cc3)[<],[>]c1ccc(cc1)[>][]}",74,1,1,single,single,0.75,0.6,0.6602879149092243,5,2,1,True,111
+P300,single,single,Polyquinoline,"{[][<]c1c(c2ccccc2)c(c3ccccc3)c4cc(ccc4n1)Oc5cc6c(c7ccccc7)c(c8ccccc8)c(nc6cc5)[<],[>]c1ccc(cc1)[>][]}",102,1,1,single,single,0.96875,0.575,0.6785408232118758,4,2,2,False,112
+P301,single,single,Polyquinolinc,"{[][<]c1c(c2ccccc2)c(c3ccccc3)c4cc(ccc4n1)Oc5cc6c(c7ccccc7)c(c8ccccc8)c(nc6cc5)[<],[>]c1ccc(cc1)c2ccc(cc2)[>][]}",112,1,1,single,single,0.96875,0.5609756097560976,0.6742784552845529,5,1,1,False,102
+P302,single,single,"Poly(quinoxaline-2,7-diylquinoxaline-7,2-diyl-1,4-phenylene)","{[][<]c1nc2cc(ccc2nc1)c3cc4nc(cnc4cc3)[<],[>]c1ccc(cc1)[>][]}",61,1,1,single,single,0.7096774193548387,0.325,0.5948665183537264,4,1,1,False,82
+P303,single,single,Polyphenoiphthalein,"{[][<]C(=O)c1ccc(cc1)C2(OC(=O)c3ccccc23)c4ccc(cc4)C(=O)[<],[>]Nc1ccc(cc1)C2(OC(=O)c3ccccc23)c4ccc(cc4)N[>][]}",109,1,1,single,single,0.8636363636363636,0.4074074074074074,0.5754161845493115,5,1,1,False,109
+P304,single,single,"Poly[N,N'-(p,p'-oxydiphenylene)pyromellitimide]","{[][<]N1C(=O)c2cc3C(=O)N(C(=O)c3cc2C1=O)[<],[>]c1ccc(cc1)Oc2ccc(cc2)[>][]}",74,1,1,single,single,0.625,0.35,0.4602777777777778,5,1,1,False,96
+P305,single,single,Polyphenolphthalein,{[][<]NC(=O)Nc1ccc(cc1)C2(c3ccccc3C(=O)N2)c4ccc(cc4)NC(=O)[>][]},64,1,1,single,single,0.4074074074074074,0.2727272727272727,0.3218260976817565,5,1,1,False,109
+P306,single,single,"Poly(N,N'-(p,p'-carbonyldiphenylene)
+pyrornellitimide]","{[][<]N1C(=O)c2cc3C(=O)N(C(=O)c3cc2C1=O)[<],[>]c1ccc(cc1)C(=O)c2ccc(cc2)[>][]}",78,1,1,single,single,0.5625,0.3541666666666667,0.4267543859649122,4,1,1,False,109
+P307,single,single,,{[>][<]OCC[>][<]}O,18,1,1,single,single,0.46153846153846156,0.29411764705882354,0.33245475113122175,4,2,2,False,23
+P309,single,single,,C{[<][>]OCC[<][>]}OC(=O)C=C,27,1,1,single,single,0.6060606060606061,0.2549019607843137,0.38336067768220605,5,1,1,False,34
+P310,single,single,,C{[>][<]OCC[>][<]}OC(=O)C,25,1,1,single,single,0.6071428571428571,0.2765957446808511,0.39424416417697494,5,1,1,False,34
+P311,single,single,,C{[>][<]OCC[>][<]}Cl,20,1,1,single,single,0.5,0.2,0.3155753632741968,5,3,1,True,27
+P312,single,single,,C=CC(=O){[<][>]OCC[<][>]}OC(=O)C=C,34,1,1,single,single,0.6060606060606061,0.2413793103448276,0.3505243751021542,5,1,1,False,35
+P313,single,single,,CC(=O){[>][<]OCC[>][<]}OC(=O)C,30,1,1,single,single,0.6071428571428571,0.2857142857142857,0.3705918020858598,5,1,1,False,43
+P314,single,single,,ClCC{[>][<]OCC[>][<]}Cl,23,1,1,single,single,0.5,0.29411764705882354,0.37363122171945706,5,2,1,True,21
+P315,single,single,,O{[>][<]C(=O)C(C)O[>][<]},25,1,1,single,single,0.22727272727272727,0.17307692307692307,0.1983480438793249,4,2,1,True,31
+P316,single,single,,C#CCOC(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}SC(=S)c1ccccc1,57,1,1,single,single,0.25263157894736843,0.22429906542056074,0.23988953023413004,5,1,1,False,66
+P317,single,single,,"N#CC(C)(C){[$][$]CC(c1ccccc1)[$];[$]C(C)(C)C#N,[$]C=C(c1ccccc1)[]}",66,1,1,single,single,0.2727272727272727,0.22340425531914893,0.24256622222109034,5,2,1,True,57
+P318,single,single,,O{[>][<]CCO[>][<]}C(=O)C(C)(C)SC(=S)SCCCCCCCCCCCC,49,2,2,block|single,block|single,0.2898550724637681,0.27956989247311825,0.2857152825334358,4,1,1,False,78
+P319,block,block,,O{[>][<]CCO[>][<]}C(=O)C(C)(C)SC(=S)S{[$][$]C(C)(C(=O)OC)C[$][$]}CCCCCCCCCCCC,77,2,2,block|single,block|single,0.40458015267175573,0.21232876712328766,0.2765468427669907,5,1,1,False,78
+P320,block,block,,O{[>][<]CCO[>][<]}C(=O)C(C)(C)SC(=S)S{[$][$]CC(C(=O)NC(C)C)[$][$]}CCCCCCCCCCCC,78,2,2,block|single,block|single,0.40458015267175573,0.1450381679389313,0.22636612580138699,5,1,1,False,86
+P321,single,single,,C1C(O1)CO{[>][<]CCO[>][<]}CC(O1)C1,34,1,1,single,single,0.3157894736842105,0.22580645161290322,0.25592757666781435,5,1,1,False,30
+P322,single,single,,CC(C)(C){[$][$]CC(C)(C)[$][$]}CC(C)=C,37,1,1,single,single,0.3695652173913043,0.15942028985507245,0.280170634646338,5,1,1,False,54
+P323,single,single,,CC(C)(C){[$][$]CC(C)(C)[$][$]}CC(C)CSCCNC(=O)OC(C)(C)C,54,1,1,single,single,0.6712328767123288,0.16666666666666666,0.32110873613917074,5,1,1,False,40
+P324,single,single,,CC(C)(C){[$][$]CC(C)(C)[$][$]}CC(C)CSCCN,40,1,1,single,single,0.6712328767123288,0.11392405063291139,0.3179094967819419,5,1,1,False,54
+P326,single,single,,C=C[Si](C)(C){[>][<]O[Si](C)(C)[>][<]}O[Si](C)(C)C=C,52,1,1,single,single,0.45,0.14285714285714285,0.285,5,1,1,False,65
+P328,single,single,,C[Si](C)(C)O[Si](C)(C)O{[>][<][Si](C)(C)O[>][<]}[Si](C)(C)C,59,1,1,single,single,0.6923076923076923,0.17857142857142858,0.35437062937062935,5,1,1,False,65
+P329,single,single,,NCCC[Si](C)(C)O{[<][>][Si](C)(C)O[<][>]}[Si](C)(C)CCCN,54,1,1,single,single,0.391304347826087,0.1891891891891892,0.30681299311734095,5,1,1,False,65
+P330,single,single,,"O{[$][$]CC(c1ccccc1)[$],[$]CC(C)(C(=O)OC)[$][$]}ON1C(C)(C)CCCC1(C)(C)",69,2,2,block|graft,block|graft,0.1955128205128205,0.11264367816091954,0.13540204037420772,5,1,1,False,108
+P331,single,single,,O{[<][>]C(=O)CCCCCN[<][>]},26,1,1,single,single,0.8064516129032258,0.5806451612903226,0.6258064516129032,2,10,4,True,45
+P332,single,single,,O{[<][>]C(=O)CCCCCN[<][>]}C(=O)CCCCC(=O)O,41,1,1,single,single,0.8064516129032258,0.72,0.737290322580645,2,10,4,True,45
+P333,single,single,,"C(c1ccccc1)O{[>][<]CCO[>],[<]CC(COCCN(C(C)C)(C(C)C))O[>][<]}[H]",63,2,2,graft|single,graft|single,0.2698412698412698,0.11764705882352941,0.18906873355402767,5,1,1,False,65
+P335,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[>][<][Si](C)(C)O[>][]},49,1,1,block,block,0.47058823529411764,0.3870967741935484,0.4144776869434814,4,1,1,False,56
+P337,block,block,,{[][$]CC(c1cc(C(=O)Oc2ccc(OCCCC)cc2)ccc1(C(=O)Oc3ccc(OCCCC)cc3))[$][$]}{[>][<][Si](C)(C)O[>][]},95,1,1,block,block,0.3723404255319149,0.18811881188118812,0.2337384899817861,5,1,1,False,139
+P338,block,block,,CCC(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C)(C(=O)OCC(CC)CCCC)[$][$]}[H],72,1,1,block,block,0.5225806451612903,0.2603305785123967,0.3823878440261089,5,1,1,False,67
+P339,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C)(C(=O)OCCCC)[$][]},55,1,1,block,block,0.8021978021978022,0.2978723404255319,0.5060119958843167,5,1,1,False,72
+P340,block,block,,"{[][<]CCO[>][<]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][]}",90,1,1,block,block,0.7232142857142857,0.51171875,0.569469600340136,5,1,1,False,108
+P341,block,block,,"{[][<]CCO[>][<]}{[$][$]C\C=C/C[$],[$]C\C=C\C[$],[$]CC(C=C)[$][]}",64,1,1,block,block,0.3707865168539326,0.09032258064516129,0.20255398151737403,5,1,1,False,90
+P342,block,block,,"{[][$]C\C=C/C[$],[$]C\C=C\C[$],[$]CC(C=C)[$][$]}{[>][<][Si](C)(C)O[>][]}",72,1,1,block,block,0.3707865168539326,0.09230769230769231,0.20863231348665767,5,1,1,False,119
+P343,block,block,,"{[][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}{[$][$]CC(c1ccccc1)[$][]}",99,1,1,block,block,0.8394495412844036,0.5462184873949579,0.6264792857818469,5,1,1,False,153
+P344,block,block,,{[][$]CC(c1ncccc1)[$][$]}{[$][$]CC(c1ccncc1)[$][]},50,1,1,block,block,0.8536585365853658,0.4230769230769231,0.5732685583641542,5,1,1,False,57
+P345,block,block,,"{[][$]CCCC[$],[$]CC(CC)[$][$]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][]}",82,1,1,block,block,0.8098159509202454,0.5274725274725275,0.5928350878097801,4,1,1,False,93
+P347,block,block,,"{[][$]CCCC[$],[$]CC(CC)[$][$]}{[$][$]CCCC[$],[$]CC(CC)[$][]}",60,1,1,block,block,0.7222222222222222,0.4482758620689655,0.5594743396963751,5,1,1,False,67
+P348,block,block,,COCCOCCO{[>][<]CCO[>][<]}{[>][<]C(CC)CO[>][<]}[H],49,1,1,block,block,0.6451612903225806,0.15384615384615385,0.28316687344913155,5,1,1,False,52
+P349,block,block,,{[][<]CCO[>][<]}{[>][<]C(CC)CO[>][]},36,1,1,block,block,0.6451612903225806,0.18518518518518517,0.33083987477128696,5,1,1,False,52
+P350,block,block,,"CCC(C){[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}{[>][<]CCO[>][<]}[H]",101,1,1,block,block,0.9343434343434344,0.5357142857142857,0.6629631288006897,5,1,1,False,110
+P351,block,block,,"{[][<]C(C)C(=O)O[>][<]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][]}",75,1,1,block,block,0.7102272727272727,0.47549019607843135,0.5378193923425687,5,1,1,False,108
+P353,block,block,,CCC(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ncccc1)[$][$]}[H],61,1,1,block,block,0.6470588235294118,0.3368421052631579,0.44767587986636936,5,1,1,False,64
+P354,block,block,,"[H]{[>][>]CCO[<][<]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}C(C)CC",101,1,1,block,block,0.9343434343434344,0.5583333333333333,0.6867597114919288,5,1,1,False,110
+P355,block,block,,"CCC(C){[$][$]CCCC[$],[$]CC(CC)[$][$]}{[$][$]CCCC[$],[$]CC(CC)[$][]}",67,1,1,block,block,0.6341463414634146,0.37142857142857144,0.4580757668921227,5,1,1,False,60
+P356,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C=C)[$][]},45,1,1,block,block,0.4528301886792453,0.3787878787878788,0.40908223418308004,4,1,1,False,56
+P357,block,block,,"{[][$]CC(c1ccccc1)[$][$]}{[$][$]C\C=C/C[$],[$]C\C=C\C[$],[$]CC(C=C)[$][]}",73,1,1,block,block,0.34831460674157305,0.15163934426229508,0.26062571083569425,5,1,1,False,106
+P358,block,block,,"{[][$]CC(C1CCCCC1)[$][$]}{[$][$]CCCC[$],[$]CC(CC)[$][]}",55,1,1,block,block,0.4727272727272727,0.2988505747126437,0.37442406858382415,5,1,1,False,67
+P359,block,block,,"{[][$]CC(C1CCCCC1)[$][$]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][]}",77,1,1,block,block,0.6016597510373444,0.4803921568627451,0.5279801271440322,5,1,1,False,108
+P360,block,block,,"{[][$]CC(c1ccccc1)[$][$]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][]}",77,1,1,block,block,0.9299363057324841,0.49504950495049505,0.5951710717761791,5,1,1,False,108
+P361,block,block,,"CCC(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][]}",106,1,1,block,block,0.8394495412844036,0.6481481481481481,0.7120529575607403,5,1,1,False,153
+P362,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ncccc1)[$][]},50,1,1,block,block,0.8536585365853658,0.49056603773584906,0.6150182763864417,5,1,1,False,57
+P363,block,block,,"CCC(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]C\C(C)=C/C(C)[$],[$]C\C(C)=C\C(C)[$],[$]CC(C)(C=CC)[$],[$]C(C)C(C(C)=C)[$][$]}[H]",120,1,1,block,block,0.3569682151589242,0.2557588075880759,0.29902982358721586,5,1,1,False,132
+P364,block,block,,CCCC{[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ccncc1)[$][]},55,1,1,block,block,0.6744186046511628,0.4528301886792453,0.5390272651403694,5,1,1,False,56
+P366,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C)(C(=O)OC)[$][]},52,1,1,block,block,0.8021978021978022,0.29523809523809524,0.48468788462326645,5,1,1,False,103
+P368,block,block,,c1ccccc1C=C{[>][>]C=CC1C(C3/C=C\C1c2c(OC)ccc(OC)c23)[<][<]}{[>][<]C(C1)CC(CO[Si](C)(C)C)C1C=C[>][<]}C(C)(C)(C),110,1,1,block,block,0.1509433962264151,0.10101010101010101,0.12350152082931105,5,1,1,False,139
+P369,block,block,,"{[][<]C(=O)C(C)O[>][<]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][]}",97,1,1,block,block,0.7232142857142857,0.49056603773584906,0.5585415914991758,5,1,1,False,108
+P370,block,block,,{[][<]CCO[>][<]}{[>][<]CC(C)O[>][]},35,2,2,block|single,block|single,0.6,0.19230769230769232,0.32359640359640357,5,1,1,False,52
+P371,block,block,,CCC(C){[$][$]CC(c1ncccc1)[$][$]}{[$][$]CC(c1ccccc1)[$][]},57,1,1,block,block,0.6727272727272727,0.4057971014492754,0.5625558880606938,5,1,1,False,64
+P373,block,block,,CCC(C){[$][$]CC(C)(c1ccccc1)[$][$]}{[$][$]CC(c1ccc(O)cc1)[$][$]}[H],67,1,1,block,block,0.3277777777777778,0.2131979695431472,0.26100763418226414,5,1,1,False,72
+P374,block,block,,"{[][$]CC(c1ccccc1)[$],[$]CC(c1ccc(S(=O)(=O)O)cc1)[$][$]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][]}",108,1,1,block,block,0.9299363057324841,0.47641509433962265,0.5743675224847523,5,1,1,False,82
+P375,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[>][<]CCO[>][]},41,1,1,block,block,0.717948717948718,0.49295774647887325,0.5635236759926071,5,1,1,False,64
+P376,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C(=O)OC(C)(C)C)[$][]},56,1,1,block,block,0.38095238095238093,0.33783783783783783,0.355381475739532,5,1,1,False,56
+P377,block,block,,{[][<][Si](C)(C)O[>][<]}{[$][$]CC(c1ccccc1)[$][]},49,1,1,block,block,0.5245901639344263,0.4,0.4482756202331902,5,1,1,False,56
+P378,block,block,,[H]{[>][>]CC(C)OC(=O)O[<][<]}OCC{[$][$]CC(c1ccccc1)[$][$]}C(C)CC,64,1,1,block,block,0.4939759036144578,0.37037037037037035,0.4355192287145451,5,1,1,False,61
+P379,block,block,,{[][$]CC(c1ncccc1)[$][$]}{[$][$]CC(C)(C(=O)OCCOC)[$][]},55,1,1,block,block,0.5981308411214953,0.28865979381443296,0.4216146894315778,5,1,1,False,72
+P380,block,block,,{[][<]CCO[>][<]}{[$][$]CC(c1ccccc1)[$][]},41,1,1,block,block,0.5576923076923077,0.42105263157894735,0.48393974791386346,5,1,1,False,56
+P381,block,block,,{[][$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ccc(O)c(O)c1)[$][]},56,1,1,block,block,0.5853658536585366,0.43636363636363634,0.4949119357402837,4,1,1,False,55
+P382,block,block,,"CO{[>][<]CCO[>][<]}{[>][<]C(=O)C(C)O[>],[<]C(=O)CO[>][<]}C(=O)CO",64,2,2,block|graft,block|graft,0.15384615384615385,0.1111111111111111,0.13463056024725853,5,1,1,False,75
+P383,block,block,,"{[][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][$]}{[>][<][Si](C)(C)O[>][]}",76,1,1,block,block,0.7117117117117117,0.470873786407767,0.5277906215044438,5,1,1,False,97
+P384,block,block,,"{[][$]CC(CC)[$],[$]CCCC[$][$]}{[>][<][Si](C)(C)O[>][]}",54,1,1,block,block,0.4482758620689655,0.2988505747126437,0.3716889689483617,5,1,1,False,67
+P385,block,block,,"{[][$]CC(CC)[$],[$]CCCC[$][$]}{[>][<]CCO[>][]}",46,1,1,block,block,0.7222222222222222,0.4,0.5315305455703354,5,1,1,False,67
+P386,block,block,,"{[][<]CCO[>][<]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][]}",68,1,1,block,block,0.7102272727272727,0.4876847290640394,0.552722741777199,5,1,1,False,108
+P387,block,block,,"{[][<]CCO[>][<]}{[$][$]CCCC[$],[$]CC(CC)[$][]}",46,1,1,block,block,0.6226415094339622,0.3291139240506329,0.4410177533635856,5,1,1,False,67
+P389,block,block,,"[H]{[$][$]CCCC[$],[$]CC(CC)[$][$]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][$]}C(C)CC",93,1,1,block,block,0.8098159509202454,0.463302752293578,0.5355849113420247,5,1,1,False,82
+P391,block,block,,"[H]{[>][>]C(C)C(=O)O[<][<]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}C(C)CC",108,1,1,block,block,0.7098214285714286,0.5551181102362205,0.6227649382913756,5,1,1,False,119
+P392,block,block,,"CCC(C){[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}{[>][<][Si](C)(C)O[>][<]}[Si](C)(C)(C)",119,1,1,block,block,0.559322033898305,0.43271767810026385,0.51833039245229,5,1,1,False,110
+P393,block,block,,"CCC(C){[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][$]}{[>][<][Si](C)(C)O[>][<]}[Si](C)(C)(C)",97,1,1,block,block,0.7117117117117117,0.3781818181818182,0.46392765159468824,5,1,1,False,108
+P394,block,block,,"CCC(C){[$][$]CC(C1CCCCC1)[$][$]}{[$][$]CCC(C)C[$],[$]CC(C(C)C)[$],[$]CC(C)(CC)[$][$]}[H]",88,1,1,block,block,0.6016597510373444,0.3531468531468531,0.4277470546315524,5,1,1,False,97
+P396,block,block,,"[H]{[$][$]CC(c1ccccc1)[$][$]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}C(C)CC",110,1,1,block,block,0.7695035460992907,0.5287524366471735,0.6168714712983692,5,1,1,False,132
+P398,block,block,,"CCC(C){[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}{[$][$]CC(c1ccccc1)[$][$]}{[>][<][Si](C)(C)O[>][<]}",132,1,1,block,block,0.6481481481481481,0.4860050890585242,0.5692774919707235,5,1,1,False,153
+P399,block,block,,"{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}{[$][$]CC(c1ccccc1)[$][$]}{[>][<]CCO[>][<]}",118,1,1,block,block,0.5249366018596787,0.44386422976501305,0.48235036308238327,5,1,1,False,153
+P400,block,block,,"CCC(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]C\C=C(C)/C[$],[$]C\C=C(C)\C[$],[$]CC(C(C)=C)[$],[$]CC(C)(C=C)[$][$]}{[$][$]CC(c1ccccc1)[$][$]}{[>][<]CCO[>][<]}[H]",153,1,1,block,block,0.6515242080095637,0.5249366018596787,0.5772506905796393,5,1,1,False,132
+P403,block,block,,CO{[>][<]CCO[>][<]}C(=O)C(c1ccccc1){[$][$]CC(C)(C(=O)OC)[$][$]}{[$][$]CC(c1ccccc1)[$][$]}SC(=S)c1ccccc1,103,1,1,block,block,0.3044315992292871,0.1714285714285714,0.23985714224146534,5,1,1,False,77
+P404,block,block,,c1ccccc1{[<][>][Si](CC)(CC)CCC[<][>]}CC(c1ccccc1)(c1ccccc1){[$][$]CC(C(=O)OCCO)[$][$]},86,1,1,block,block,0.1830065359477124,0.12972972972972974,0.14907341110190825,5,1,1,False,78
+P405,block,block,,{[][$]CC[$][$]}{[$][$]CC(c1ccccc1)[$][]},40,1,1,block,block,0.717948717948718,0.48,0.6031745422284277,5,1,1,False,56
+P406,block,block,,{[][<]OCC[>][<]}{[<][>]OC(C)C[<][>]}{[>][<]OCC[>][]},52,2,2,block|single,block|single,0.6,0.13836477987421383,0.26408100195185424,5,1,1,False,49
+P407,graft,graft,,"{[][$]CC(C(=O)O)[$],[$]CC(C(=O)O{[>][<]CCO[>][<]}C)[$][]}",57,2,2,graft|single,graft|single,0.24358974358974358,0.15757575757575756,0.1823240093240093,5,1,1,False,72
+P408,graft,graft,,"{[][$]CC(C)(C(=O)OC)[$],[$]CC(C)(C(=O)OCCOC(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][]})[$][]}",86,3,3,block|graft|single,block|graft|single,0.29,0.15789473684210525,0.23853975889366558,5,1,1,False,72
+P409,graft,graft,,"COCCO{[>][<]C(O{[<][>]CCO[<][>]}C)CCCCCO[>],[<]C(=O)CCCCCO[>][<]}",65,2,2,block|graft,block|graft,0.24358974358974358,0.13253012048192772,0.1740275494903764,5,1,1,False,72
+P410,graft,graft,,"{[][$]CC(c(cc1)ccc1CCCC{[>][<]OCC[>][<]}N)[$],[$]CC(c1ccccc1)[$][]}",67,2,2,graft|single,graft|single,0.7090909090909091,0.17543859649122806,0.3942804368955601,5,1,1,False,86
+P411,graft,graft,,"{[][$]CC(c(cc1)ccc1CCCC{[>][<]OCC[>][<]}C(=O)O)[$],[$]CC(c1ccccc1)[$][]}",72,1,1,graft,graft,0.639344262295082,0.17045454545454544,0.3887924694306286,4,1,1,False,86
+P412,graft,graft,,"{[][$]CC(c(cc1)ccc1CCCC{[>][<]OCC[>][<]}S)[$],[$]CC(c1ccccc1)[$][]}",67,2,2,graft|single,graft|single,0.7090909090909091,0.16981132075471697,0.39394185161963097,5,1,1,False,86
+P417,segmented,segmented,,"{[][<]C(=O)Nc(cc1)ccc1Cc(cc2)ccc2NC(=O)[<],[>]NCCC{[>][<][Si](C)(C)O[>][<]}[Si](C)(C)CCCN[>][]}",95,2,2,segmented|single,segmented|single,0.5666666666666667,0.11818181818181818,0.22943564921336956,5,1,1,False,119
+P419,segmented,segmented,,"{[][<]NCCC{[>][<][Si](C)(C)O[>][<]}[Si](C)(C)CCCN[<],[>]C(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]}",95,3,3,network|segmented|single,segmented|segmented+network|single,0.5666666666666667,0.10294117647058823,0.2243595488431515,5,1,1,False,119
+P422,block+star,star,,OCCCCCC(=O){[>][<]OCCCCCC(=C)[>][<]}OCc1cc([#Arm1])cc([#Arm2])c1.{#Arm1=c2nnn(CC{[$][$]CC(c3ccccc3)[$][$]}CCC)c2}.{#Arm2=c4nnn({[>][<]CCO[>][<]}C)c4},149,2,2,block|star,block|block+star,0.2751677852348993,0.18439716312056736,0.21303623495582932,5,1,1,False,113
+P425,block+star,star,,CC(=O){[>][<]N(CCCCCC)C(=O)[>][<]}OCCCCCCn1nnc(c1)COCC([#Arm])([#Arm])CC.{#Arm=CO{[>][<]C(=O)CCCCCO[>][<]}},107,2,2,block|star,block|block+star,0.7124999999999999,0.10666666666666666,0.29763033124052823,5,1,1,False,149
+P426,block+star,star,,CC(=O){[>][<]N(CCCCCC)C(=O)[>][<]}OCCCCCCn1nnc(c1)COCC([#Arm])([#Arm])([#Arm]).{#Arm=CO{[>][<]C(=O)CCCCCO[>][<]}},113,2,2,block|star,block|block+star,0.7124999999999999,0.08130081300813008,0.3137003455713656,5,1,1,False,149
+P427,block+star,star,,C([#R])([#R])([#R])([#R]).{#R=C{[<][>]OC(=O)CCCCC[<][>]}O},58,2,2,single|star,block+star|single,0.4897959183673469,0.12162162162162163,0.24320142040272424,5,1,1,False,149
+P428,block+star,star,,C([#R])([#R])([#R])([#R]).{#R=C{[<][>]OC(=O)CCCCC[<][>]}OC(=O)C(C)(C)Br},72,2,2,single|star,block+star|single,0.4897959183673469,0.125,0.2493959652826648,4,2,2,False,149
+P432,segmented+network,network,,"{[][<]CCCCC(C)(C)C(=O)O{[>][<]CCO[>][<]}C(=O)C(C)(C)CCCC[<],[>]n1cc([<2])nn1,[>2]COCC(COC[>2])(COC[>2])COC[>2][]}",113,1,2,network,network|segmented+network,0.6527777777777778,0.09615384615384616,0.22257724550243735,5,1,1,False,249
+P433,segmented+network,network,,"{[][<]CCCCC(C)(C)C(=O)O{[>][<]CCO[>][<]}C(=O)C(C)(C)CCCC[<],[>]n1cc([<2])nn1,[>2]COCC(COC[>2])(COC[>2])C[]}",107,1,2,network,network|segmented+network,0.6527777777777778,0.08831521739130434,0.2130151558615414,5,1,1,False,138
+P434,segmented+network,network,,"{[][<]CC(O)COCCC[Si](C)(C)O{[<][>][Si](C)(C)O[<][>]}[Si](C)(C)CCCOCC(O)C[<],[>]OC(=O)C(C(=O)O[>])C(=O)O[>][]}",109,2,3,network|segmented,network|segmented|segmented+network,0.10327022375215146,0.07305194805194806,0.0916848073880796,4,1,1,False,113
+P435,segmented+network,network,,"{[][<]NCCC{[>][<]OCC[>][<]}OCC(CO{[<][>]CCO[<][>]}CCCN[<])(CO{[<][>]CCO[<][>]}CCCN[<])CO{[<][>]CCO[<][>]}CCCN[<],[>]C(=O)CCCOC{[>][<]OCC[>][<]}OCC(CO{[<][>]CCO[<][>]}COCCCC(=O)[>])(CO{[<][>]CCO[<][>]}COCCCC(=O)[>])CO{[<][>]CCO[<][>]}COCCCC(=O)[>][]}",249,3,3,network|segmented|single,segmented|segmented+network|single,0.1388888888888889,0.06944444444444445,0.09794389978213507,4,10,2,True,119
+P436,segmented,segmented,,"{[][>]C(=O)CCCCCCC(=O)[>],C([#R])([#R])OC([#R])([#R])[]}.{#R=COC(CO{[<][>]CCO[<][>]}CCN[<])(CO{[<][>]CCO[<][>]}CCN[<])}",119,1,1,single,single,0.21621621621621623,0.21621621621621623,0.21621621621621623,1,10,5,True,49
+P437,network,network,,"{[][<1]CC(=O)OCc1ccc(COC(=O)C[<1])c(N(=O)=O)c1,CCC(COC(=O)CCS[>2])(COC(=O)CCS[>2])COC(=O)CCS[>2],[>1]CC[<2][]}",110,1,2,network,network|segmented+network,0.5595238095238095,0.07305194805194806,0.2801278081432359,5,1,1,False,138
+P438,network,network,,"{[][<1]CC(=O)OCc1ccc(COC(=O)C[<1])c(N(=O)=O)c1,[>2]SCCC(=O)OC(COC(=O)CCS[>2])(COC(=O)CCS[>2])COC(=O)CCS[>2],[>1]CC[<2][]}",121,1,2,network,network|segmented+network,0.9629629629629629,0.05921052631578947,0.35725215817321077,5,1,1,False,249
+P439,network,network,,"{[][<1]CC(=O)OCc1ccc(COC(=O)C[<1])c(N(=O)=O)c1,[>2]SCCC(=O)OC(COC(=O)CCS[>2])(COC(=O)CCS[>2])COC(=O)CCS[>2],[>2]SCCCCCCS[>2],[>1]CC[<2][]}",138,1,2,network,network|segmented+network,0.9629629629629629,0.057692307692307696,0.35244927693209605,5,1,1,False,249
+P482,single,single,,{[][<]CC(Cl)C(Cl)C[>][]},24,1,1,single,single,0.5,0.125,0.20696408708088354,5,5,1,True,31
+P483,block,block,,{[>][<]OCC(C)(C(=O)OCCOC)COC(=O)[>][<]}OCCCCCCOc(cc1)ccc1C(=O)Oc(cc1(C))ccc1OC(=O)c(cc1)ccc1OCCCCCCO{[>][<]C(=O)OCC(C)(C(=O)OCCOC)CO[>][<]},139,2,2,block|single,block|single,0.22033898305084745,0.16296296296296298,0.1857554334308669,5,1,1,False,95
+P485,single,single,,C=C(C)C(=O)OCCC[Si](C)(C){[>][<]O[Si](C)(C)[>][<]}O[Si](C)(C)CCCC,65,1,1,single,single,0.391304347826087,0.22950819672131148,0.2634234147166484,3,5,3,True,54
+P486,single,single,,{[][<]C#Cc(cc1)ccc1C#C[Pt](P(c1ccccc1)(c1ccccc1)(c1ccccc1))(P(c1ccccc1)(c1ccccc1)(c1ccccc1))C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1[>][]},134,1,1,single,single,0.2923076923076923,0.19672131147540983,0.23128406162618567,5,3,1,True,35

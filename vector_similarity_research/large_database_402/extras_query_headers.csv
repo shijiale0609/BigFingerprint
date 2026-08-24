@@ -1,0 +1,201 @@
+source_sheet,source_cell,query_bigsmarts,rule,number_of_matches,case_topology
+Extras,E1,{[][<][Si](CC)(CC)O[>][]},ring opening,1,"9, 1"
+Extras,F1,{[][<]O[Si](CC)(CC)[>][]},inversion,1,1
+Extras,G1,"{[][<][Si](CC)(CC)[<2],[>2]O[>][]}",RU split,1,1
+Extras,H1,"{[][>2]O[>],[<][Si](CC)(CC)[<2][]}",switch RU order,1,1
+Extras,I1,"{[][<][Si](CC)(CC)[<2],[>2]O[>],[>2]O[>][]}",split + duplication,1,1
+Extras,J1,{[][<3][Si](CC)(CC)O[>3][]},change in descriptors,1,1
+Extras,K1,{[]CC[Si]([<])(CC)O[>][]},descriptors not at ends,1,1
+Extras,L1,{[][<][Si](CC)(CC)O[Si](CC)(CC)O[>][]},concatenation,1,1
+Extras,M1,{[][<][Si](CC)([<2])O[>];[>2]CC[]},pendant group as EG,1,1
+Extras,N1,{[][<][Si](CC)(CC)O[>][<]}[Si](CC)(CC)O,RU in EG,1,1
+Extras,O1,{[][<][Si](CC)(CC)O[>][<]}[Si](CC)(CC)O[Si](CC)(CC)O,RU x2 in EG,1,1
+Extras,P1,"{[][<][Si](CC)(CC)O[Si](CC)(CC)O[>],!*[]}",exact concatenation cycle,0,1
+Extras,Q1,{[][<][Si](c1ccccc1)(C)O[>][]},ring on the sidechain,1,"13, 2"
+Extras,R1,{[][>][Si](c1ccccc1)(C)O[<][]},change descriptors,1,2
+Extras,S1,{[][<][Si](C)(c5ccccc5)O[>][]},change in SMARTS,1,2
+Extras,T1,{[][<][Si](C)(C1CCCCC1)O[>][]},aliphatic ring,0,2
+Extras,U1,{[][<]O[Si](c1ccccc1)(C)[>][]},inversion,1,2
+Extras,V1,"{[][<][Si](c1ccccc1)(C)[<2],[>2]O[>][]}",RU split,1,2
+Extras,W1,"{[][<][Si](c1ccccc1)(C)[<2],[>2]O[>],[>2]O[>][]}",split + duplication,1,2
+Extras,X1,{[][<]O[Si]([<2])(C)[>];[>2]c1ccccc1[]},RU written as EG,1,2
+Extras,Y1,{[][<][Si](c1ccccc1)(C)O[>][<]}[Si](c1ccccc1)(C)O,RU in EG,1,2
+Extras,Z1,[Si](c1ccccc1)(C)O{[>][<][Si](c1ccccc1)(C)O[>][<]}[Si](c1ccccc1)(C)O,RU x2 in EG,1,2
+Extras,AA1,{[][<][Si](c1ccccc1)(C)O[Si](c1ccccc1)(C)O[>][]},joined x2,1,2
+Extras,AB1,"{[][<][Si](c1ccccc1)(C)O[Si](c1ccccc1)(C)O[>],!*[]}",joined x2 with !*,0,2
+Extras,AC1,{[][<][Si](c1ccccc1)(C)O[Si](c1ccccc1)(C)O[Si](c1ccccc1)(C)O[>][]},joined x3,1,2
+Extras,AD1,{[][<]CCCCO[>][]},"ring opening, hits to RU in macrocycle",2,"15, 3"
+Extras,AE1,{[][>]CCCCO[<][]},change descriptors,2,3
+Extras,AF1,{[][>]COCCC[<][]},frame shift,2,3
+Extras,AG1,{[][>]COCCCCOCCC[<][]},joined x2,2,3
+Extras,AH1,"{[][<]C[<2],[>2]CC[>3],[<3]CO[>][]}",RU split,2,3
+Extras,AI1,"{[][<]C[<2],[>2]CC[>3],[<3]CO[>],[>2]CC[>3][]}",split + duplication,2,3
+Extras,AJ1,"{[][>2]CC[>3],[<3]CO[>],[<]C[<2][]}",RU split + change in order,2,3
+Extras,AK1,{[][>]CCCCO[<][>]}CCCCO,RU in EG,2,3
+Extras,AL1,{[][<]CCCCO[>];!*[]},"no EG, does not match to macrocycle",1,3
+Extras,AM1,{[][$]CCCCO[$][]},[$] to RO polymer,0,3
+Extras,AN1,{[][<]CCC[Si](C)(C)[>][]},silicon on the backbone,2,"27,4 "
+Extras,AO1,{[][<]CCC[Si][>][]},"backbone, more matches since pendant groups not defined",6,4
+Extras,AP1,{[][<]CCC[Si](C)(C)CCC[Si](C)(C)[>][]},joined x2,2,4
+Extras,AQ1,{[]C([<])CC[Si](C)([>])C[]},descriptors not on ends of RU,2,4
+Extras,AR1,{[][<]C[Si](C)(C)CC[>][]},frame shift,2,4
+Extras,AS1,{[][>]C[Si](C)(C)CC[<][]},change to descriptors,2,4
+Extras,AT1,"{[][<]C[<2],[>2][Si](C)(C)[<3],[>3]C[<4],[>4]C[>][]}",RU split,2,4
+Extras,AU1,{[][<]CCC[Si]([CH3])([CH3])[>][]},pendant group restrictions,1,4
+Extras,AV1,{[][<]C[Si](C)(C)CC[>];!*[]},no EG,1,4
+Extras,AW1,{[][$]CCC[Si]([CH3])([CH3])[$][]},adding [$] descriptors,0,4
+Extras,AX1,"{[][<]OCCCCO[<],[>]C(=O)CCCCC(=O)[>][]}",AA-BB copolymer,1,"31, 5"
+Extras,AY1,"{[][>]C(=O)CCCCC(=O)[>],[<]OCCCCO[<][]}",change the order,1,5
+Extras,AZ1,{[][<]OCCCCOC(=O)CCCCC(=O)[>][]},AB concatenation,1,5
+Extras,BA1,{[][<]COC(=O)CCCCC(=O)OCCC[>][]},AB concatenation + frame shift,1,5
+Extras,BB1,"{[][<]CCCC[<],[>]OC(=O)CCCCC(=O)O[>][]}",symmetric frame shift,1,5
+Extras,BC1,"{[][<]CC[<],[>]COC(=O)CCCCC(=O)OC[>][]}",symmetric frame shift,1,5
+Extras,BD1,"{[][>]COC(=O)CCCCC(=O)OC[>],[<]CC[<][]}",change the RU order,1,5
+Extras,BE1,"{[][<]CC[<],[<]CC[<],[>]COC(=O)CCCCC(=O)OC[>][]}",duplication,1,5
+Extras,BF1,"{[][>]COC(=O)CCCCC(=O)OC[>],[<]CCC[<][]}",add extra carbon,0,5
+Extras,BG1,{[][$]CC(O)[$][]},vinyl alcohol backbone,18,"34, 6"
+Extras,BH1,{[][<]CC(O)[>][]},HT vinyl alcohol ,18,6
+Extras,BI1,{[][<]C(O)C[>][]},inversion,18,6
+Extras,BJ1,{[][<]CC(O)C(O)C[>][]},"HHTT vinyl alcohol, extra match",19,6
+Extras,BK1,{[][$]CC(O)C(O)C[$][]},changing [<][>] to [$],19,6
+Extras,BL1,{[][$]CC(OC)[$][]},pendant group more specific,17,6
+Extras,BM1,{[][$]CC(OCCCC[CH3])[$][]},specific vinyl alcohol,1,6
+Extras,BN1,{[][$2]CC(OCCCC[CH3])[$2][]},changing the bonding descriptors,1,6
+Extras,BO1,{[][$2]C(OCCCC[CH3])C[$2][]},inversion,1,6
+Extras,BP1,"{[][$]C[<2],[>2]C(OCCCC[CH3])[$][]}",split,1,6
+Extras,BQ1,"{[][$]CC(OC1CC)C(O1)C[$],[$]CC(OC1CC)CC(O1)[$][]}",specific vinyl alcohol,1,6
+Extras,BR1,{[][<]OCCCCCC(=O)[>][]}, AB polymer backbone,10,"41, 7"
+Extras,BS1,{[][<]C(=O)CCCCCO[>][]},inversion,10,7
+Extras,BT1,{[][<]CCCOC(=O)CC[>][]},frame shift,10,7
+Extras,BU1,{[][>]OCCCCCC(=O)[<][]},changing the bonding descriptors,10,7
+Extras,BV1,"{[][>]OCC[<3],[>3]CCCC(=O)[<][]}",RU split,10,7
+Extras,BW1,"{[][>3]CCCC(=O)[<],[>]OCC[<3][]}",change the RU order,10,7
+Extras,BX1,{[][<]O[CH2][CH2][CH2][CH2][CH2]C(=O)[>][]},restrict pendant groups,8,7
+Extras,BY1,"{[][<]O[CH2][CH2][CH2][CH2][CH2]C(=O)[>],!*[]}",no matches to copolymers,7,7
+Extras,BZ1,{[][<]O[CH2][CH2][CH2][CH2][CH2]C(=O)[>];!{[][]}[]},no other objects,2,7
+Extras,CA1,{[][<]O[CH2][CH2][CH2][CH2][CH2]C(=O)[>][]}!{[][]},no other objects,2,7
+Extras,CB1,{[][<]O[CH2][CH2][CH2][CH2][CH2]C(=O)[>];!*[]},no other endgroups,1,7
+Extras,CC1,{[][$]CC(C)(C(=O)OCCCCCCCCCCCC)[$][]},chain growth polyacrylate,1,"46, 8"
+Extras,CD1,{[][<]CC(C)(C(=O)OCCCCCCCCCCCC)[>][]},HT polyacrylate,1,8
+Extras,CE1,{[]CC(C)(C(=O)OCCCCCCCCCCCC)[]},"localization search, not a backbone search so extra matches",2,8
+Extras,CF1,{[][$]CC(C(OCCCCCCCCCCCC)=O)(C)[$][]},change to SMARTS,1,8
+Extras,CG1,{[][$2]CC(C)(C(=O)OCCCCCCCCCCCC)[$2][]},changing descriptors,1,8
+Extras,CH1,"{[][$2]C[<3],[>3]C(C)(C(=O)OCCCCCCCCCCCC)[$2][]}",RU split,1,8
+Extras,CI1,{[][<]C(C(F)(F)F)OC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)OC(F)(C(F)(F)F)c1nc(nc(C)n1)[>][]},flourinated polymer,1,"76, 9"
+Extras,CJ1,{[][>]C(C(F)(F)F)OC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)OC(F)(C(F)(F)F)c5nc(nc(C)n5)[<][]},change descriptors and SMARTS,1,9
+Extras,CK1,{[][<]COCCCCCOCc1nc(nc(C)n1)[>][]},backbone search,1,9
+Extras,CL1,{[][<]CCCOCc1nc(nc(C)n1)COCC[>][]},frame shift,1,9
+Extras,CM1,"{[][<]C[<2],[>2]C[<3],[>3]C[<4],[>4]OCc1nc(nc(C)n1)COCC[>][]}",RU split,1,9
+Extras,CN1,{[][<][Si](c1ccccc1)(c2ccccc2)c3cccc(c3)O[>][]},ring along backbone,1,"141, 10"
+Extras,CO1,{[]c1ccccc1[Si]([<])(c2ccccc2)c5cccc(c5)O[>][]},change in SMARTS,1,10
+Extras,CP1,{[][<]O[Si](c1ccccc1)(c2ccccc2)c3cccc(c3)[>][]},frame shift,1,10
+Extras,CQ1,{[][<][Si](c1ccccc1)(c2ccccc2)c3cccc(c3)O[Si](c1ccccc1)(c2ccccc2)c3cccc(c3)O[>][]},concatenation,1,10
+Extras,CR1,"{[][<]CC[<],[>]N1C(=O)c2c(C1=O)ccc(c2)Oc3ccc(cc3)Oc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[>][]}",AA-BB with ring along backbone,1,"221, 11"
+Extras,CS1,{[][<]CCN1C(=O)c2c(C1=O)ccc(c2)Oc3ccc(cc3)Oc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)[>][]},AB concatenation,1,11
+Extras,CT1,{[][<]Oc3ccc(cc3)Oc4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)CCN1C(=O)c2c(C1=O)ccc(c2)[>][]},AB concatenation + frame shift,1,11
+Extras,CU1,"{[][<]c5ccc6C(=O)N(C(=O)c6c5)CCN1C(=O)c2c(C1=O)ccc(c2)[<],[>]Oc3ccc(cc3)Oc4ccc(cc4)O[>][]}",symmetric frame shift with entire fused rings,1,11
+Extras,CV1,"{[][<]Oc5ccc6C(=O)N(C(=O)c6c5)CCN1C(=O)c2c(C1=O)ccc(c2)O[<],[>]c3ccc(cc3)Oc4ccc(cc4)[>][]}",symmetric frame shift with oxygens,1,11
+Extras,CW1,"{[][<]c4ccc(cc4)Oc5ccc6C(=O)N(C(=O)c6c5)CCN1C(=O)c2c(C1=O)ccc(c2)Oc3ccc(cc3)[<],[>]O[>][]}",symmetric frame shift with benzene rings,1,11
+Extras,CX1,CC(C)(C){[$][$]CC(C)(C)[$][$]}CC(C)CSCCN{[<][>]C(=O)C(CCC(=O)OCc1ccccc1)N[<][>]},BCP with speciified initiator and linker,1,"335, 12"
+Extras,CY1,{[][$]CC(C)(C)[$][$]}?*{[<][>]C(=O)C(CCC(=O)OCc1ccccc1)N[<][]},"wildcard initiator, wildcard linker",1,12
+Extras,CZ1,{[][>]C(=O)C(CCC(=O)OCc1ccccc1)N[<][<]}?*{[$][$]CC(C)(C)[$][$]}C(C)(C)C,AB to BA,1,12
+Extras,DA1,CC(C)(C){[$][$]CC(C)(C)[$][$]}CC(C)(C)CC(C)CSCCN{[<][>]C(=O)C(CCC(=O)OCc1ccccc1)N[<][]},RU in linker,1,12
+Extras,DB1,"CC(C)(C){[<][>]CC(C)(C)[<],[>]CC(C)CSCCN[<2],[>2]C(=O)C(CCC(=O)OCc1ccccc1)N[<2][]}",single object with orthogonal descriptors,1,12
+Extras,DC1,CC(C)(C){[$][$]CC(C)(C)[$][$]}?*{[<][>]C(=O)C(CCC(=O)OCc1ccccc1)N[<][]},"speciified initiator, wildcard linker",1,12
+Extras,DD1,CC(C)(C){[$][$]CC(C)(C)[$];[$]?*{[<][>]C(=O)C(CCC(=O)OCc1ccccc1)N[<][]}[]},implicit-explicit reprsesentation,1,12
+Extras,DE1,"O{[>][<]C(=O)C(C)N[>],[<]C(=O)CN[>][<]}",step-growth copolymer with endgroup,1,"344, 13"
+Extras,DF1,"{[][<]C(=O)C(C)N[>],[<]C(=O)CN[>];[>]O[<]}",EG written implicitly,1,13
+Extras,DG1,"O{[>][<]CCN[>],[<]CCN[>][<]}",remove pendant groups,1,13
+Extras,DH1,"O{[>][<]C(=O)C(C)N[>],!*[<]}",no other units,0,13
+Extras,DI1,C=C{[>][<]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C[>][<]}{[>][<]C(C1)CCC1C=C[>][<]}C(C)(C)(C),norbornene,1,"375, 14"
+Extras,DJ1,{[][<]C(C1)CCC1C=C[>][>]}?*{[<][<]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C[>][]},AB to BA,1,14
+Extras,DK1,{[][<]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C[>][<]}?*{[>][<]C(C1)CCC1C=C[>][]},wildcard linker,1,14
+Extras,DL1,"C=C{[>][<]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)[<2],[>2]C=C[>][<]}{[>][<]C(C1)CCC1C=C[>][<]}C(C)(C)(C)",split units,1,14
+Extras,DM1,C=C{[<][>]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C[<][>]}{[>][<]C(C1)CCC1C=C[>][<]}C(C)(C)(C),flip descriptors in left object,1,14
+Extras,DN1,C=CC1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C{[>][<]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C[>][<]}{[>][<]C(C1)CCC1C=C[>][<]}C(C)(C)(C),RU in left EG,1,14
+Extras,DO1,{[][<]C1CC(C2CN(C(C)(C)C)[Sn](Cl)(Cl)N(C(C)(C)C)CC12)C=C[>];[>]C=C[<]}{[>][<]C(C1)CCC1C=C[>][<]}C(C)(C)(C),implicit-explicit representation,1,14
+Extras,DP1,C(c1ccccc1)(c1ccccc1)C{[$][$]CC(c1ncccc1)[$][$]}{[$][$]CC(c1ccncc1)[$][$]}C(C)CC,diblock with EG,1,"398, 15"
+Extras,DQ1,C(c1ccccc1)(c1ccccc1)C{[$][$]CC(c1ncccc1)[$][$]}?*{[$][$]CC(c1ccncc1)[$][$]}C(C)CC,wildcard initiator,1,15
+Extras,DR1,{[][$]CC(c1ncccc1)[$][$]}?*{[$][$]CC(c1ccncc1)[$][]},wildcard initiator and linker,2,15
+Extras,DS1,{[][$]CC(c1ccncc1)[$][$]}?*{[$][$]CC(c1ncccc1)[$][]},AB to BA,2,15
+Extras,DT1,"{[][$]CC(c1ccncc1)[$],[$]CC(c1ncccc1)[$][]}",random copolymer does not match to block,0,15
+Extras,DU1,{[][$]CC(c1ccncc1)[$][$]}{[$][$]CC(c1ccncc1)[$][]},blocks must match to different blocks,0,15
+Extras,DV1,"{[][<]NNC(=O)C(=O)NCCC[Si](C)(C){[<][>]O[Si](C)(C)[<][>]}CCCNC(=O)C(=O)NN[<],[>]C(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]}",segmented,1,"429, 16"
+Extras,DW1,"{[][<]NNC(=O)C(=O)NCCC[Si](C)(C){[<][<][Si](C)(C)O[>][>]}CCCNC(=O)C(=O)NN[<],[>]C(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]}",nested RU inverted,1,16
+Extras,DX1,{[][<]NNC(=O)C(=O)NCCC[Si](C)(C){[<][>]O[Si](C)(C)[<][>]}CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]},AA-BB to AB,1,16
+Extras,DY1,{[][<]NNC(=O)C(=O)NCCC[Si](C)(C){[<][>]O[Si](C)(C)[<][>]}O[Si](C)(C)O[Si](C)(C)CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]},nested realizations in base cycle,1,16
+Extras,DZ1,{[][<]NNC(=O)C(=O)NCCC[Si](C)(C){[<][>]O[Si](C)(C)[<][>]}CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)NNC(=O)C(=O)NCCC[Si](C)(C){[<][>]O[Si](C)(C)[<][>]}CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]},AB concatenated,1,16
+Extras,EA1,{[][<]NCCC[Si](C)(C){[<][>]O[Si](C)(C)[<][>]}CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)NNC(=O)C(=O)[>][]},AB frameshifted,1,16
+Extras,EB1,{[][<]NNC(=O)C(=O)NCCC[Si](C)(C)O[Si](C)(C)O[Si](C)(C)O[Si](C)(C)CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)[>][]},base + nested x 3 + base,1,16
+Extras,EC1,{[][<]O[Si](C)(C)O[Si](C)(C)O[Si](C)(C)CCCNC(=O)C(=O)NNC(=O)NC(CC1)CCC1CC(CC2)CCC2NC(=O)NNC(=O)C(=O)NCCC[Si](C)(C)[>][]},nested x 3 + base,1,16
+Extras,ED1,{[][$]CC(C)([#R])[$][]}.{#R=C(=O)OCC12CC(C3)CC(C1)CC3C2},complex pendant group,1,"423, 17"
+Extras,EE1,{[][$]CC(C)(C(=O)OCC12CC(C3)CC(C1)CC3C2)[$][]},no fragment,1,17
+Extras,EF1,{[]C15CC(C6)CC(C1)CC6C5[]},localization search for pendant group,1,17
+Extras,EG1,"{[][$]CC(C)(C)[$],[$]CC(c1cccc(c1)C{[$][$]CC(C)(C(=O)OC)[$][$]}Br)[$][]}",graft,1,"424, 18"
+Extras,EH1,"{[][$]CC(c1cccc(c1)C{[$][$]CC(C)(C(=O)OC)[$][$]}Br)[$],[$]CC(C)(C)[$][]}",change the RU order,1,18
+Extras,EI1,{[][$]CC(c1cccc(c1)C{[$][$]CC(C)(C(=O)OC)[$][]})CC(c1cccc(c1)C{[$][$]CC(C)(C(=O)OC)[$][]})[$][]},concatenate base cycle,1,18
+Extras,EJ1,{[][$]CC(c1cccc(c1)C{[$][$]CC(C)(C(=O)OC)[$][]})CC(c1cccc(c1)C)[$][]},concatenate + no nested object in second RU,1,18
+Extras,EK1,{[][<]?*(?*{[>][<]CC(C)(C(=O)OC)[>][]})?*[>][]},topology,2,18
+Extras,EL1,"{[][>]C(=O)Nc1ccc(C)c(c1)NC(=O)[>],[<]OCC{[>][<]OCC[>][<]}O[<],[<]OCCCO[<][]}",AA + 2 BB segmented polymer,1,"429, 19"
+Extras,EM1,"C(=O)Nc1ccc(C)c(c1)NC(=O){[>][>]C(=O)Nc1ccc(C)c(c1)NC(=O)[>],[<]OCC{[>][<]OCC[>][<]}O[<],[<]OCCCO[<][]}",termination with a RU,1,19
+Extras,EN1,"{[][>]OCCCO[>],[<]C(=O)Nc1ccc(C)c(c1)NC(=O)[<],[>]OCC{[>][<]OCC[>][<]}O[>][]}",change the descriptors,1,19
+Extras,EO1,"{[][<]OCCCO[<],[>]C(=O)Nc1ccc(C)c(c1)NC(=O)[>],[<]OCC{[>][<]OCC[>][<]}O[<][]}",change RU order,1,19
+Extras,EP1,"{[][<]OCCCO[<],[<]OCCCO[<],[>]C(=O)Nc1ccc(C)c(c1)NC(=O)[>],[<]OCC{[>][<]OCC[>][<]}O[<][]}",duplication of unit,1,19
+Extras,EQ1,"{[][<]OCCCOC(=O)Nc1ccc(C)c(c1)NC(=O)[>],[<]OCC{[>][<]OCC[>][<]}OC(=O)Nc1ccc(C)c(c1)NC(=O)[>][]}","AABB, AABB polymer",1,19
+Extras,ER1,{[][<]OCCCOC(=O)Nc1ccc(C)c(c1)NC(=O)OCC{[>][<]OCC[>][<]}OC(=O)Nc1ccc(C)c(c1)NC(=O)[>][]},AABBAABB concatenation,1,19
+Extras,ES1,{[][<]OCCCOC(=O)Nc1ccc(C)c(c1)NC(=O)OCC{[>][<]OCC[>][<]}OC(=O)Nc1ccc(C)c(c1)NC(=O)OCCCOC(=O)Nc1ccc(C)c(c1)NC(=O)OCC{[>][<]OCC[>][<]}OC(=O)Nc1ccc(C)c(c1)NC(=O)[>][]},AABBAABB joined x2,1,19
+Extras,ET1,"{[][<]OCCCOC(=O)Nc1ccc(C)c(c1)NC(=O)[>],[<]OCCOC(=O)Nc1ccc(C)c(c1)NC(=O)[>][]}",elimination of nested object,1,19
+Extras,EU1,CC([#R])([#R])([#R]).{#R=c(cc1)ccc1OC(=O)C(CO{[>][<]C(=O)C(C)O[>][]})(CO{[>][<]C(=O)C(C)O[>][]})C},funny star shaped polymer,2,"432, 20"
+Extras,EV1,CC([#R])([#R]).{#R=c(cc1)ccc1OC(=O)C(CO{[>][<]C(=O)C(C)O[>][]})(CO{[>][<]C(=O)C(C)O[>][]})C},diblock substructure,2,20
+Extras,EW1,CC([#R])([#R])([#R]).{#R=c(cc1)ccc1OC(=O)C(CO{[>][<]C(=O)C(C)O[>][<]})(CO{[>][<]C(=O)C(C)O[>][<]})C},termination with hydrogens,1,20
+Extras,EX1,CC([#R])([#R])([#R]).{#R=c(cc1)ccc1OC(=O)C(COC(=O)C(C)O{[>][<]C(=O)C(C)O[>][]})(COC(=O)C(C)O{[>][<]C(=O)C(C)O[>][]})C},RU in core,2,20
+Extras,EY1,CC([#R])([#R])([#R]).{#R=c(cc1)ccc1OC(=O)C(COC(=O)C(C)O{[>][<]C(=O)C(C)O[>][<]})(COC(=O)C(C)O{[>][<]C(=O)C(C)O[>][<]})C},termination with hydrogens,1,20
+Extras,EZ1,O1C(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)C1,macrocycle with ring in EG,1,"456, 21"
+Extras,FA1,O1C(=O)C(C)(C){[<][>]CC[<][>]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)C1,remove pendant group from RU,1,21
+Extras,FB1,O1C(=O)C(C)(C){[<][>]CCCC[<][>]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)C1,concatenate RU,1,21
+Extras,FC1,O1C(=O)C(C)(C){[<][>]CC(c1ccccc1)[<][>]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)C1,convert RU to HT,1,21
+Extras,FD1,O4C(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}SCC(C)C(=O)OCC(O)CN3N=NC(=C3)C4,change ring ID on sidechain and macrocycle ID,1,21
+Extras,FE1,O1C(=O)C(C)(C){[$][$]CC(c1ccccc1)C(c1ccccc1)C[$][$]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)C1,HHTT polystyrene in macrocycle,1,21
+Extras,FF1,C1(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)CO1,frame shift EG without frame shifting RU,1,21
+Extras,FG1,C1(C)(C){[$][$]CC(c1ccccc1)[$][$]}SCC(C)C(=O)OCC(O)CN2N=NC(=C2)COC(=O)1,frame shift EG again,1,21
+Extras,FH1,C(C)(C)SCC(C)C(=O)OCC(O)CN2N=NC(=C2)COC(=O),remove object,1,21
+Extras,FI1,{[][<]C(C)(C)SCC(C)C(=O)OCC(O)CN2N=NC(=C2)COC(=O)[>][]},RU should not match to EG,0,21
+Extras,FJ1,O1C(=O)c(cc2)ccc2c(cc3)ccc3C(=O)OCCCCN(c4ccccc4)CCCC{[<][>]OCCCC[<][>]}N(c5ccccc5)CCCC1,macrocycle,1,"460, 22"
+Extras,FK1,O1C(=O)c(cc2)ccc2c(cc3)ccc3C(=O)OCCCCN(c4ccccc4)CCCCOCCCC{[<][>]OCCCC[<][>]}N(c5ccccc5)CCCC1,RU in EG,1,22
+Extras,FL1,O1C(=O)c(cc2)ccc2c(cc3)ccc3C(=O)OCCCCN(c4ccccc4)CCCC{[<][>]OCCCCOCCCC[<][>]}N(c5ccccc5)CCCC1,concatenate RU,1,22
+Extras,FM1,O6C(=O)c(cc2)ccc2c(cc3)ccc3C(=O)OCCCCN(c4ccccc4)CCCC{[<][>]OCCCC[<][>]}N(c5ccccc5)CCCC6,change macrocycle ring id,1,22
+Extras,FN1,C1(=O)c(cc2)ccc2c(cc3)ccc3C(=O)OCCCCNCCCC{[<][>]OCCCC[<][>]}NCCCCO1,frameshift EG without framshifting RU,1,22
+Extras,FO1,O1C(=O)c(cc2)ccc2c(cc3)ccc3C(=O)OCCCCNCCCC{[<][>]OCCCC[<][>]}NCCCC1,frameshift EG without frameshifting RU,1,22
+Extras,FP1,{[][<]OCC(C)(C(=O)OCCOC)COC(=O)[>][<]}OCCCCCCOc(cc1)ccc1C(=O)Oc(cc1(C))ccc1OC(=O)c(cc1)ccc1OCCCCCCO{[>][<]C(=O)OCC(C)(C(=O)OCCOC)CO[>][]},multiblock aromatic/aliphatic condensation polymers,1,"488, 23"
+Extras,FQ1,"{[][<]OCC(C)(C(=O)OCCOC)COC(=O)[>],[<]OCCCCCCOc(cc1)ccc1C(=O)Oc(cc1(C))ccc1OC(=O)c(cc1)ccc1OCCCCCCO[>2],[<2]C(=O)OCC(C)(C(=O)OCCOC)CO[>2][]}",orthogonal descriptors,1,23
+Extras,FR1,"{[][<]OCC(C)(C(=O)OCCOC)COC(=O)[>],[<2]C(=O)OCC(C)(C(=O)OCCOC)CO[>2],[<]OCCCCCCOc(cc1)ccc1C(=O)Oc(cc1(C))ccc1OC(=O)c(cc1)ccc1OCCCCCCO[>2][]}",orthogonal descriptors RU rearranged,1,23
+Extras,FS1,{[][<]OCCCOC(=O)[>][<]}OCCCCCCOc(cc1)ccc1C(=O)Oc(cc1(C))ccc1OC(=O)c(cc1)ccc1OCCCCCCO{[>][<]C(=O)OCCCO[>][]},backbone search,1,23
+Extras,FT1,{[][<]OCC(C)(C(=O)OCCOC)COC(=O)[>][<]}?*{[>][<]C(=O)OCC(C)(C(=O)OCCOC)CO[>][]},wildcard linker,1,23
+Extras,FU1,{[][<]OCCCOC(=O)[>][<]}?*{[>][<]C(=O)OCCCO[>][]},backbone with wildcard linker,1,23
+Extras,FV1,{[][<]C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1[>][]},optically inactive Pt-containing polymer,1,24
+Extras,FW1,{[][<]C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1[>][<]}C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1,RU in EG,1,24
+Extras,FX1,"{[][<]C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#C[<],[>]c(cc(OCCCCCCC)c1)cc1[>][]}",identify symmetry to convert to AA-BB,1,24
+Extras,FY1,"{[][>]c(cc(OCCCCCCC)c1)cc1[>],[<]C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#C[<][]}",change RU order in AA-BB,1,24
+Extras,FZ1,{[][>]C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1[<][]},change in bonding descriptors,1,24
+Extras,GA1,{[][<]c(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1C#C[>][]},RU frame shift,1,24
+Extras,GB1,"{[][<]C#C[<2],[>2]c(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1[>][]}",RU split,1,24
+Extras,GC1,{[][<]C#Cc(cc1)ccc1C#C[Pt]C#Cc(cc1)ccc1C#Cc(ccc1)cc1[>][]},substructure search,1,24
+Extras,GD1,{[][<]C#Cc(cc1)ccc1C#C[Pt]C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1C#Cc(cc1)ccc1C#C[Pt]C#Cc(cc1)ccc1C#Cc(cc(OCCCCCCC)c1)cc1[>][]},RU concatenation,1,24
+Extras,GE1,{[][<]C#Cc(cc1)ccc1C#C[Pt](P)(P)C#Cc(cc1)ccc1C#Cc(cc([OH])c1)cc1[>][]},premature termination of pendant group,0,24
+Extras,GF1,{[][<]c(cc1(CCCCCC))sc1c(cc1(CCCCCC))sc1[>][]},conjugated polymer poly(3-hexylthiophene),1,25
+Extras,GG1,{[][<]c(cc1(CCCCCC))sc1?*[>][]},searching functional group on backbone,1,25
+Extras,GH1,{[][<]c(cc1(CCCCCC))sc1c(cc3(CCCCCC))sc3[>][]},change ring id,1,25
+Extras,GI1,{[][$]c(cc1)sc1c(cc1)sc1[$][]},symmetric backbone,1,25
+Extras,GJ1,"{[][<]c(cc1(CCCCCC))sc1[<],[>]c(cc1(CCCCCC))sc1[>][]}",conversion to AA-BB,0,25
+Extras,GK1,{[][<]c(cc1(CCCCCC))sc1c(cc1(CCCCCC))sc1c(cc1(CCCCCC))sc1c(cc1(CCCCCC))sc1[>][]},RU joined x2,1,25
+Extras,GL1,"{[][<]c(cc1)sc1[<],[>]c(cc1)sc1[>][]}",AA-BB backbone search,1,25
+Extras,GM1,"{[][<]c(cc1)sc1[<],[>]c(cc1)sc1[>],[>]c(cc1)sc1[>][]}",BB duplication,1,25
+Extras,GN1,"{[][<]c(cc1)sc1[<],[<]c(cc1)sc1[<],[>]c(cc1)sc1[>],[>]c(cc1)sc1[>][]}",double duplication,1,25
+Extras,GO1,{[>][<]c(cc1(CCCCCC))sc1c(cc1(CCCCCC))sc1[>][<]},hydrogen termination,0,25
+Extras,GP1,{[>][<]c(cc1(CCCCCC))sc1c(cc1([CH3]))sc1[>][<]},pendant group termination,0,25
+Extras,GQ1,"OC(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ccccc1)[$],[$]CC(C(=O)O)[$][$]}ON(C(C)(C)(C))C(C(C)(C)(C))P(=O)(OCC)(OCC)",amphiphilic block copolymer,1,26
+Extras,GR1,"OC(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ccccc1)[$],[$]CC(C(=O)O)[$];[$]ON(C(C)(C)(C))C(C(C)(C)(C))P(=O)(OCC)(OCC)[]}",implicit-explicit representation,1,26
+Extras,GS1,"OC(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C(=O)O)[$],[$]CC(c1ccccc1)[$][$]}ON(C(C)(C)(C))C(C(C)(C)(C))P(=O)(OCC)(OCC)",change the order of RU,1,26
+Extras,GT1,"OC(=O)C(C)(C){[$][$]CC(C(=O)O)[$],[$]CC(c1ccccc1)[$][$]}{[$][$]CC(c1ccccc1)[$][$]}ON(C(C)(C)(C))C(C(C)(C)(C))P(=O)(OCC)(OCC)",flip the blocks,0,26
+Extras,GU1,"OC(=O)C(C)(C){[$][$]CC(c1ccccc1)[$][$]}{[$][$]CC(C(=O)O)[$],[$]CC(c1ccccc1)[$],!*[$]}ON(C(C)(C)(C))C(C(C)(C)(C))P(=O)(OCC)(OCC)",no other RU in second object,1,26
+Extras,GV1,"OC(=O)C(C)(C){[>][<]CC(c1ccccc1)[>][<]}{[<][>]CC(C(=O)O)[<],[>]CC(c1ccccc1)[<][>]}ON(C(C)(C)(C))C(C(C)(C)(C))P(=O)(OCC)(OCC)",changing RU to HT,1,26
