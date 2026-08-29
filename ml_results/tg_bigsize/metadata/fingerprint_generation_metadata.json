@@ -1,0 +1,44 @@
+{
+  "bigfp_definition": "concatenate(p-ECFP[2048], p-TFP[40])",
+  "bigsmiles_preflight_seconds": 53.45120906829834,
+  "elapsed_seconds": 1342.5557248592377,
+  "excluded_explicit_deuterium": 13,
+  "excluded_legacy_sample_indices": [
+    9,
+    817,
+    818,
+    819,
+    820,
+    821,
+    822,
+    1396,
+    1628,
+    1698,
+    2382,
+    4118,
+    4404
+  ],
+  "matrix_sha256": {
+    "fingerprint_bigfp.npy": "dd02067131fbc8e8a713670c52c93218722dae35e8b9896c8d6bda4cd9b70e18",
+    "fingerprint_morgan.npy": "442b476ce53f5055fa91e48630c6ab286912b042965a931effb38b353ab166bf",
+    "fingerprint_pecfp.npy": "b775545186ee04c8f73a76f823c702d8b303ffb4cf65e81a8ebc43c61f995b45",
+    "fingerprint_ptfp.npy": "1e00909bcf31db5b72b30c94f8f18f75c8f0dc9bda68fabf4c974cde557b98b3"
+  },
+  "morgan_input": "canonical p-SMILES",
+  "pecfp_implementation": "polymersearch-2025/polymer_ecfp.py::ECFP",
+  "pecfp_input": "BigSMILES",
+  "ptfp_implementation": "polymersearch-2025/polymer_topfp.py::bigsmiles_topology_vector",
+  "ptfp_input": "BigSMILES",
+  "ptfp_nonconstant_dimensions_zero_based": [
+    19,
+    20
+  ],
+  "ptfp_unique_vectors": 4,
+  "sample_count": 7157,
+  "source_artifacts": "PolyInfo large-Tg source set containing 7170 eligible linear homopolymers",
+  "source_cleaned_tg_sha256": "0ca972531f691d1520db5fe5ad51b3444097f6a87a548f4d1d0786df1c7046ae",
+  "source_sample_count": 7170,
+  "split_created_after_exclusion": true,
+  "split_seed": 42,
+  "status": "final"
+}

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Run one large-PolyInfo Tg exact-GPR fold or summarize all five folds.
+"""Run one corrected large-PolyInfo Tg exact-GPR fold or summarize all folds.
 
 This is the large-dataset counterpart of ThermalProcess/
 final_prediction_tg_five_fold.py. It keeps the original GPR kernel, alpha,
-optimizer restarts, and random seed. The only data-level changes are loading the
-7,170-sample fingerprint matrices and the same five folders already used for
-the large-dataset SVR and Random Forest models.
+optimizer restarts, and random seed. It loads the corrected 7,157-sample
+fingerprints after excluding explicit [2H], and uses exactly the same five
+folders as the corrected large-dataset SVR and Random Forest models.
 """
 
 from __future__ import annotations
@@ -25,9 +25,8 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-DEFAULT_DATA_DIR = ROOT / "data"
-DEFAULT_OUTPUT_DIR = ROOT / "results" / "gpr"
+DEFAULT_DATA_DIR = HERE / "data"
+DEFAULT_OUTPUT_DIR = HERE / "results"
 FINGERPRINTS = ("morgan", "pecfp", "bigfp")
 FINGERPRINT_FILES = {
     "morgan": "fingerprint_morgan.npy",
@@ -35,6 +34,8 @@ FINGERPRINT_FILES = {
     "bigfp": "fingerprint_bigfp.npy",
 }
 EXPECTED_DIMENSIONS = {"morgan": 2048, "pecfp": 2048, "bigfp": 2088}
+EXPECTED_SAMPLE_COUNT = 7157
+EXPECTED_FOLD_SIZES = [1432, 1432, 1431, 1431, 1431]
 FIXED_ALPHA = {"morgan": 500.0, "pecfp": 300.0, "bigfp": 300.0}
 N_RESTARTS = 20
 RANDOM_STATE = 42
@@ -86,6 +87,7 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
         "cleaned_tg.csv",
         "split_indices.npz",
         "split_assignments.csv",
+        "fingerprint_ptfp.npy",
         *FINGERPRINT_FILES.values(),
     ]
     missing = [name for name in required if not (data_dir / name).exists()]
@@ -94,17 +96,51 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
 
     cleaned = pd.read_csv(data_dir / "cleaned_tg.csv")
     assignments = pd.read_csv(data_dir / "split_assignments.csv")
-    if len(cleaned) != 7170 or len(assignments) != 7170:
-        raise ValueError("Expected exactly 7,170 samples in cleaned data and assignments")
+    if len(cleaned) != EXPECTED_SAMPLE_COUNT or len(assignments) != EXPECTED_SAMPLE_COUNT:
+        raise ValueError(
+            f"Expected exactly {EXPECTED_SAMPLE_COUNT:,} samples in cleaned data "
+            "and assignments"
+        )
+    required_columns = {
+        "sample_index",
+        "canonical_psmiles",
+        "bigsmiles",
+        "tg",
+        "folder",
+    }
+    if not required_columns.issubset(cleaned.columns):
+        raise ValueError(
+            "cleaned_tg.csv lacks columns: "
+            + ", ".join(sorted(required_columns - set(cleaned.columns)))
+        )
+    if not np.array_equal(
+        cleaned["sample_index"].to_numpy(dtype=int),
+        np.arange(EXPECTED_SAMPLE_COUNT),
+    ):
+        raise ValueError("cleaned_tg.csv sample_index is not the contiguous matrix row index")
     if cleaned["tg"].isna().any():
         raise ValueError("Tg target contains missing values")
+    if cleaned["canonical_psmiles"].str.contains(r"\[2H\]", regex=True).any():
+        raise ValueError("Explicit [2H] remains in corrected canonical p-SMILES")
+    if not cleaned["canonical_psmiles"].map(lambda text: str(text).count("*") == 2).all():
+        raise ValueError("Corrected canonical p-SMILES must contain exactly two bare * endpoints")
+    if not cleaned["bigsmiles"].astype(str).str.startswith("{").all():
+        raise ValueError("Corrected BigSMILES rows must begin with a stochastic object")
 
     folds = load_folds(data_dir)
     combined = np.concatenate(folds)
-    if [len(fold) for fold in folds] != [1434] * 5:
-        raise ValueError("Expected the same five 1,434-sample folds used by SVR/RF")
-    if len(np.unique(combined)) != 7170 or set(combined.tolist()) != set(range(7170)):
-        raise ValueError("Five-fold indices overlap or do not cover all 7,170 samples")
+    if [len(fold) for fold in folds] != EXPECTED_FOLD_SIZES:
+        raise ValueError(
+            "Expected corrected SVR/RF fold sizes "
+            f"{EXPECTED_FOLD_SIZES}, found {[len(fold) for fold in folds]}"
+        )
+    if (
+        len(np.unique(combined)) != EXPECTED_SAMPLE_COUNT
+        or set(combined.tolist()) != set(range(EXPECTED_SAMPLE_COUNT))
+    ):
+        raise ValueError(
+            f"Five-fold indices overlap or do not cover all {EXPECTED_SAMPLE_COUNT:,} samples"
+        )
     for fold_number, indices in enumerate(folds, start=1):
         assigned = assignments.iloc[indices]["folder"].to_numpy(dtype=int)
         if not np.all(assigned == fold_number):
@@ -114,7 +150,7 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
     dtypes: dict[str, str] = {}
     for fingerprint, filename in FINGERPRINT_FILES.items():
         matrix = np.load(data_dir / filename, mmap_mode="r")
-        expected_shape = (7170, EXPECTED_DIMENSIONS[fingerprint])
+        expected_shape = (EXPECTED_SAMPLE_COUNT, EXPECTED_DIMENSIONS[fingerprint])
         if matrix.shape != expected_shape:
             raise ValueError(f"{filename}: expected {expected_shape}, found {matrix.shape}")
         if not np.isfinite(matrix).all():
@@ -122,15 +158,39 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
         shapes[fingerprint] = [int(value) for value in matrix.shape]
         dtypes[fingerprint] = str(matrix.dtype)
 
+    ptfp = np.load(data_dir / "fingerprint_ptfp.npy", mmap_mode="r")
+    if ptfp.shape != (EXPECTED_SAMPLE_COUNT, 40):
+        raise ValueError(f"fingerprint_ptfp.npy: expected ({EXPECTED_SAMPLE_COUNT}, 40), found {ptfp.shape}")
+    if not np.array_equal(np.unique(ptfp), np.array([0, 1], dtype=ptfp.dtype)):
+        raise ValueError("p-TFP must be binary and contain both 0 and 1")
+    pecfp = np.load(data_dir / FINGERPRINT_FILES["pecfp"], mmap_mode="r")
+    bigfp = np.load(data_dir / FINGERPRINT_FILES["bigfp"], mmap_mode="r")
+    if not np.array_equal(np.asarray(bigfp[:, :2048]), np.asarray(pecfp)):
+        raise ValueError("BigFingerprint first 2,048 dimensions do not equal p-ECFP")
+    if not np.array_equal(np.asarray(bigfp[:, 2048:]), np.asarray(ptfp)):
+        raise ValueError("BigFingerprint final 40 dimensions do not equal p-TFP")
+    nonconstant_ptfp = (
+        np.flatnonzero((ptfp.sum(axis=0) > 0) & (ptfp.sum(axis=0) < len(ptfp))) + 1
+    ).tolist()
+    if nonconstant_ptfp != [20, 21]:
+        raise ValueError(
+            f"Expected nonconstant p-TFP dimensions [20, 21], found {nonconstant_ptfp}"
+        )
+
     return {
-        "sample_count": 7170,
+        "sample_count": EXPECTED_SAMPLE_COUNT,
         "fold_sizes": [int(len(fold)) for fold in folds],
-        "train_samples_per_job": 5736,
-        "test_samples_per_job": 1434,
+        "train_samples_by_test_fold": [
+            int(EXPECTED_SAMPLE_COUNT - len(fold)) for fold in folds
+        ],
+        "test_samples_by_fold": [int(len(fold)) for fold in folds],
         "fingerprint_shapes": shapes,
         "fingerprint_dtypes": dtypes,
+        "ptfp_nonconstant_dimensions_1_based": nonconstant_ptfp,
+        "bigfp_composition_verified": True,
+        "explicit_deuterium_excluded": True,
         "input_preprocessing": "none",
-        "split_source": "the same split_indices.npz used by large-Tg SVR/RF",
+        "split_source": "the same corrected split_indices.npz used by large-Tg SVR/RF",
     }
 
 
@@ -229,6 +289,7 @@ def run_fold(
                 "sample_index": test_indices,
                 "folder": selected["folder"].to_numpy(dtype=int),
                 "canonical_psmiles": selected["canonical_psmiles"].to_numpy(),
+                "bigsmiles": selected["bigsmiles"].to_numpy(),
                 "tg_actual": y[test_indices],
                 "tg_predicted": prediction,
             }
@@ -264,7 +325,9 @@ def summarize(data_dir: Path, output_dir: Path) -> pd.DataFrame:
             predictions = pd.read_csv(predictions_path)
             expected_indices = set(folds[fold_number - 1].tolist())
             actual_indices = set(predictions["sample_index"].astype(int).tolist())
-            if actual_indices != expected_indices or len(predictions) != 1434:
+            if actual_indices != expected_indices or len(predictions) != len(
+                folds[fold_number - 1]
+            ):
                 raise RuntimeError(f"Prediction rows are incomplete for fold{fold_number} {fingerprint}")
             if predictions[["tg_actual", "tg_predicted"]].isna().any().any():
                 raise RuntimeError(f"Missing prediction value for fold{fold_number} {fingerprint}")
@@ -278,8 +341,10 @@ def summarize(data_dir: Path, output_dir: Path) -> pd.DataFrame:
             "fingerprint": fingerprint,
             "model": "gpr",
             "n_folds": 5,
-            "n_train_per_fold": 5736,
-            "n_test_per_fold": 1434,
+            "n_train_by_fold": ";".join(
+                str(EXPECTED_SAMPLE_COUNT - len(fold)) for fold in folds
+            ),
+            "n_test_by_fold": ";".join(str(len(fold)) for fold in folds),
             "input_dimensions": int(group["input_dimensions"].iloc[0]),
             "input_preprocessing": "none",
             "alpha": float(group["alpha"].iloc[0]),
@@ -304,7 +369,14 @@ def summarize(data_dir: Path, output_dir: Path) -> pd.DataFrame:
             "fixed_alpha": FIXED_ALPHA,
             "n_restarts_optimizer": N_RESTARTS,
             "random_state": RANDOM_STATE,
-            "split": "same five folders used by large-Tg SVR/RF",
+            "sample_count": EXPECTED_SAMPLE_COUNT,
+            "fold_sizes": EXPECTED_FOLD_SIZES,
+            "split": "same corrected five folders used by large-Tg SVR/RF",
+            "explicit_deuterium_excluded": True,
+            "morgan_input": "canonical p-SMILES",
+            "pecfp_input": "BigSMILES",
+            "ptfp_input": "BigSMILES",
+            "bigfp_definition": "concatenate(p-ECFP[2048], p-TFP[40])",
             "input_preprocessing": "none",
             "standard_deviation_ddof": STD_DDOF,
         },

@@ -118,7 +118,7 @@ def main() -> None:
             predictions = pd.read_csv(path)
             train = predictions[predictions["split"] == "train"]
             test = predictions[predictions["split"] == "test"]
-            if len(train) != 5736 or len(test) != 1434:
+            if len(train) != 5725 or len(test) != 1432:
                 raise ValueError(f"Unexpected Fold-1 sizes in {path}")
             destination = PLOTS / (
                 f"{FP_FILE_LABELS[fingerprint]}_Tg_prediction_{MODEL_LABELS[model]}"

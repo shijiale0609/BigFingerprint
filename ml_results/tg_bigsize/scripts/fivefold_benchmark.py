@@ -400,6 +400,39 @@ def optimize_classical(
                 flush=True,
             )
 
+    summary_rows: list[dict[str, Any]] = []
+    for combination, result in sorted(best_parameters.items()):
+        fingerprint, model_name = combination.split("__", maxsplit=1)
+        fold_scores = result["fold_scores"]
+        row: dict[str, Any] = {
+            "fingerprint": fingerprint,
+            "model": model_name,
+            "cv_folds": len(fold_scores),
+            "cv_train_samples_per_fold": fold_scores[0]["n_train"],
+            "cv_validation_samples": ";".join(
+                str(score["n_validation"]) for score in fold_scores
+            ),
+            "heldout_samples": len(test),
+            "best_parameters": json.dumps(
+                _json_safe(result["parameters"]), sort_keys=True
+            ),
+            "cv_r2_mean": result["mean_validation_r2"],
+            "cv_r2_std_ddof0": float(
+                np.std([score["r2"] for score in fold_scores], ddof=0)
+            ),
+            "cv_rmse_mean": result["mean_validation_rmse"],
+            "cv_rmse_std_ddof0": float(
+                np.std([score["rmse"] for score in fold_scores], ddof=0)
+            ),
+            "heldout_r2": result["heldout_test"]["r2"],
+            "heldout_rmse": result["heldout_test"]["rmse"],
+            "heldout_mae": result["heldout_test"]["mae"],
+        }
+        summary_rows.append(row)
+    pd.DataFrame(summary_rows).sort_values(["model", "fingerprint"]).to_csv(
+        results_dir / "classical_optimization_heldout_summary.csv", index=False
+    )
+
 
 def evaluate_classical_fixed_fivefold(
     output_dir: Path,
@@ -538,12 +571,13 @@ def evaluate_classical_fixed_fivefold(
     for (fingerprint, model_name), group in fold_frame.groupby(
         ["fingerprint", "model"], sort=True
     ):
+        group = group.sort_values("test_fold")
         row: dict[str, Any] = {
             "fingerprint": fingerprint,
             "model": model_name,
             "n_folds": int(len(group)),
-            "n_train_per_fold": int(group["n_train"].iloc[0]),
-            "n_test_per_fold": int(group["n_test"].iloc[0]),
+            "n_train_by_fold": ";".join(group["n_train"].astype(int).astype(str)),
+            "n_test_by_fold": ";".join(group["n_test"].astype(int).astype(str)),
             "std_ddof": 0,
         }
         for metric_name in ("r2", "rmse", "mae"):
@@ -565,8 +599,14 @@ def evaluate_classical_fixed_fivefold(
             "protocol": "fixed optimized parameters; each fold1-fold5 is test once; other four folds train",
             "sample_count": int(len(cleaned)),
             "n_folds": 5,
-            "n_train_per_fold": int(sum(len(fold) for fold in folds[1:])),
-            "n_test_per_fold": int(len(folds[0])),
+            "n_train_by_fold": {
+                f"fold{fold_number}": int(len(cleaned) - len(fold))
+                for fold_number, fold in enumerate(folds, start=1)
+            },
+            "n_test_by_fold": {
+                f"fold{fold_number}": int(len(fold))
+                for fold_number, fold in enumerate(folds, start=1)
+            },
             "parameter_source": str(best_path.resolve()),
             "parameters_held_fixed": True,
             "standard_deviation_ddof": 0,
@@ -642,9 +682,6 @@ def _gp_search_tasks(
     task_dir = output_dir / "results" / "search" / "exact_gp_tasks"
     task_dir.mkdir(parents=True, exist_ok=True)
     for fingerprint in fingerprints:
-        if fingerprint == "bigfp":
-            # Its p-TFP suffix is checked before reuse in optimize_exact_gp.
-            continue
         for alpha in alphas:
             for validation_folder in range(2, 6):
                 tag = f"{fingerprint}__alpha{alpha:g}__validation_fold{validation_folder}.json"
@@ -662,16 +699,6 @@ def _gp_search_tasks(
     return tasks
 
 
-def _assert_bigfp_gp_equivalence(output_dir: Path) -> None:
-    pecfp = np.load(output_dir / FINGERPRINT_FILES["pecfp"], mmap_mode="r")
-    bigfp = np.load(output_dir / FINGERPRINT_FILES["bigfp"], mmap_mode="r")
-    if not np.array_equal(pecfp, bigfp[:, : pecfp.shape[1]]):
-        raise ValueError("BigFP does not begin with the p-ECFP matrix")
-    suffix = bigfp[:, pecfp.shape[1] :]
-    if np.any(np.ptp(suffix, axis=0)):
-        raise ValueError("BigFP p-TFP is not constant; GP CV results cannot be reused")
-
-
 def _collect_gp_search(
     output_dir: Path,
     fingerprints: Iterable[str],
@@ -682,12 +709,11 @@ def _collect_gp_search(
     rows: list[dict[str, Any]] = []
     fingerprints = list(fingerprints)
     for fingerprint in fingerprints:
-        source_fingerprint = "pecfp" if fingerprint == "bigfp" else fingerprint
         for alpha in alphas:
             fold_rows = []
             for validation_folder in range(2, 6):
                 path = task_dir / (
-                    f"{source_fingerprint}__alpha{alpha:g}__validation_fold{validation_folder}.json"
+                    f"{fingerprint}__alpha{alpha:g}__validation_fold{validation_folder}.json"
                 )
                 if not path.exists():
                     raise RuntimeError(f"Missing exact-GP task result: {path}")
@@ -703,7 +729,7 @@ def _collect_gp_search(
                     "mean_validation_rmse": float(np.mean([row["rmse"] for row in fold_rows])),
                     "mean_validation_mae": float(np.mean([row["mae"] for row in fold_rows])),
                     "total_fit_seconds": float(sum(row["fit_seconds"] for row in fold_rows)),
-                    "cv_reused_from": source_fingerprint if source_fingerprint != fingerprint else None,
+                    "cv_reused_from": None,
                 }
             )
     frame = pd.DataFrame(rows)
@@ -784,8 +810,6 @@ def optimize_exact_gp(
 ) -> None:
     fingerprints = list(fingerprints)
     alphas = list(alphas)
-    if "bigfp" in fingerprints:
-        _assert_bigfp_gp_equivalence(output_dir)
 
     tasks = _gp_search_tasks(output_dir, fingerprints, alphas, n_restarts, seed)
     pending = [task for task in tasks if not Path(task["destination"]).exists()]
@@ -858,9 +882,9 @@ def run_exact_gp_array_task(
     n_restarts: int,
     seed: int,
 ) -> dict[str, Any]:
-    """Run one SCC/Slurm CV task from the 2 fingerprints x alphas x 4 folds grid."""
+    """Run one SCC/Slurm CV task from the 3 fingerprints x alphas x 4 folds grid."""
     alphas = list(alphas)
-    unique_fingerprints = ["morgan", "pecfp"]
+    unique_fingerprints = ["morgan", "pecfp", "bigfp"]
     task_count = len(unique_fingerprints) * len(alphas) * 4
     if task_id < 0 or task_id >= task_count:
         raise ValueError(f"task_id must be in [0, {task_count - 1}], got {task_id}")
@@ -903,8 +927,6 @@ def collect_exact_gp_search(
 ) -> dict[str, float]:
     """Aggregate completed SCC CV tasks and select alpha without fitting anything."""
     fingerprints = list(fingerprints)
-    if "bigfp" in fingerprints:
-        _assert_bigfp_gp_equivalence(output_dir)
     frame, best_alpha = _collect_gp_search(output_dir, fingerprints, alphas, n_restarts)
     search_dir = output_dir / "results" / "search"
     search_dir.mkdir(parents=True, exist_ok=True)

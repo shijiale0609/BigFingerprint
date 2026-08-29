@@ -1,38 +1,44 @@
 {
   "training_target": "Tg in degrees Celsius",
-  "training_protocol": "Fold 1 held out; hyperparameters selected by folds 2-5; serialized RF/SVR estimators refit on folds 2-5 (5736 samples)",
+  "training_protocol": "Fold 1 held out; hyperparameters selected using folds 2-5; serialized RF/SVR estimators refit on folds 2-5 (5725 samples)",
   "input_preprocessing": "none",
   "serialization_environment": {
-    "scikit_learn": "1.6.1"
+    "scikit_learn": "1.9.0"
   },
   "models": {
     "morgan__rf.joblib": {
       "estimator": "RandomForestRegressor",
       "input_dimensions": 2048,
+      "input_source": "canonical p-SMILES",
       "n_estimators": 300
     },
     "morgan__svr.joblib": {
       "estimator": "SVR",
-      "input_dimensions": 2048
+      "input_dimensions": 2048,
+      "input_source": "canonical p-SMILES"
     },
     "pecfp__rf.joblib": {
       "estimator": "RandomForestRegressor",
       "input_dimensions": 2048,
+      "input_source": "BigSMILES",
       "n_estimators": 300
     },
     "pecfp__svr.joblib": {
       "estimator": "SVR",
-      "input_dimensions": 2048
+      "input_dimensions": 2048,
+      "input_source": "BigSMILES"
     },
     "bigfp__rf.joblib": {
       "estimator": "RandomForestRegressor",
       "input_dimensions": 2088,
+      "input_source": "concatenated BigSMILES-derived p-ECFP and p-TFP",
       "n_estimators": 300
     },
     "bigfp__svr.joblib": {
       "estimator": "SVR",
-      "input_dimensions": 2088
+      "input_dimensions": 2088,
+      "input_source": "concatenated BigSMILES-derived p-ECFP and p-TFP"
     }
   },
-  "gpr_models": "The exact five-fold SCC GPR runs saved predictions, learned kernels, and metrics, but did not serialize fitted estimator objects."
+  "gpr_models": "The exact five-fold SCC GPR runs saved predictions, learned kernels, and metrics but did not serialize fitted estimator objects."
 }

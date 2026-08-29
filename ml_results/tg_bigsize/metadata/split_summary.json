@@ -5,23 +5,18 @@
     "fold4",
     "fold5"
   ],
-  "cv_train_samples_per_split": 4302,
-  "cv_validation_samples_per_split": 1434,
-  "final_train_samples": 5736,
+  "excluded_explicit_deuterium": 13,
   "folder_sizes": {
-    "fold1": 1434,
-    "fold2": 1434,
-    "fold3": 1434,
-    "fold4": 1434,
-    "fold5": 1434
+    "fold1": 1432,
+    "fold2": 1432,
+    "fold3": 1431,
+    "fold4": 1431,
+    "fold5": 1431
   },
   "heldout_test_folder": "fold1",
-  "heldout_test_samples": 1434,
-  "protocol": "ThermalProcess five-folder held-out-test protocol",
-  "sample_count": 7170,
+  "protocol": "exclude [2H], then ThermalProcess five-folder held-out-test protocol",
+  "sample_count": 7157,
   "seed": 42,
-  "selection_rule": "highest mean validation R2 across four CV folds",
-  "source_artifacts": "/Users/jialeshi/Projects/BigFingerprint/Tg_PolyInfo/artifacts",
-  "test_fraction": 0.2,
+  "source_sample_count": 7170,
   "test_is_excluded_from_all_hyperparameter_search": true
 }

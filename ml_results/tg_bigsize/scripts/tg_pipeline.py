@@ -13,6 +13,7 @@ import argparse
 import json
 import math
 import re
+import sys
 import time
 from pathlib import Path
 from typing import Any, Iterable
@@ -36,7 +37,13 @@ from sklearn.svm import SVR
 
 
 HERE = Path(__file__).resolve().parent
-PROJECT_ROOT = HERE.parent
+PROJECT_ROOT = HERE.parents[2]
+BIGFINGERPRINT_SCRIPT = PROJECT_ROOT / "script"
+if str(BIGFINGERPRINT_SCRIPT) not in sys.path:
+    sys.path.insert(0, str(BIGFINGERPRINT_SCRIPT))
+import search_tools as _bigfp_search_tools
+import polymer_ecfp as _bigfp_polymer_ecfp
+import polymer_topfp as _bigfp_polymer_topfp
 DEFAULT_INPUT = HERE / "tg_raw.csv"
 DEFAULT_OUTPUT = HERE / "artifacts"
 FINGERPRINT_FILES = {
@@ -101,7 +108,43 @@ def _canonicalize_linear_psmiles(smiles: str) -> tuple[str | None, str | None]:
         return None, "non_linear_connection_count"
     if any(atom.GetDegree() != 1 for atom in wildcard_atoms):
         return None, "non_terminal_connection_point"
-    canonical = Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
+    canonical_rdkit = Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
+    canonical_mol = Chem.MolFromSmiles(canonical_rdkit)
+    if canonical_mol is None:
+        return None, "canonical_rdkit_reparse_failed"
+    canonical_wildcards = sorted(
+        atom.GetIdx() for atom in canonical_mol.GetAtoms() if atom.GetAtomicNum() == 0
+    )
+    # After RDKit canonicalizes the graph, deterministically serialize it from
+    # one connection atom to the other. Keeping the second wildcard last in
+    # the atom order prevents a connection point from being emitted as a
+    # branch, and post-normalizing ``[*]`` gives one bare ``*`` convention.
+    atom_order = (
+        [canonical_wildcards[0]]
+        + [
+            atom_index
+            for atom_index in range(canonical_mol.GetNumAtoms())
+            if atom_index not in canonical_wildcards
+        ]
+        + [canonical_wildcards[1]]
+    )
+    endpoint_ordered_mol = Chem.RenumberAtoms(canonical_mol, atom_order)
+    canonical = Chem.MolToSmiles(
+        endpoint_ordered_mol,
+        canonical=False,
+        isomericSmiles=True,
+        rootedAtAtom=0,
+    ).replace("[*]", "*")
+    normalized_mol = Chem.MolFromSmiles(canonical)
+    if normalized_mol is None:
+        return None, "canonical_wildcard_normalization_failed"
+    normalized_check = Chem.MolToSmiles(
+        normalized_mol, canonical=True, isomericSmiles=True
+    )
+    if normalized_check != canonical_rdkit:
+        return None, "canonical_wildcard_normalization_changed_structure"
+    if canonical.count("*") != 2 or "[*]" in canonical:
+        return None, "canonical_wildcard_normalization_failed"
     return canonical, None
 
 
@@ -109,7 +152,9 @@ def _psmiles_to_linear_bigsmiles(psmiles: str) -> str:
     """Encode a two-connection-point p-SMILES as one linear BigSMILES object."""
     if psmiles.count("*") != 2:
         raise ValueError(f"Expected exactly two '*' tokens: {psmiles}")
-    repeat_unit = re.sub(r"\*", "[$]", psmiles)
+    if "[*]" in psmiles:
+        raise ValueError(f"p-SMILES was not normalized to bare '*' tokens: {psmiles}")
+    repeat_unit = psmiles.replace("*", "[$]")
     return "{[]" + repeat_unit + "[]}"
 
 
@@ -120,102 +165,29 @@ def _morgan_fp(mol: Chem.Mol, generator, fp_size: int) -> np.ndarray:
     return array
 
 
-def _periodic_oligomer(mol: Chem.Mol, copies: int = 7) -> tuple[Chem.Mol, list[int]]:
-    """Build a capped oligomer and return atom indices in its central repeat.
-
-    Seven copies are sufficient for every radius-2 environment centered in the
-    middle repeat, including the one-atom repeat-unit edge case.  Terminal dummy
-    atoms are retained only at the two remote chain ends; internal dummy pairs
-    are replaced by the corresponding polymerization bonds.
-    """
-    dummy_indices = sorted(atom.GetIdx() for atom in mol.GetAtoms() if atom.GetAtomicNum() == 0)
-    if len(dummy_indices) != 2:
-        raise ValueError("Periodic p-ECFP requires exactly two connection atoms")
-    if copies < 7 or copies % 2 == 0:
-        raise ValueError("copies must be an odd integer >= 7")
-
-    connections = []
-    for dummy_index in dummy_indices:
-        dummy = mol.GetAtomWithIdx(dummy_index)
-        bond = next(iter(dummy.GetBonds()))
-        connections.append((dummy.GetNeighbors()[0].GetIdx(), bond.GetBondType()))
-    if connections[0][1] != connections[1][1]:
-        raise ValueError("The two connection-point bond types do not match")
-
-    atoms_per_copy = mol.GetNumAtoms()
-    combined = mol
-    for _ in range(copies - 1):
-        combined = Chem.CombineMols(combined, mol)
-    editable = Chem.RWMol(combined)
-
-    removed_dummy_indices: list[int] = []
-    for copy_index in range(copies - 1):
-        editable.AddBond(
-            copy_index * atoms_per_copy + connections[1][0],
-            (copy_index + 1) * atoms_per_copy + connections[0][0],
-            connections[0][1],
-        )
-        removed_dummy_indices.extend(
-            [
-                copy_index * atoms_per_copy + dummy_indices[1],
-                (copy_index + 1) * atoms_per_copy + dummy_indices[0],
-            ]
-        )
-
-    removed = set(removed_dummy_indices)
-    middle_copy = copies // 2
-    central_old_indices = [
-        middle_copy * atoms_per_copy + atom_index
-        for atom_index in range(atoms_per_copy)
-        if atom_index not in dummy_indices
-    ]
-    central_new_indices = [
-        old_index - sum(removed_index < old_index for removed_index in removed)
-        for old_index in central_old_indices
-    ]
-    for dummy_index in sorted(removed_dummy_indices, reverse=True):
-        editable.RemoveAtom(dummy_index)
-
-    oligomer = editable.GetMol()
-    Chem.SanitizeMol(oligomer)
-    return oligomer, central_new_indices
-
-
-def _periodic_pecfp(mol: Chem.Mol, generator, fp_size: int) -> np.ndarray:
-    oligomer, central_atoms = _periodic_oligomer(mol, copies=7)
-    bit_vector = generator.GetFingerprint(oligomer, fromAtoms=central_atoms)
-    array = np.zeros(fp_size, dtype=np.uint8)
-    DataStructs.ConvertToNumpyArray(bit_vector, array)
-    return array
-
-
-def _linear_homopolymer_topology_fp(mol: Chem.Mol) -> np.ndarray:
-    """Return the exact 40-d p-TFP layout for one linear homopolymer object.
-
-    For ``{[][$]repeat[$][]}``, the topology-search and network portions are
-    constant: only the generic polymer bit is on.  Chirality and E/Z bits are
-    still molecule-specific and occupy the same positions as polymer_topfp.py.
-    """
-    vector = np.zeros(40, dtype=np.uint8)
-    vector[0] = 1  # generic polymer BigSMARTS
-
-    Chem.AssignStereochemistry(mol, cleanIt=True, force=True)
-    centers = Chem.FindMolChiralCenters(
-        mol, includeUnassigned=True, useLegacyImplementation=False
+def _standard_bigsmiles_fingerprints(bigsmiles: str, fp_size: int) -> tuple[np.ndarray, np.ndarray]:
+    """Generate p-ECFP and p-TFP through the repository's BigSMILES APIs."""
+    graphs = _bigfp_search_tools.generate_NetworkX_graphs(bigsmiles, is_bigsmarts=False)
+    _, individual_clusters, _ = _bigfp_search_tools.identify_cycles(graphs)
+    pecfp = _bigfp_polymer_ecfp.ECFP(
+        graphs=graphs,
+        individual_clusters=individual_clusters,
+        iteration_input=2,
+        repeat_unit_property=False,
+        backbone_property=False,
+        fp_size=fp_size,
+        print_identifiers=False,
+        print_all=False,
+        save_graph=False,
     )
-    if any(label == "R" for _, label in centers):
-        vector[17] = 1
-    if any(label == "S" for _, label in centers):
-        vector[18] = 1
-
-    for bond in mol.GetBonds():
-        if bond.GetBondType() != Chem.rdchem.BondType.DOUBLE:
-            continue
-        if bond.GetStereo() == Chem.rdchem.BondStereo.STEREOE:
-            vector[19] = 1
-        elif bond.GetStereo() == Chem.rdchem.BondStereo.STEREOZ:
-            vector[20] = 1
-    return vector
+    p_tfp = _bigfp_polymer_topfp.bigsmiles_topology_vector(bigsmiles)
+    pecfp = np.asarray(pecfp, dtype=np.uint8)
+    p_tfp = np.asarray(p_tfp, dtype=np.uint8)
+    if pecfp.shape != (fp_size,):
+        raise ValueError(f"BigSMILES p-ECFP shape {pecfp.shape}; expected {(fp_size,)}")
+    if p_tfp.shape != (40,):
+        raise ValueError(f"BigSMILES p-TFP shape {p_tfp.shape}; expected (40,)")
+    return pecfp, p_tfp
 
 
 def _stratified_limit(frame: pd.DataFrame, limit: int, seed: int, n_bins: int) -> pd.DataFrame:
@@ -341,15 +313,15 @@ def prepare_dataset(
     topology_vectors: list[np.ndarray] = []
     started = time.time()
     morgan_generator = GetMorganGenerator(radius=2, fpSize=fp_size, includeChirality=False)
-    pecfp_generator = GetMorganGenerator(radius=2, fpSize=fp_size, includeChirality=False)
     for completed, (position, row) in enumerate(grouped.iterrows(), start=1):
         mol = Chem.MolFromSmiles(row["canonical_psmiles"])
         try:
             if mol is None:
                 raise ValueError("RDKit failed to reparse canonical p-SMILES")
             morgan = _morgan_fp(mol, morgan_generator, fp_size)
-            pecfp = _periodic_pecfp(mol, pecfp_generator, fp_size)
-            topology = _linear_homopolymer_topology_fp(mol)
+            # Morgan is deliberately the p-SMILES baseline.  The polymer
+            # fingerprints must use the generated BigSMILES object.
+            pecfp, topology = _standard_bigsmiles_fingerprints(row["bigsmiles"], fp_size)
         except Exception as exc:  # record the exact failed molecule; do not misalign matrices
             excluded_records.append(
                 {
