@@ -3,8 +3,8 @@ from rdkit import Chem
 import networkx as nx
 import re
 
-from graphs import get_objects, get_repeats, desc_regex
-from search_tools import generate_NetworkX_graphs, identify_cycles, desc_regex
+from .graphs import get_objects, get_repeats, desc_regex
+from .search_tools import generate_NetworkX_graphs, identify_cycles, desc_regex
 
 def generate_filters(bigsmiles):
 

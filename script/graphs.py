@@ -1,10 +1,14 @@
 import re
 import copy
+import logging
 import rdkit
 from rdkit import Chem
 import networkx as nx
 
-from adjacency import feed_to_bonds_n
+from .adjacency import feed_to_bonds_n
+
+
+logger = logging.getLogger(__name__)
 
 desc_regex = r"\[(\$|\<|\>|\$=|\<=|\>=)\d+\]"
 ladder_desc_regex = r"\[(\$|\<|\>)\d+\[(\$|\<|\>)\d+\]\d+\]"
@@ -456,33 +460,33 @@ def build_level(atomistic, is_bigsmarts, object_list, object_orientation, was_im
             value = single_path["2"][0]
             if value == get_comp(left_terminal):
                 atomistic, terminals_attachment, l_index, r_index = insert_terminals(atomistic, terminals, neighbors, "1")
-                print( atomistic, terminals_attachment, l_index, r_index, "pass 1")
+                logger.debug("%s %s %s %s pass 1", atomistic, terminals_attachment, l_index, r_index)
             elif value == get_comp(right_terminal):
                 atomistic, terminals_attachment, l_index, r_index = insert_terminals(atomistic, terminals, neighbors, "2")
-                print( atomistic, terminals_attachment, l_index, r_index, "pass 2")
+                logger.debug("%s %s %s %s pass 2", atomistic, terminals_attachment, l_index, r_index)
             else:
-                print("first if else")
+                logger.debug("No compatible terminal in single-path case")
         elif len(single_path["2"]) > 1:
             for value in single_path["2"]:
                 if object_orientation[o] == "1":
                     if value == get_comp(left_terminal):
                         atomistic, terminals_attachment, l_index, r_index = insert_terminals(atomistic, terminals, neighbors, "1")
                         single_path["2"] = [value]
-                        print( atomistic, terminals_attachment, l_index, r_index, "pass 3")
+                        logger.debug("%s %s %s %s pass 3", atomistic, terminals_attachment, l_index, r_index)
                         break
                     else:
-                        print("second if else")
+                        logger.debug("No left-compatible terminal in multi-path case")
                 else:
                     if value == get_comp(right_terminal):
                         atomistic, terminals_attachment, l_index, r_index = insert_terminals(atomistic, terminals, neighbors, "2")
                         single_path["2"] = [value]
-                        print( atomistic, terminals_attachment, l_index, r_index, "pass 4")
+                        logger.debug("%s %s %s %s pass 4", atomistic, terminals_attachment, l_index, r_index)
                         break
                     else:
-                        print("third if else")
+                        logger.debug("No right-compatible terminal in multi-path case")
         else:
             atomistic, terminals_attachment, l_index, r_index = insert_terminals(atomistic, terminals, neighbors, object_orientation[o])
-            print( atomistic, terminals_attachment, l_index, r_index, "pass 5")
+            logger.debug("%s %s %s %s pass 5", atomistic, terminals_attachment, l_index, r_index)
         terminals_indices.append([l_index, r_index])
         
         if len(implicit_ends) > 0:

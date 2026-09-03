@@ -62,10 +62,17 @@ def orient_repeat_unit_fragment(repeat_unit_smiles, repeat_descriptor_side, inse
 
     descriptor_map = descriptor_maps[repeat_descriptor_side]
     anchor_atom_map = _find_anchor_atom_map(mol, descriptor_map)
-    fragment = _remove_dummy_descriptors(mol)
+    fragment = _keep_selected_dummy_descriptor(mol, descriptor_map)
 
-    wanted_anchor_position = "first" if insert_side == "right" else "last"
-    smiles, mapped_smiles = _oriented_smiles(fragment, anchor_atom_map, wanted_anchor_position)
+    # Keep the selected descriptor as a temporary terminal dummy.  This also
+    # handles branch endings such as C(=O), where the attachment atom is not the
+    # final lexical atom in the SMILES text.
+    dummy_position = "first" if insert_side == "right" else "last"
+    smiles, mapped_smiles = _oriented_smiles_by_selected_dummy(
+        fragment,
+        descriptor_map,
+        dummy_position,
+    )
 
     return OrientedRepeatFragment(
         smiles=smiles,
@@ -332,10 +339,24 @@ def _oriented_smiles_by_selected_dummy(fragment, selected_descriptor_map, dummy_
         smiles = mapped_smiles[len(dummy_token):]
         return smiles, mapped_smiles
 
-    for atom in fragment.GetAtoms():
-        mapped_smiles = Chem.MolToSmiles(fragment, rootedAtAtom=atom.GetIdx(), canonical=False)
-        if mapped_smiles.endswith(dummy_token):
-            candidates.append((len(mapped_smiles), mapped_smiles))
+    atom_orders = [list(range(fragment.GetNumAtoms()))]
+    if fragment.GetNumAtoms() > 1:
+        atom_orders.append(list(reversed(atom_orders[0])))
+
+    for atom_order in atom_orders:
+        ordered_fragment = (
+            fragment
+            if atom_order == atom_orders[0]
+            else Chem.RenumberAtoms(fragment, atom_order)
+        )
+        for atom in ordered_fragment.GetAtoms():
+            mapped_smiles = Chem.MolToSmiles(
+                ordered_fragment,
+                rootedAtAtom=atom.GetIdx(),
+                canonical=False,
+            )
+            if mapped_smiles.endswith(dummy_token):
+                candidates.append((len(mapped_smiles), mapped_smiles))
 
     if not candidates:
         raise ValueError("Could not orient selected wildcard at the end of the SMILES string")
@@ -357,16 +378,34 @@ def _dummy_atom_with_map(mol, descriptor_map):
 
 def _oriented_smiles(fragment, anchor_atom_map, wanted_anchor_position):
     candidates = []
-    for atom in fragment.GetAtoms():
-        root = atom.GetIdx()
-        mapped_smiles = Chem.MolToSmiles(fragment, rootedAtAtom=root, canonical=False)
-        atom_order = _atom_map_order(mapped_smiles)
-        if not atom_order:
-            continue
-        if wanted_anchor_position == "first" and atom_order[0] == anchor_atom_map:
-            candidates.append((len(mapped_smiles), mapped_smiles, root))
-        elif wanted_anchor_position == "last" and atom_order[-1] == anchor_atom_map:
-            candidates.append((len(mapped_smiles), mapped_smiles, root))
+    atom_orders = [list(range(fragment.GetNumAtoms()))]
+    if fragment.GetNumAtoms() > 1:
+        atom_orders.append(list(reversed(atom_orders[0])))
+
+    for atom_ordering in atom_orders:
+        ordered_fragment = (
+            fragment
+            if atom_ordering == atom_orders[0]
+            else Chem.RenumberAtoms(fragment, atom_ordering)
+        )
+        for atom in ordered_fragment.GetAtoms():
+            root = atom.GetIdx()
+            mapped_smiles = Chem.MolToSmiles(
+                ordered_fragment,
+                rootedAtAtom=root,
+                canonical=False,
+            )
+            atom_order = _atom_map_order(mapped_smiles)
+            if not atom_order:
+                continue
+            if wanted_anchor_position == "first" and atom_order[0] == anchor_atom_map:
+                candidates.append(
+                    (len(mapped_smiles), mapped_smiles, root, ordered_fragment)
+                )
+            elif wanted_anchor_position == "last" and atom_order[-1] == anchor_atom_map:
+                candidates.append(
+                    (len(mapped_smiles), mapped_smiles, root, ordered_fragment)
+                )
 
     if not candidates:
         raise ValueError(
@@ -374,9 +413,12 @@ def _oriented_smiles(fragment, anchor_atom_map, wanted_anchor_position):
             f"{wanted_anchor_position}. The selected descriptor may not be terminal."
         )
 
-    _, mapped_smiles, root = sorted(candidates)[0]
+    _, mapped_smiles, root, selected_fragment = sorted(
+        candidates,
+        key=lambda candidate: candidate[:3],
+    )[0]
 
-    unmapped = Chem.Mol(fragment)
+    unmapped = Chem.Mol(selected_fragment)
     for atom in unmapped.GetAtoms():
         atom.SetAtomMapNum(0)
     smiles = Chem.MolToSmiles(unmapped, rootedAtAtom=root, canonical=False)

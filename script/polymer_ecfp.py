@@ -1,19 +1,11 @@
-from rdkit import Chem
-from rdkit.Chem import rdFingerprintGenerator
-from rdkit import DataStructs
 import numpy as np
 import itertools
 import networkx as nx    
-import copy
 try:
     import xlwt
 except ImportError:
     xlwt = None
-import pandas as pd
 import sys, os
-import matplotlib.pyplot as plt
-
-import search_tools
 
 # Disable
 def blockPrint():
@@ -575,7 +567,7 @@ def _pecfp_across_atoms(atomistic, symbols, node):
 
 def ECFP(graphs, individual_clusters, iteration_input=2, repeat_unit_property=False,
          backbone_property=False, fp_size=2048, print_identifiers=False,
-         print_all=True, graph_name=""):
+         print_all=True, graph_name="", save_graph=False):
     """Generate pECFP using atom invariants plus ``iteration_input`` expansions."""
     if not isinstance(iteration_input, int) or iteration_input < 0:
         raise ValueError("iteration_input must be a non-negative integer")
@@ -588,17 +580,29 @@ def ECFP(graphs, individual_clusters, iteration_input=2, repeat_unit_property=Fa
 
     atomistic = graphs["atomistic"].copy()
     atomistic.remove_nodes_from(
-        node for node, attrs in atomistic.nodes(data=True) if attrs.get("symbol") == "H"
+        [
+            node
+            for node, attrs in atomistic.nodes(data=True)
+            if attrs.get("symbol") == "H"
+        ]
     )
     working_graphs = dict(graphs)
     working_graphs["atomistic"] = atomistic
     symbols = nx.get_node_attributes(atomistic, "symbol")
 
-    plt.figure(figsize=(8, 6))
-    nx.draw(atomistic, with_labels=True, node_color="lightblue", node_size=800,
-            font_size=14, font_weight="bold")
-    plt.savefig("network_graph" + graph_name + ".png", format="PNG")
-    plt.close()
+    if save_graph:
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError as exc:
+            raise ImportError(
+                "save_graph=True requires the optional 'debug' dependencies. "
+                "Install them with 'pip install BigFingerprint[debug]'."
+            ) from exc
+        plt.figure(figsize=(8, 6))
+        nx.draw(atomistic, with_labels=True, node_color="lightblue", node_size=800,
+                font_size=14, font_weight="bold")
+        plt.savefig("network_graph" + graph_name + ".png", format="PNG")
+        plt.close()
 
     if print_identifiers:
         if xlwt is None:

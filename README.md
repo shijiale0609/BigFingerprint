@@ -1,121 +1,188 @@
 # BigFingerprint
 
-BigFingerprint generates polymer fingerprints from BigSMILES strings by combining:
-
-- p-ECFP features from repeat-unit chemistry
-- p-TFP features from polymer topology
-- BigSMILES preprocessing helpers for explicit or missing `[H]` end groups
-
-All source code is in the [`script/`](script/) folder.
+BigFingerprint is an installable Python package for polymer informatics with
+BigSMILES. It combines a 2,048-bit polymer extended-connectivity fingerprint
+(p-ECFP) with a 40-element polymer topology fingerprint (p-TFP), and includes
+BigSMARTS matching plus explicit or missing `[H]` end-group preprocessing.
 
 ## Installation
 
-RDKit is required. The recommended setup is a conda environment because RDKit wheels can be platform- and Python-version-sensitive.
+Install the package and its RDKit, NumPy, and NetworkX dependencies directly
+from the repository:
 
 ```bash
-git clone git@github.com:shijiale0609/BigFingerprint.git
-cd BigFingerprint
-
-conda create -n bigfingerprint python=3.10 -y
-conda activate bigfingerprint
-conda install -c conda-forge rdkit -y
-pip install -r requirements.txt
+python -m pip install .
 ```
 
-If you prefer pip-only installation, install RDKit with the package/version that supports your Python version, then run:
+For an editable development installation:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -e ".[test]"
+pytest
 ```
 
-## Run The Built-In Example
-
-From the repository root:
+The package can also be installed directly from GitHub:
 
 ```bash
-cd script
-python bigfingerprint.py
+python -m pip install "git+https://github.com/shijiale0609/BigFingerprint.git"
 ```
 
-This prints example BigSMILES strings, their BigFingerprint vectors, and the vector shapes.
+Python 3.9 or newer is required. If pip cannot find a compatible RDKit wheel
+for a platform, create a conda environment with RDKit first and then install
+BigFingerprint into that environment.
 
-## Use BigFingerprint In Your Own Script
+## Python API
 
-From the repository root, set `PYTHONPATH` to the `script/` folder:
+### Generate one fingerprint
+
+Use the low-level function when the BigSMILES string is already resolved and
+does not need `[H]` expansion:
+
+```python
+import bigfingerprint as bfp
+
+bigsmiles = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"  # closed terminals
+fp = bfp.generate_bigfingerprint_vector(bigsmiles)
+
+print(fp.shape)  # (2088,)
+```
+
+The default p-ECFP radius is 2. Both the radius and p-ECFP bit-vector size are
+configurable:
+
+```python
+fp = bfp.generate_bigfingerprint_vector(
+    bigsmiles,
+    pecfp_iterations=3,
+    fp_size=4096,
+)
+```
+
+### Preprocess `[H]` end groups and fingerprint all candidates
+
+An open polymer end can expand to multiple chemically valid repeat-fragment
+candidates. The high-level API preserves each candidate next to its vector
+instead of silently selecting or averaging one:
+
+```python
+import bigfingerprint as bfp
+
+result = bfp.generate_bigfingerprint_vectors(
+    "[H]{[$][$]CC(C)[$][$]}[H]"
+)
+
+print(result.candidates)
+print(result.vectors.shape)  # (4, 2088)
+
+for candidate, vector in result:
+    print(candidate, vector.shape)
+```
+
+If preprocessing produces exactly one candidate, `result.vector` returns its
+one-dimensional vector. If several candidates exist, that property raises a
+clear error so ambiguity cannot pass unnoticed.
+
+The preprocessing stage can also be used independently:
+
+```python
+from bigfingerprint import (
+    add_missing_h_endgroups,
+    expand_h_endgroups,
+    preprocess_bigsmiles,
+)
+
+candidates = preprocess_bigsmiles(
+    "{[>][<]CCO[>], [<]CC(C)O[>][<]}CC"
+)
+```
+
+`preprocess_bigsmiles` first adds missing `[H]` markers at open stochastic
+object ends, then expands every marker with compatible repeat-unit fragments.
+Multiple sites form a Cartesian product. Closed `[]` terminals are left alone,
+and nested BigSMILES text is preserved during directional expansion.
+
+### Lower-level modules
+
+The original algorithms remain available as package submodules:
+
+```python
+from bigfingerprint import polymer_ecfp, polymer_topfp, search_tools
+
+graphs = search_tools.generate_NetworkX_graphs(bigsmiles)
+_, clusters, _ = search_tools.identify_cycles(graphs)
+pecfp = polymer_ecfp.ECFP(
+    graphs,
+    clusters,
+    print_all=False,
+    save_graph=False,
+)
+ptfp = polymer_topfp.bigsmiles_topology_vector(bigsmiles)
+```
+
+## Command line
+
+Installation provides a `bigfingerprint` command:
 
 ```bash
-PYTHONPATH=script python - <<'PY'
-from bigfingerprint import generate_bigfingerprint_vector
-
-bigsmiles = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"
-fingerprint = generate_bigfingerprint_vector(bigsmiles)
-
-print(fingerprint)
-print(fingerprint.shape)
-PY
+bigfingerprint preprocess "[H]{[$][$]CC(C)[$][$]}[H]"
+bigfingerprint fingerprint "{[][<]CC[>][]}" --output fingerprint.json
+bigfingerprint --version
 ```
 
-## Use The BigSMILES Preprocessor
+The `fingerprint` command preprocesses `[H]` by default and writes every
+candidate, its on-bit indices, and its full vector as JSON. Pass
+`--no-preprocess-h` to fingerprint the input verbatim.
 
-The preprocessor expands explicit or missing `[H]` end groups using compatible repeat-unit fragments.
+## Optional diagnostics
+
+Normal API calls do not print legacy debug traces or create files. To export
+the historical atom-invariant spreadsheet or network graph, install the
+optional dependencies and opt in explicitly:
 
 ```bash
-PYTHONPATH=script python - <<'PY'
-from bigfingerprint_preprocess import preprocess_bigsmiles
-
-bigsmiles = "{[>][<]CCO[>], [<]CC(C)O[>][<]}CC"
-candidates = preprocess_bigsmiles(bigsmiles)
-
-for candidate in candidates:
-    print(candidate)
-PY
+python -m pip install ".[debug]"
 ```
 
-Example output:
-
-```text
-CCO{[>][<]CCO[>], [<]CC(C)O[>][<]}CC
-CC(C)O{[>][<]CCO[>], [<]CC(C)O[>][<]}CC
+```python
+fp = bfp.generate_bigfingerprint_vector(
+    bigsmiles,
+    print_identifiers=True,
+    save_graph=True,
+    graph_name="_example",
+    verbose=True,
+)
 ```
 
-## Run Tests
+This writes `Atom_Invariants.xls` and `network_graph_example.png` in the current
+directory.
 
-```bash
-cd script
-python -m unittest test_bigfingerprint_preprocess.py
-```
+## Research results
 
-## ML Results
+Research artifacts remain available in [`ml_results/`](ml_results/) for Tg,
+large-data Tg, EV, and IP prediction studies. Vector-similarity datasets,
+figures, and reproduction scripts are in
+[`vector_similarity_research/`](vector_similarity_research/). These research
+artifacts stay in the repository but are excluded from the installable wheel.
 
-ML plotting scripts and prediction figures are collected in [`ml_results/`](ml_results/).
-
-The available property folders are:
-
-- [`ml_results/tg/`](ml_results/tg/): glass transition temperature prediction plots.
-- [`ml_results/tg_bigsize/`](ml_results/tg_bigsize/): large-data Tg benchmark with 7,170 polymers, fixed five-fold results, trained RF/SVR models, exact-GPR outputs, and manuscript figures.
-- [`ml_results/ev/`](ml_results/ev/): electron affinity / EV prediction plots using `EA vs SHE (eV)`.
-- [`ml_results/ip/`](ml_results/ip/): ionization potential prediction plots using `IP vs SHE (eV)`.
-
-Each property folder contains:
-
-- `scripts/`: scripts used to generate the ML predictions and figures.
-- `prediction_plots/`: SVG prediction plots for MorganFP, p-ECFP, and BigFP with SVR, Gaussian process, and random forest models.
-
-## Repository Layout
+## Repository layout
 
 ```text
 BigFingerprint/
+├── pyproject.toml       # package metadata and dependencies
 ├── README.md
-├── requirements.txt
-├── ml_results/
-│   ├── tg/
-│   ├── ev/
-│   └── ip/
-└── script/
-    ├── bigfingerprint.py
-    ├── bigfingerprint_preprocess.py
-    ├── rdkit_repeat_orientation.py
-    ├── polymer_ecfp.py
-    ├── polymer_topfp.py
-    └── ...
+├── LICENSE
+├── script/              # installed as the `bigfingerprint` package
+│   ├── __init__.py      # public API
+│   ├── api.py           # [H]-aware high-level workflow
+│   ├── bigfingerprint.py
+│   ├── bigfingerprint_preprocess.py
+│   ├── polymer_ecfp.py
+│   ├── polymer_topfp.py
+│   └── ...
+├── tests/
+└── ml_results/          # research outputs; excluded from wheels
 ```
+
+## License
+
+BigFingerprint is distributed under the GNU General Public License v3.0.

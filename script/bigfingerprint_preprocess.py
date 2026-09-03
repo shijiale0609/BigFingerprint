@@ -2,10 +2,9 @@ import itertools
 import re
 from dataclasses import dataclass
 
-from rdkit_repeat_orientation import (
+from .rdkit_repeat_orientation import (
     DESCRIPTOR_RE,
     orient_bigsmiles_repeat_unit_fragments,
-    orient_repeat_unit_fragment,
 )
 
 
@@ -151,20 +150,10 @@ def _candidate_fragments(repeats, terminal_descriptor, h_side):
             continue
 
         if h_side == "left" and right_desc == terminal_descriptor:
-            fragment = orient_repeat_unit_fragment(
-                repeat,
-                repeat_descriptor_side="right",
-                insert_side="left",
-            )
-            candidates.append(fragment.smiles)
+            candidates.append(_strip_outer_repeat_descriptors(repeat))
 
         if h_side == "right" and left_desc == terminal_descriptor:
-            fragment = orient_repeat_unit_fragment(
-                repeat,
-                repeat_descriptor_side="left",
-                insert_side="right",
-            )
-            candidates.append(fragment.smiles)
+            candidates.append(_strip_outer_repeat_descriptors(repeat))
 
     return _unique_preserve_order(candidates)
 
@@ -190,10 +179,17 @@ def _find_objects(bigsmiles):
 
 
 def _object_terminals(object_text):
-    descriptors = list(DESCRIPTOR_RE.finditer(object_text))
-    if not descriptors:
-        return "[]", "[]"
-    return descriptors[0].group(0), descriptors[-1].group(0)
+    # Only the tokens immediately inside the outer braces are object terminals.
+    # A closed [] terminal is intentionally not part of DESCRIPTOR_RE, so a
+    # whole-object search would mistake a repeat descriptor for an open end.
+    inner = object_text[1:-1].strip()
+    terminal_pattern = rf"(?:\[\]|{DESCRIPTOR_RE.pattern})"
+    left_match = re.match(terminal_pattern, inner)
+    right_match = re.search(rf"({terminal_pattern})\s*$", inner)
+
+    left_terminal = left_match.group(0) if left_match else "[]"
+    right_terminal = right_match.group(1) if right_match else "[]"
+    return left_terminal, right_terminal
 
 
 def _repeat_units(object_text):
@@ -208,6 +204,14 @@ def _repeat_terminals(repeat_unit):
     if len(descriptors) < 2:
         raise ValueError(f"Repeat unit must contain at least two descriptors: {repeat_unit}")
     return descriptors[0].group(0), descriptors[-1].group(0)
+
+
+def _strip_outer_repeat_descriptors(repeat_unit):
+    """Remove terminal descriptors without rewriting nested BigSMILES text."""
+    descriptors = list(DESCRIPTOR_RE.finditer(repeat_unit))
+    if len(descriptors) < 2:
+        raise ValueError(f"Repeat unit must contain at least two descriptors: {repeat_unit}")
+    return repeat_unit[descriptors[0].end():descriptors[-1].start()]
 
 
 def _split_implicit_ends(text):

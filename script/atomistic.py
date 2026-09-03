@@ -2,7 +2,7 @@ import sys
 import rdkit
 import networkx as nx
 
-from adjacency import *
+from .adjacency import *
 
 class Atom_Graph_Matcher:
     def __init__(self, G1, G2, all_descriptors_1, all_descriptors_2):

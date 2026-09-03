@@ -4,8 +4,8 @@ import argparse
 
 import numpy as np
 
-import polymer_ecfp
-import search_tools
+from . import polymer_ecfp
+from . import search_tools
 
 
 DEFAULT_BIGSMILES = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"

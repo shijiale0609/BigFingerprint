@@ -5,11 +5,11 @@ import re
 
 
 
-from graphs import build_atomistic, build_topology, get_objects, get_repeats, desc_regex
-from adjacency import feed_to_bonds_n
+from .graphs import build_atomistic, build_topology, get_objects, get_repeats, desc_regex
+from .adjacency import feed_to_bonds_n
 
-from atomistic import Atom_Graph_Matcher
-from adjacency import *
+from .atomistic import Atom_Graph_Matcher
+from .adjacency import *
 
 
 def generate_NetworkX_graphs(input_string, is_bigsmarts = False):

@@ -1,29 +1,12 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import json
-import networkx as nx
 import re
-import pandas as pd 
-import os
-import sys
-import copy
 from collections import Counter
 
-from rdkit import Chem, DataStructs
-from rdkit.Chem import AllChem, Draw, MACCSkeys
-from rdkit.Chem.AtomPairs import Pairs
-from rdkit.Chem.Descriptors import ExactMolWt
-from rdkit.Chem.Draw import IPythonConsole
-from rdkit.Chem.rdFingerprintGenerator import GetMorganGenerator, GetRDKitFPGenerator
+from rdkit import Chem
 
-import search_tools 
-import polymer_ecfp
+from . import search_tools
 
-from graphs import build_atomistic, build_topology, get_objects, get_repeats, desc_regex
-from adjacency import feed_to_bonds_n
-
-from atomistic import Atom_Graph_Matcher
-from adjacency import *
+from .graphs import get_objects, get_repeats
 
 
 def reorder_list_list(list_list):
