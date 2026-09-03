@@ -47,16 +47,9 @@ fp = bfp.generate_bigfingerprint_vector(bigsmiles)
 print(fp.shape)  # (2088,)
 ```
 
-The default p-ECFP radius is 2. Both the radius and p-ECFP bit-vector size are
-configurable:
-
-```python
-fp = bfp.generate_bigfingerprint_vector(
-    bigsmiles,
-    pecfp_iterations=3,
-    fp_size=4096,
-)
-```
+The default p-ECFP radius is 2 and the default p-ECFP bit-vector size is 2,048.
+All examples in this README use these standard defaults, producing a
+2,088-element BigFingerprint after concatenating the 40-element p-TFP vector.
 
 ### Preprocess `[H]` end groups and fingerprint all candidates
 
