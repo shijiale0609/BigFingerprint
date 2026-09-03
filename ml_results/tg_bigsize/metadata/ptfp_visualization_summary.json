@@ -1,0 +1,23 @@
+{
+  "matrix_shape": [
+    7157,
+    40
+  ],
+  "dtype": "uint8",
+  "binary_values": [
+    0,
+    1
+  ],
+  "nonzero_dimensions_1_based": [
+    1,
+    20,
+    21
+  ],
+  "nonconstant_dimensions_1_based": [
+    20,
+    21
+  ],
+  "unique_vector_count": 4,
+  "matches_last_40_dimensions_of_bigfingerprint": true,
+  "heatmap_row_order": "grouped by identical p-TFP vector for visualization only"
+}

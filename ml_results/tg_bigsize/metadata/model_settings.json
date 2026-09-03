@@ -1,0 +1,33 @@
+{
+  "bigfp": {
+    "alpha": 300.0,
+    "definition": "concatenate(p-ECFP[2048], p-TFP[40])",
+    "input_dimensions": 2088,
+    "input_source": "BigSMILES"
+  },
+  "explicit_deuterium_excluded": true,
+  "fold_sizes": [1432, 1432, 1431, 1431, 1431],
+  "input_preprocessing": "none",
+  "kernel": "ConstantKernel(1.0, (1e-6, 1e6)) * RBF(1.0, (1e-6, 1e6))",
+  "morgan": {
+    "alpha": 500.0,
+    "input_dimensions": 2048,
+    "input_source": "canonical p-SMILES"
+  },
+  "n_restarts_optimizer": 20,
+  "pecfp": {
+    "alpha": 300.0,
+    "input_dimensions": 2048,
+    "input_source": "BigSMILES"
+  },
+  "ptfp": {
+    "input_dimensions": 40,
+    "input_source": "BigSMILES",
+    "nonconstant_dimensions_1_based": [20, 21]
+  },
+  "random_state": 42,
+  "sample_count": 7157,
+  "small_dataset_reference": "ThermalProcess/final_prediction_tg_five_fold.py",
+  "split_reference": "ml_results/tg_bigsize/data/split_indices.npz",
+  "standard_deviation_ddof": 0
+}

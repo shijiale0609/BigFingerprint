@@ -1,0 +1,18 @@
+source_row,SMILES,tg,reason,detail
+7047,*O[SiH](*)Nc1cccc(N[Si](*)(C)O*)c1,177.5,non_linear_connection_count,
+7154,*c1cc(/C=N/c2ccc3c(c2)c2cc(/N=C/c4cc(*)c(O)c(*)c4)ccc2n3CCCC)ccc1O,306.0,non_linear_connection_count,
+7155,*c1cc(/C=N/c2ccc3c(c2)c2cc(/N=C/c4cc(*)c(O)c(*)c4)ccc2n3CCCCCC)ccc1O,327.0,non_linear_connection_count,
+7156,*c1cc(/C=N/c2ccc3c(c2)c2cc(/N=C/c4cc(*)c(O)c(*)c4)ccc2n3CCCCCCCCCCCC)ccc1O,310.0,non_linear_connection_count,
+2785,*/C(=C(\[2H])C([2H])([2H])C(*)([2H])[2H])C([2H])([2H])[2H],-58.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2620,*C([2H])([2H])C(*)(C(=O)OC([2H])([2H])C([2H])([2H])[2H])C([2H])([2H])[2H],94.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2481,*C([2H])([2H])C(*)(C(=O)OC([2H])([2H])[2H])C([2H])([2H])[2H],115.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2152,*C([2H])([2H])C(*)([2H])C([2H])([2H])[2H],0.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2786,*C([2H])([2H])C(*)([2H])C([2H])=C([2H])[2H],1.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2778,*C([2H])([2H])C(*)([2H])Cl,85.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+189,*C([2H])([2H])C(*)([2H])c1c([2H])c([2H])c([2H])c([2H])c1[2H],97.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2674,*CC(*)C(=O)OC([2H])([2H])[2H],35.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2269,*CC(*)OC(=O)OC([2H])([2H])[2H],55.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2185,*CC(*)c1c([2H])c([2H])c([2H])c([2H])c1[2H],100.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+2167,*CCC([2H])C(*)([2H])C,-47.5,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+6924,*O[Si](*)(C([2H])([2H])[2H])C([2H])([2H])[2H],-125.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation
+4091,*Oc1c([2H])c([2H])c(S(=O)(=O)c2c([2H])c([2H])c(Oc3c([2H])c([2H])c(C(c4c([2H])c([2H])c(*)c([2H])c4[2H])(C([2H])([2H])[2H])C([2H])([2H])[2H])c([2H])c3[2H])c([2H])c2[2H])c([2H])c1[2H],175.0,explicit_deuterium_[2H],excluded before splitting and fingerprint generation

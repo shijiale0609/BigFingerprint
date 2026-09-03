@@ -1,0 +1,27 @@
+{
+  "bigfp_definition": "concatenate(p-ECFP[2048], p-TFP[40])",
+  "explicit_deuterium_excluded": true,
+  "fixed_alpha": {
+    "bigfp": 300.0,
+    "morgan": 500.0,
+    "pecfp": 300.0
+  },
+  "fold_sizes": [
+    1432,
+    1432,
+    1431,
+    1431,
+    1431
+  ],
+  "input_preprocessing": "none",
+  "kernel": "ConstantKernel * RBF",
+  "morgan_input": "canonical p-SMILES",
+  "n_restarts_optimizer": 20,
+  "pecfp_input": "BigSMILES",
+  "ptfp_input": "BigSMILES",
+  "random_state": 42,
+  "sample_count": 7157,
+  "small_dataset_reference": "ThermalProcess/final_prediction_tg_five_fold.py",
+  "split": "same corrected five folders used by large-Tg SVR/RF",
+  "standard_deviation_ddof": 0
+}

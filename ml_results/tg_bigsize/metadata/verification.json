@@ -1,0 +1,29 @@
+{
+  "sample_count": 7157,
+  "source_sample_count": 7170,
+  "excluded_explicit_deuterium": 13,
+  "fold_sizes": [1432, 1432, 1431, 1431, 1431],
+  "n_train_by_fold": [5725, 5725, 5726, 5726, 5726],
+  "n_test_by_fold": [1432, 1432, 1431, 1431, 1431],
+  "same_rows_and_folds_for_rf_svr_gpr": true,
+  "fivefold_std_ddof": 0,
+  "temperature_unit": "degrees Celsius",
+  "fold1_plot_axis_celsius": [-200, 600],
+  "embedding_shapes": {
+    "morgan": [7157, 2048],
+    "pecfp": [7157, 2048],
+    "ptfp": [7157, 40],
+    "bigfp": [7157, 2088]
+  },
+  "embedding_inputs": {
+    "morgan": "canonical p-SMILES",
+    "pecfp": "BigSMILES",
+    "ptfp": "BigSMILES",
+    "bigfp": "concatenate(p-ECFP[2048], p-TFP[40])"
+  },
+  "ptfp_nonconstant_dimensions_1_based": [20, 21],
+  "ptfp_unique_vectors": 4,
+  "all_15_scc_gpr_results_verified": true,
+  "gpr_test_points": "exact saved SCC predictions",
+  "gpr_train_prediction_note": "Fold-1 training predictions were reconstructed using each SCC learned kernel; exact saved SCC predictions are used for test points."
+}

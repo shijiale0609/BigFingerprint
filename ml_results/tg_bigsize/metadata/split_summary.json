@@ -1,0 +1,22 @@
+{
+  "cv_pool_folders": [
+    "fold2",
+    "fold3",
+    "fold4",
+    "fold5"
+  ],
+  "excluded_explicit_deuterium": 13,
+  "folder_sizes": {
+    "fold1": 1432,
+    "fold2": 1432,
+    "fold3": 1431,
+    "fold4": 1431,
+    "fold5": 1431
+  },
+  "heldout_test_folder": "fold1",
+  "protocol": "exclude [2H], then ThermalProcess five-folder held-out-test protocol",
+  "sample_count": 7157,
+  "seed": 42,
+  "source_sample_count": 7170,
+  "test_is_excluded_from_all_hyperparameter_search": true
+}

@@ -92,6 +92,7 @@ ML plotting scripts and prediction figures are collected in [`ml_results/`](ml_r
 The available property folders are:
 
 - [`ml_results/tg/`](ml_results/tg/): glass transition temperature prediction plots.
+- [`ml_results/tg_bigsize/`](ml_results/tg_bigsize/): large-data Tg benchmark with 7,170 polymers, fixed five-fold results, trained RF/SVR models, exact-GPR outputs, and manuscript figures.
 - [`ml_results/ev/`](ml_results/ev/): electron affinity / EV prediction plots using `EA vs SHE (eV)`.
 - [`ml_results/ip/`](ml_results/ip/): ionization potential prediction plots using `IP vs SHE (eV)`.
 
