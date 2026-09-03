@@ -3,7 +3,9 @@
 BigFingerprint is an installable Python package for polymer informatics with
 BigSMILES. It combines a 2,048-bit polymer extended-connectivity fingerprint
 (p-ECFP) with a 40-element polymer topology fingerprint (p-TFP), and includes
-BigSMARTS matching plus explicit or missing `[H]` end-group preprocessing.
+BigSMARTS matching plus automatic explicit or missing `[H]` end-group
+preprocessing. Its unified fingerprint API always returns one binary vector,
+including when preprocessing produces multiple candidate structures.
 
 ## Installation
 
@@ -33,10 +35,10 @@ BigFingerprint into that environment.
 
 ## Python API
 
-### Generate one fingerprint
+### Generate one unified fingerprint
 
-Use the low-level function when the BigSMILES string is already resolved and
-does not need `[H]` expansion:
+Use `generate_bigfingerprint_vector` for every BigSMILES input. The function
+always runs `[H]` preprocessing internally, even when no expansion is needed:
 
 ```python
 import bigfingerprint as bfp
@@ -49,39 +51,42 @@ fp = bfp.generate_bigfingerprint_vector(
 )
 
 print(fp.shape)  # (2088,)
+print(fp.dtype)  # uint8
 ```
 
 The default p-ECFP radius is 2 and the default p-ECFP bit-vector size is 2,048.
 All examples in this README use these standard defaults, producing a
-2,088-element BigFingerprint after concatenating the 40-element p-TFP vector.
+2,088-element binary BigFingerprint after concatenating the 40-element p-TFP
+vector.
 
-### Preprocess `[H]` end groups and fingerprint all candidates
+### Automatic `[H]` preprocessing and candidate aggregation
 
 An open polymer end can expand to multiple chemically valid repeat-fragment
-candidates. The high-level API preserves each candidate next to its vector
-instead of silently selecting or averaging one:
+candidates. The same function processes every candidate internally and returns
+one unified vector:
 
 ```python
 import bigfingerprint as bfp
 
-result = bfp.generate_bigfingerprint_vectors(
-    "[H]{[$][$]CC(C)[$][$]}[H]",
+bigsmiles = "{[>][<]CCO[>], [<]CC(C)O[>][<]}CC"
+fp = bfp.generate_bigfingerprint_vector(
+    bigsmiles,
     pecfp_iterations=2,
     fp_size=2048,
 )
 
-print(result.candidates)
-print(result.vectors.shape)  # (4, 2088)
-
-for candidate, vector in result:
-    print(candidate, vector.shape)
+print(fp.shape)  # (2088,)
+print(fp.dtype)  # uint8
 ```
 
-If preprocessing produces exactly one candidate, `result.vector` returns its
-one-dimensional vector. If several candidates exist, that property raises a
-clear error so ambiguity cannot pass unnoticed.
+For one candidate, its p-ECFP is used directly. For multiple candidates, their
+p-ECFP vectors are combined with a bitwise OR. The p-TFP is calculated once
+from the original BigSMILES and appended to the aggregated p-ECFP. Therefore,
+inputs with one or many candidates have the same output format: one binary
+`numpy.ndarray` with shape `(fp_size + 40,)`.
 
-The preprocessing stage can also be used independently:
+The preprocessing stage remains available independently when candidate strings
+need to be inspected:
 
 ```python
 from bigfingerprint import (
@@ -133,9 +138,9 @@ bigfingerprint fingerprint "{[][<]CC[>][]}" \
 bigfingerprint --version
 ```
 
-The `fingerprint` command preprocesses `[H]` by default and writes every
-candidate, its on-bit indices, and its full vector as JSON. Pass
-`--no-preprocess-h` to fingerprint the input verbatim.
+The `fingerprint` command always preprocesses `[H]` internally. Its JSON output
+contains the one aggregated vector and its on-bit indices, regardless of how
+many candidate structures preprocessing generates.
 
 ## Optional diagnostics
 
@@ -179,7 +184,6 @@ BigFingerprint/
 ├── LICENSE
 ├── script/              # installed as the `bigfingerprint` package
 │   ├── __init__.py      # public API
-│   ├── api.py           # [H]-aware high-level workflow
 │   ├── bigfingerprint.py
 │   ├── bigfingerprint_preprocess.py
 │   ├── polymer_ecfp.py

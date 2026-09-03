@@ -6,14 +6,12 @@ from unittest.mock import patch
 import numpy as np
 
 from bigfingerprint import (
-    FingerprintResult,
     generate_bigfingerprint_vector,
-    generate_bigfingerprint_vectors,
 )
 
 
 class BigFingerprintApiTest(unittest.TestCase):
-    def test_low_level_fingerprint_is_silent_and_has_expected_shape(self):
+    def test_standard_fingerprint_is_silent_and_has_expected_format(self):
         output = io.StringIO()
         with contextlib.redirect_stdout(output):
             vector = generate_bigfingerprint_vector(
@@ -22,32 +20,41 @@ class BigFingerprintApiTest(unittest.TestCase):
             )
         self.assertEqual(output.getvalue(), "")
         self.assertEqual(vector.shape, (2088,))
+        self.assertEqual(vector.dtype, np.uint8)
         self.assertTrue(np.isin(vector, [0, 1]).all())
 
-    def test_high_level_api_preserves_candidate_vector_mapping(self):
-        fake_vector = np.array([0.0, 1.0])
+    def test_multiple_h_candidates_are_combined_by_bitwise_or(self):
+        bigsmiles = "{[>][<]CCO[>], [<]CC(C)O[>][<]}CC"
+        candidate_vectors = [
+            np.array([1, 0, 1], dtype=np.uint8),
+            np.array([0, 1, 1], dtype=np.uint8),
+        ]
         with patch(
-            "bigfingerprint.api.generate_bigfingerprint_vector",
-            return_value=fake_vector,
-        ) as generate:
-            result = generate_bigfingerprint_vectors(
-                "{[>][<]CCO[>][<]}CC",
-                preprocess_h=True,
+            "bigfingerprint.bigfingerprint._generate_pecfp_vector",
+            side_effect=candidate_vectors,
+        ) as generate, patch(
+            "bigfingerprint.bigfingerprint.polymer_topfp.bigsmiles_topology_vector",
+            return_value=np.array([1, 0], dtype=np.uint8),
+        ) as topology:
+            vector = generate_bigfingerprint_vector(
+                bigsmiles,
+                pecfp_iterations=2,
+                fp_size=3,
             )
 
-        self.assertIsInstance(result, FingerprintResult)
-        self.assertEqual(result.candidates, ("CCO{[>][<]CCO[>][<]}CC",))
-        np.testing.assert_array_equal(result.vector, fake_vector)
-        generate.assert_called_once()
-
-    def test_result_vector_rejects_ambiguous_candidates(self):
-        result = FingerprintResult(
-            "input",
-            ("candidate-a", "candidate-b"),
-            np.zeros((2, 3)),
+        np.testing.assert_array_equal(
+            vector,
+            np.array([1, 1, 1, 1, 0], dtype=np.uint8),
         )
-        with self.assertRaisesRegex(ValueError, "produced 2"):
-            _ = result.vector
+        self.assertEqual(generate.call_count, 2)
+        self.assertEqual(
+            [candidate_call.args[0] for candidate_call in generate.call_args_list],
+            [
+                "CCO{[>][<]CCO[>], [<]CC(C)O[>][<]}CC",
+                "CC(C)O{[>][<]CCO[>], [<]CC(C)O[>][<]}CC",
+            ],
+        )
+        topology.assert_called_once_with(bigsmiles)
 
 
 if __name__ == "__main__":
