@@ -42,7 +42,11 @@ does not need `[H]` expansion:
 import bigfingerprint as bfp
 
 bigsmiles = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"  # closed terminals
-fp = bfp.generate_bigfingerprint_vector(bigsmiles)
+fp = bfp.generate_bigfingerprint_vector(
+    bigsmiles,
+    pecfp_iterations=2,
+    fp_size=2048,
+)
 
 print(fp.shape)  # (2088,)
 ```
@@ -61,7 +65,9 @@ instead of silently selecting or averaging one:
 import bigfingerprint as bfp
 
 result = bfp.generate_bigfingerprint_vectors(
-    "[H]{[$][$]CC(C)[$][$]}[H]"
+    "[H]{[$][$]CC(C)[$][$]}[H]",
+    pecfp_iterations=2,
+    fp_size=2048,
 )
 
 print(result.candidates)
@@ -106,6 +112,8 @@ _, clusters, _ = search_tools.identify_cycles(graphs)
 pecfp = polymer_ecfp.ECFP(
     graphs,
     clusters,
+    iteration_input=2,
+    fp_size=2048,
     print_all=False,
     save_graph=False,
 )
@@ -118,7 +126,10 @@ Installation provides a `bigfingerprint` command:
 
 ```bash
 bigfingerprint preprocess "[H]{[$][$]CC(C)[$][$]}[H]"
-bigfingerprint fingerprint "{[][<]CC[>][]}" --output fingerprint.json
+bigfingerprint fingerprint "{[][<]CC[>][]}" \
+  --radius 2 \
+  --fp-size 2048 \
+  --output fingerprint.json
 bigfingerprint --version
 ```
 
@@ -139,6 +150,8 @@ python -m pip install ".[debug]"
 ```python
 fp = bfp.generate_bigfingerprint_vector(
     bigsmiles,
+    pecfp_iterations=2,
+    fp_size=2048,
     print_identifiers=True,
     save_graph=True,
     graph_name="_example",
