@@ -54,10 +54,11 @@ print(fp.shape)  # (2088,)
 print(fp.dtype)  # uint8
 ```
 
-The default p-ECFP radius is 2 and the default p-ECFP bit-vector size is 2,048.
-All examples in this README use these standard defaults, producing a
-2,088-element binary BigFingerprint after concatenating the 40-element p-TFP
-vector.
+The p-ECFP implementation accepts any non-negative integer radius; radius 2 is
+the standard default, not a limitation of the algorithm. The default p-ECFP
+bit-vector size is 2,048. All examples in this README use these defaults,
+producing a 2,088-element binary BigFingerprint after concatenating the
+40-element p-TFP vector.
 
 ### Automatic `[H]` preprocessing and candidate aggregation
 
@@ -169,10 +170,10 @@ directory.
 
 ## Research results
 
-Research artifacts remain available in [`ml_results/`](ml_results/) for Tg,
-large-data Tg, EV, and IP prediction studies. Vector-similarity datasets,
-figures, and reproduction scripts are in
-[`vector_similarity_research/`](vector_similarity_research/). These research
+Research artifacts remain available in [`ml_results/`](ml_results/) for the
+manuscript's large-data Tg, EV, and IP prediction studies. Vector-similarity
+datasets, figures, and reproduction scripts are in
+[`vector_similarity_search/`](vector_similarity_search/). These research
 artifacts stay in the repository but are excluded from the installable wheel.
 
 ## Repository layout
@@ -190,7 +191,9 @@ BigFingerprint/
 │   ├── polymer_topfp.py
 │   └── ...
 ├── tests/
-└── ml_results/          # research outputs; excluded from wheels
+├── ml_results/          # property-prediction results; excluded from wheels
+└── vector_similarity_search/
+                         # vector-search data, figures, and scripts
 ```
 
 ## License

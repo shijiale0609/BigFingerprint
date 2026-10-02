@@ -12,7 +12,6 @@ import pandas as pd
 from matplotlib import rcParams
 from matplotlib.font_manager import FontProperties
 
-
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 PREDICTIONS = ROOT / "results" / "fold1_predictions"

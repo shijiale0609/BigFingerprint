@@ -17,33 +17,52 @@ class HEndGroupSite:
 
 
 def preprocess_bigsmiles(bigsmiles):
-    """
-    Expand missing or explicit [H] end groups using adjacent stochastic-object repeat units.
+    """Expand missing or explicit ``[H]`` polymer end groups.
 
-    Flow:
-      1. Detect stochastic objects at open ends that need an explicit [H].
-      2. Add missing [H] markers.
-      3. Detect standalone [H] end groups adjacent to stochastic objects.
-      4. Replace each [H] with every compatible repeat-unit fragment. Multiple [H]
-         sites are independent, so the output is a Cartesian product.
+    Parameters
+    ----------
+    bigsmiles : str
+        BigSMILES representation to preprocess.
 
-    Returns:
-        list[str]: all expanded BigSMILES candidates. If no [H] end-group expansion
-        is needed, returns [bigsmiles] or [bigsmiles_with_added_H] if only H insertion
-        was applicable but no compatible repeat unit was found.
+    Returns
+    -------
+    list[str]
+        Expanded BigSMILES candidates. Independent end-group sites produce a
+        Cartesian product; an input requiring no expansion returns as a
+        one-element list.
     """
     with_h = add_missing_h_endgroups(bigsmiles)
     return expand_h_endgroups(with_h)
 
 
 def needs_h_endgroup_completion(bigsmiles):
-    """Return True if any stochastic object has an open terminal that should get [H]."""
+    """Check whether a stochastic object needs an explicit ``[H]`` end group.
+
+    Parameters
+    ----------
+    bigsmiles : str
+        BigSMILES representation to inspect.
+
+    Returns
+    -------
+    bool
+        ``True`` when at least one open terminal should receive ``[H]``.
+    """
     return add_missing_h_endgroups(bigsmiles) != bigsmiles
 
 
 def add_missing_h_endgroups(bigsmiles):
-    """
-    Add explicit [H] to stochastic objects that sit at an open string/branch end.
+    """Add ``[H]`` to stochastic objects at open string or branch ends.
+
+    Parameters
+    ----------
+    bigsmiles : str
+        BigSMILES representation to complete.
+
+    Returns
+    -------
+    str
+        BigSMILES with missing terminal ``[H]`` markers inserted.
 
     Examples:
         "{[>][<]CCO[>][<]}CC" -> "[H]{[>][<]CCO[>][<]}CC"
@@ -76,10 +95,17 @@ def add_missing_h_endgroups(bigsmiles):
 
 
 def expand_h_endgroups(bigsmiles):
-    """
-    Replace explicit [H] end groups adjacent to stochastic objects with repeat fragments.
+    """Replace explicit ``[H]`` end groups with compatible repeat fragments.
 
-    Returns all Cartesian-product candidates across independent H sites.
+    Parameters
+    ----------
+    bigsmiles : str
+        BigSMILES containing zero or more explicit ``[H]`` end groups.
+
+    Returns
+    -------
+    list[str]
+        All Cartesian-product candidates across independent end-group sites.
     """
     sites = _find_h_endgroup_sites(bigsmiles)
     if not sites:
@@ -99,7 +125,7 @@ def _find_h_endgroup_sites(bigsmiles):
         left_terminal, right_terminal = _object_terminals(object_text)
         repeats = _repeat_units(object_text)
 
-        if start >= 3 and bigsmiles[start - 3:start] == "[H]":
+        if start >= 3 and bigsmiles[start - 3 : start] == "[H]":
             candidates = _candidate_fragments(
                 repeats=repeats,
                 terminal_descriptor=left_terminal,
@@ -115,7 +141,7 @@ def _find_h_endgroup_sites(bigsmiles):
                     )
                 )
 
-        if bigsmiles[end:end + 3] == "[H]":
+        if bigsmiles[end : end + 3] == "[H]":
             candidates = _candidate_fragments(
                 repeats=repeats,
                 terminal_descriptor=right_terminal,
@@ -167,10 +193,12 @@ def _find_objects(bigsmiles):
             stack.append(index)
         elif char == "}":
             if not stack:
-                raise ValueError(f"Unmatched closing brace at index {index}: {bigsmiles}")
+                raise ValueError(
+                    f"Unmatched closing brace at index {index}: {bigsmiles}"
+                )
             start = stack.pop()
             if not stack:
-                objects.append((start, index + 1, bigsmiles[start:index + 1]))
+                objects.append((start, index + 1, bigsmiles[start : index + 1]))
 
     if stack:
         raise ValueError(f"Unmatched opening brace at index {stack[-1]}: {bigsmiles}")
@@ -193,16 +221,22 @@ def _object_terminals(object_text):
 
 
 def _repeat_units(object_text):
-    inner = object_text[object_text.find("]") + 1:]
-    inner = inner[:inner.rfind("[")]
+    inner = object_text[object_text.find("]") + 1 :]
+    inner = inner[: inner.rfind("[")]
     repeat_side, _implicit_side = _split_implicit_ends(inner)
-    return [repeat.strip() for repeat in _split_top_level(repeat_side, ",") if repeat.strip()]
+    return [
+        repeat.strip()
+        for repeat in _split_top_level(repeat_side, ",")
+        if repeat.strip()
+    ]
 
 
 def _repeat_terminals(repeat_unit):
     descriptors = list(DESCRIPTOR_RE.finditer(repeat_unit))
     if len(descriptors) < 2:
-        raise ValueError(f"Repeat unit must contain at least two descriptors: {repeat_unit}")
+        raise ValueError(
+            f"Repeat unit must contain at least two descriptors: {repeat_unit}"
+        )
     return descriptors[0].group(0), descriptors[-1].group(0)
 
 
@@ -210,8 +244,10 @@ def _strip_outer_repeat_descriptors(repeat_unit):
     """Remove terminal descriptors without rewriting nested BigSMILES text."""
     descriptors = list(DESCRIPTOR_RE.finditer(repeat_unit))
     if len(descriptors) < 2:
-        raise ValueError(f"Repeat unit must contain at least two descriptors: {repeat_unit}")
-    return repeat_unit[descriptors[0].end():descriptors[-1].start()]
+        raise ValueError(
+            f"Repeat unit must contain at least two descriptors: {repeat_unit}"
+        )
+    return repeat_unit[descriptors[0].end() : descriptors[-1].start()]
 
 
 def _split_implicit_ends(text):
@@ -248,15 +284,15 @@ def _split_top_level(text, delimiter):
 
 
 def _needs_left_h(bigsmiles, object_start):
-    if object_start >= 3 and bigsmiles[object_start - 3:object_start] == "[H]":
+    if object_start >= 3 and bigsmiles[object_start - 3 : object_start] == "[H]":
         return False
     return object_start == 0 or bigsmiles[object_start - 1] == "("
 
 
 def _needs_right_h(bigsmiles, object_end):
-    if bigsmiles[object_end:object_end + 3] == "[H]":
+    if bigsmiles[object_end : object_end + 3] == "[H]":
         return False
-    return object_end == len(bigsmiles) or bigsmiles[object_end:object_end + 1] == ")"
+    return object_end == len(bigsmiles) or bigsmiles[object_end : object_end + 1] == ")"
 
 
 def _replace_spans(bigsmiles, sites, replacements):

@@ -44,8 +44,7 @@ class BigFingerprintPreprocessTest(unittest.TestCase):
 
     def test_directional_repeat_with_nested_object_is_preserved(self):
         bigsmiles = (
-            "COCCO{[>][<]C(O{[<][>]CCO[<][>]}C)CCCCCO[>],"
-            "[<]C(=O)CCCCCO[>][<]}"
+            "COCCO{[>][<]C(O{[<][>]CCO[<][>]}C)CCCCCO[>]," "[<]C(=O)CCCCCO[>][<]}"
         )
         self.assertEqual(
             preprocess_bigsmiles(bigsmiles),

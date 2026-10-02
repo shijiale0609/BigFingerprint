@@ -34,7 +34,6 @@ from tg_pipeline import (
     _standard_bigsmiles_fingerprints,
 )
 
-
 HERE = Path(__file__).resolve().parent
 DEFAULT_SOURCE = HERE / "artifacts_fivefold"
 DEFAULT_OUTPUT = HERE / "artifacts_fivefold_bigsmiles_corrected_no2H"
@@ -73,17 +72,27 @@ def validate_input(frame: pd.DataFrame) -> None:
         psmiles = str(row.canonical_psmiles)
         bigsmiles = str(row.bigsmiles)
         if psmiles.count("*") != 2:
-            raise ValueError(f"sample {row.sample_index}: p-SMILES does not contain two '*' tokens")
+            raise ValueError(
+                f"sample {row.sample_index}: p-SMILES does not contain two '*' tokens"
+            )
         if not (bigsmiles.startswith("{[]") and bigsmiles.endswith("[]}")):
-            raise ValueError(f"sample {row.sample_index}: malformed linear-homopolymer BigSMILES")
+            raise ValueError(
+                f"sample {row.sample_index}: malformed linear-homopolymer BigSMILES"
+            )
         if bigsmiles.count("[$]") != 2:
-            raise ValueError(f"sample {row.sample_index}: BigSMILES does not contain two '[$]' descriptors")
+            raise ValueError(
+                f"sample {row.sample_index}: BigSMILES does not contain two '[$]' descriptors"
+            )
         if "[[$]]" in bigsmiles or "*" in bigsmiles:
-            raise ValueError(f"sample {row.sample_index}: unconverted or nested wildcard descriptor")
+            raise ValueError(
+                f"sample {row.sample_index}: unconverted or nested wildcard descriptor"
+            )
 
 
 def allocate_partial(output_dir: Path, name: str, shape: tuple[int, int]) -> np.memmap:
-    return open_memmap(output_dir / f".{name}.partial.npy", mode="w+", dtype=np.uint8, shape=shape)
+    return open_memmap(
+        output_dir / f".{name}.partial.npy", mode="w+", dtype=np.uint8, shape=shape
+    )
 
 
 def finalize_partial(output_dir: Path, name: str) -> Path:
@@ -95,12 +104,16 @@ def finalize_partial(output_dir: Path, name: str) -> Path:
 
 def rebuild(source_dir: Path, output_dir: Path) -> None:
     if source_dir.resolve() == output_dir.resolve():
-        raise ValueError("Output directory must differ from the legacy source directory")
+        raise ValueError(
+            "Output directory must differ from the legacy source directory"
+        )
     output_dir.mkdir(parents=True, exist_ok=True)
     source_csv = source_dir / "cleaned_tg.csv"
     source_frame = pd.read_csv(source_csv)
-    deuterium_mask = source_frame["canonical_psmiles"].astype(str).str.contains(
-        r"\[2H\]", regex=True
+    deuterium_mask = (
+        source_frame["canonical_psmiles"]
+        .astype(str)
+        .str.contains(r"\[2H\]", regex=True)
     )
     deuterium_excluded = source_frame.loc[deuterium_mask].copy()
     frame = source_frame.loc[~deuterium_mask].copy().reset_index(drop=True)
@@ -124,7 +137,9 @@ def rebuild(source_dir: Path, output_dir: Path) -> None:
 
     # Recreate the five folders only after the exclusion rule has been applied.
     permutation = np.random.RandomState(SPLIT_SEED).permutation(len(frame))
-    folds = [np.asarray(chunk, dtype=np.int64) for chunk in np.array_split(permutation, 5)]
+    folds = [
+        np.asarray(chunk, dtype=np.int64) for chunk in np.array_split(permutation, 5)
+    ]
     folder = np.empty(len(frame), dtype=np.int8)
     role = np.empty(len(frame), dtype=object)
     for fold_number, indices in enumerate(folds, start=1):
@@ -141,7 +156,10 @@ def rebuild(source_dir: Path, output_dir: Path) -> None:
     with open(os.devnull, "w") as devnull:
         for checked, row in enumerate(frame.itertuples(index=False), start=1):
             try:
-                with contextlib.redirect_stdout(devnull), contextlib.redirect_stderr(devnull):
+                with (
+                    contextlib.redirect_stdout(devnull),
+                    contextlib.redirect_stderr(devnull),
+                ):
                     _bigfp_search_tools.generate_NetworkX_graphs(
                         str(row.bigsmiles), is_bigsmarts=False
                     )
@@ -153,19 +171,27 @@ def rebuild(source_dir: Path, output_dir: Path) -> None:
             if checked % 1000 == 0 or checked == n_samples:
                 print(f"BigSMILES preflight {checked}/{n_samples}", flush=True)
 
-    morgan = allocate_partial(output_dir, "fingerprint_morgan.npy", (n_samples, FP_SIZE))
+    morgan = allocate_partial(
+        output_dir, "fingerprint_morgan.npy", (n_samples, FP_SIZE)
+    )
     pecfp = allocate_partial(output_dir, "fingerprint_pecfp.npy", (n_samples, FP_SIZE))
-    p_tfp = allocate_partial(output_dir, "fingerprint_ptfp.npy", (n_samples, P_TFP_SIZE))
+    p_tfp = allocate_partial(
+        output_dir, "fingerprint_ptfp.npy", (n_samples, P_TFP_SIZE)
+    )
     bigfp = allocate_partial(
         output_dir, "fingerprint_bigfp.npy", (n_samples, FP_SIZE + P_TFP_SIZE)
     )
-    morgan_generator = GetMorganGenerator(radius=2, fpSize=FP_SIZE, includeChirality=False)
+    morgan_generator = GetMorganGenerator(
+        radius=2, fpSize=FP_SIZE, includeChirality=False
+    )
     started = time.time()
     with open(os.devnull, "w") as devnull:
         for completed, row in enumerate(frame.itertuples(index=False), start=1):
             mol = Chem.MolFromSmiles(str(row.canonical_psmiles))
             if mol is None:
-                raise ValueError(f"sample {row.sample_index}: canonical p-SMILES parse failed")
+                raise ValueError(
+                    f"sample {row.sample_index}: canonical p-SMILES parse failed"
+                )
             bit_vector = morgan_generator.GetFingerprint(mol)
             morgan_row = np.zeros(FP_SIZE, dtype=np.uint8)
             DataStructs.ConvertToNumpyArray(bit_vector, morgan_row)
@@ -290,7 +316,9 @@ def rebuild(source_dir: Path, output_dir: Path) -> None:
         "elapsed_seconds": time.time() - started,
         "bigsmiles_preflight_seconds": started - preflight_started,
     }
-    with (output_dir / "fingerprint_generation_metadata.json").open("w", encoding="utf-8") as handle:
+    with (output_dir / "fingerprint_generation_metadata.json").open(
+        "w", encoding="utf-8"
+    ) as handle:
         json.dump(metadata, handle, indent=2, sort_keys=True)
         handle.write("\n")
     print(json.dumps(metadata, indent=2), flush=True)

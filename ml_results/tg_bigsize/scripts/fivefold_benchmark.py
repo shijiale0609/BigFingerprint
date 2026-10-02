@@ -42,7 +42,6 @@ from sklearn.svm import SVR
 
 from tg_pipeline import FINGERPRINT_FILES, _json_safe, _write_json
 
-
 HERE = Path(__file__).resolve().parent
 DEFAULT_SOURCE = HERE / "artifacts"
 DEFAULT_OUTPUT = HERE / "artifacts_fivefold"
@@ -76,7 +75,9 @@ class CachedRBF(RBF):
         length_scale_bounds: tuple[float, float] = (1e-5, 1e5),
         cache_key: str | None = None,
     ):
-        super().__init__(length_scale=length_scale, length_scale_bounds=length_scale_bounds)
+        super().__init__(
+            length_scale=length_scale, length_scale_bounds=length_scale_bounds
+        )
         self.cache_key = cache_key
 
     def __call__(self, X, Y=None, eval_gradient=False):
@@ -128,7 +129,9 @@ def _validate_folds(folds: list[np.ndarray], sample_count: int) -> None:
         raise ValueError("Folder sizes differ by more than one sample")
 
 
-def create_fivefold_split(source_dir: Path, output_dir: Path, seed: int) -> dict[str, Any]:
+def create_fivefold_split(
+    source_dir: Path, output_dir: Path, seed: int
+) -> dict[str, Any]:
     """Create the same five-folder data layout used by ThermalProcess."""
     output_dir.mkdir(parents=True, exist_ok=True)
     cleaned = pd.read_csv(source_dir / "cleaned_tg.csv")
@@ -138,7 +141,9 @@ def create_fivefold_split(source_dir: Path, output_dir: Path, seed: int) -> dict
     # Its generation script is absent, so reproduce that format with a fixed
     # RandomState permutation and five equal consecutive chunks.
     permutation = np.random.RandomState(seed).permutation(sample_count)
-    folds = [np.asarray(chunk, dtype=np.int64) for chunk in np.array_split(permutation, 5)]
+    folds = [
+        np.asarray(chunk, dtype=np.int64) for chunk in np.array_split(permutation, 5)
+    ]
     _validate_folds(folds, sample_count)
 
     folder = np.empty(sample_count, dtype=np.int8)
@@ -175,7 +180,9 @@ def create_fivefold_split(source_dir: Path, output_dir: Path, seed: int) -> dict
         "protocol": "ThermalProcess five-folder held-out-test protocol",
         "seed": seed,
         "sample_count": sample_count,
-        "folder_sizes": {f"fold{i}": int(len(fold)) for i, fold in enumerate(folds, start=1)},
+        "folder_sizes": {
+            f"fold{i}": int(len(fold)) for i, fold in enumerate(folds, start=1)
+        },
         "heldout_test_folder": "fold1",
         "heldout_test_samples": int(len(folds[0])),
         "cv_pool_folders": ["fold2", "fold3", "fold4", "fold5"],
@@ -194,19 +201,27 @@ def create_fivefold_split(source_dir: Path, output_dir: Path, seed: int) -> dict
 
 def _classical_estimator_and_grid(model_name: str, seed: int, n_jobs: int):
     if model_name == "rf":
-        return RandomForestRegressor(random_state=seed, n_jobs=n_jobs), {
-            "n_estimators": [300],
-            "max_depth": [None, 20, 50],
-            "min_samples_split": [2, 5],
-            "min_samples_leaf": [1, 2],
-            "max_features": ["sqrt", 0.5],
-        }, 1
+        return (
+            RandomForestRegressor(random_state=seed, n_jobs=n_jobs),
+            {
+                "n_estimators": [300],
+                "max_depth": [None, 20, 50],
+                "min_samples_split": [2, 5],
+                "min_samples_leaf": [1, 2],
+                "max_features": ["sqrt", 0.5],
+            },
+            1,
+        )
     if model_name == "svr":
-        return SVR(kernel="rbf"), {
-            "C": [10.0, 100.0, 1000.0],
-            "epsilon": [0.1, 1.0, 5.0],
-            "gamma": ["scale", 0.001],
-        }, n_jobs
+        return (
+            SVR(kernel="rbf"),
+            {
+                "C": [10.0, 100.0, 1000.0],
+                "epsilon": [0.1, 1.0, 5.0],
+                "gamma": ["scale", 0.001],
+            },
+            n_jobs,
+        )
     raise ValueError(f"Unknown classical model: {model_name}")
 
 
@@ -286,7 +301,9 @@ def optimize_classical(
             ):
                 print(f"skip completed {combination}", flush=True)
                 continue
-            estimator, grid, search_jobs = _classical_estimator_and_grid(model_name, seed, n_jobs)
+            estimator, grid, search_jobs = _classical_estimator_and_grid(
+                model_name, seed, n_jobs
+            )
             print(
                 f"search {combination}: {len(list(ParameterGrid(grid)))} candidates, "
                 "4 CV folds, held-out fold1 excluded",
@@ -330,14 +347,21 @@ def optimize_classical(
             search_frame["params"] = search_frame["params"].map(
                 lambda value: json.dumps(_json_safe(value), sort_keys=True)
             )
-            for column in ("mean_train_rmse", "mean_test_rmse", "mean_train_mae", "mean_test_mae"):
+            for column in (
+                "mean_train_rmse",
+                "mean_test_rmse",
+                "mean_train_mae",
+                "mean_test_mae",
+            ):
                 search_frame[column] = -search_frame[column]
             search_frame.to_csv(search_dir / f"{combination}.csv", index=False)
 
             best_estimator = search.best_estimator_
             oof = np.empty(len(train_pool), dtype=float)
             fold_scores: list[dict[str, Any]] = []
-            for cv_number, (local_train, local_validation) in enumerate(predefined.split(), start=2):
+            for cv_number, (local_train, local_validation) in enumerate(
+                predefined.split(), start=2
+            ):
                 fold_model = clone(estimator).set_params(**search.best_params_)
                 fold_model.fit(X_pool[local_train], y_pool[local_train])
                 fold_prediction = fold_model.predict(X_pool[local_validation])
@@ -351,7 +375,9 @@ def optimize_classical(
                     }
                 )
 
-            test_prediction = best_estimator.predict(np.asarray(X[test], dtype=np.float32))
+            test_prediction = best_estimator.predict(
+                np.asarray(X[test], dtype=np.float32)
+            )
             pool_prediction = best_estimator.predict(X_pool)
             oof_metrics = metrics(y_pool, oof)
             test_metrics = metrics(y[test], test_prediction)
@@ -360,8 +386,12 @@ def optimize_classical(
                 "parameters": search.best_params_,
                 "selection_metric": "mean_validation_r2_across_fold2_to_fold5",
                 "mean_validation_r2": float(search.best_score_),
-                "mean_validation_rmse": float(-cv.loc[search.best_index_, "mean_test_rmse"]),
-                "mean_validation_mae": float(-cv.loc[search.best_index_, "mean_test_mae"]),
+                "mean_validation_rmse": float(
+                    -cv.loc[search.best_index_, "mean_test_rmse"]
+                ),
+                "mean_validation_mae": float(
+                    -cv.loc[search.best_index_, "mean_test_mae"]
+                ),
                 "candidate_count": int(len(list(ParameterGrid(grid)))),
                 "fold_scores": fold_scores,
                 "heldout_test": test_metrics,
@@ -385,13 +415,29 @@ def optimize_classical(
 
             predictions = pd.concat(
                 [
-                    _prediction_frame(cleaned, train_pool, oof, fingerprint, model_name, "cv_validation_oof"),
-                    _prediction_frame(cleaned, test, test_prediction, fingerprint, model_name, "heldout_test"),
+                    _prediction_frame(
+                        cleaned,
+                        train_pool,
+                        oof,
+                        fingerprint,
+                        model_name,
+                        "cv_validation_oof",
+                    ),
+                    _prediction_frame(
+                        cleaned,
+                        test,
+                        test_prediction,
+                        fingerprint,
+                        model_name,
+                        "heldout_test",
+                    ),
                 ],
                 ignore_index=True,
             )
             predictions.to_csv(predictions_dir / f"{combination}.csv", index=False)
-            joblib.dump(best_estimator, models_dir / f"{combination}.joblib", compress=3)
+            joblib.dump(
+                best_estimator, models_dir / f"{combination}.joblib", compress=3
+            )
             _write_json(best_path, best_parameters)
             pd.DataFrame(metric_rows).to_csv(metrics_path, index=False)
             print(
@@ -501,7 +547,11 @@ def evaluate_classical_fixed_fivefold(
                     print(f"skip completed {combination} fold{fold_number}", flush=True)
                 else:
                     train_indices = np.concatenate(
-                        [fold for index, fold in enumerate(folds, start=1) if index != fold_number]
+                        [
+                            fold
+                            for index, fold in enumerate(folds, start=1)
+                            if index != fold_number
+                        ]
                     )
                     model = clone(estimator).set_params(**parameters)
                     X_train = np.asarray(X[train_indices], dtype=np.float32)
@@ -724,11 +774,21 @@ def _collect_gp_search(
                     "fingerprint": fingerprint,
                     "alpha": float(alpha),
                     "n_restarts_optimizer": n_restarts,
-                    "mean_validation_r2": float(np.mean([row["r2"] for row in fold_rows])),
-                    "std_validation_r2": float(np.std([row["r2"] for row in fold_rows])),
-                    "mean_validation_rmse": float(np.mean([row["rmse"] for row in fold_rows])),
-                    "mean_validation_mae": float(np.mean([row["mae"] for row in fold_rows])),
-                    "total_fit_seconds": float(sum(row["fit_seconds"] for row in fold_rows)),
+                    "mean_validation_r2": float(
+                        np.mean([row["r2"] for row in fold_rows])
+                    ),
+                    "std_validation_r2": float(
+                        np.std([row["r2"] for row in fold_rows])
+                    ),
+                    "mean_validation_rmse": float(
+                        np.mean([row["rmse"] for row in fold_rows])
+                    ),
+                    "mean_validation_mae": float(
+                        np.mean([row["mae"] for row in fold_rows])
+                    ),
+                    "total_fit_seconds": float(
+                        sum(row["fit_seconds"] for row in fold_rows)
+                    ),
                     "cv_reused_from": None,
                 }
             )
@@ -736,7 +796,9 @@ def _collect_gp_search(
     best_alpha = {
         fingerprint: float(
             frame[frame["fingerprint"] == fingerprint]
-            .sort_values(["mean_validation_r2", "mean_validation_rmse"], ascending=[False, True])
+            .sort_values(
+                ["mean_validation_r2", "mean_validation_rmse"], ascending=[False, True]
+            )
             .iloc[0]["alpha"]
         )
         for fingerprint in fingerprints
@@ -842,7 +904,9 @@ def optimize_exact_gp(
                     flush=True,
                 )
 
-    search_frame, best_alpha = _collect_gp_search(output_dir, fingerprints, alphas, n_restarts)
+    search_frame, best_alpha = _collect_gp_search(
+        output_dir, fingerprints, alphas, n_restarts
+    )
     search_path = output_dir / "results" / "search" / "exact_gp.csv"
     search_frame.to_csv(search_path, index=False)
     _write_json(
@@ -862,7 +926,10 @@ def optimize_exact_gp(
 
     final_results = []
     for fingerprint in fingerprints:
-        print(f"final exact GP fit: {fingerprint}, alpha={best_alpha[fingerprint]:g}", flush=True)
+        print(
+            f"final exact GP fit: {fingerprint}, alpha={best_alpha[fingerprint]:g}",
+            flush=True,
+        )
         result = _fit_final_gp(
             output_dir, fingerprint, best_alpha[fingerprint], n_restarts, seed
         )
@@ -872,7 +939,10 @@ def optimize_exact_gp(
             f"RMSE={result['heldout_test']['rmse']:.3f}",
             flush=True,
         )
-    _write_json(output_dir / "results" / "final_exact_gp_summary.json", {"results": final_results})
+    _write_json(
+        output_dir / "results" / "final_exact_gp_summary.json",
+        {"results": final_results},
+    )
 
 
 def run_exact_gp_array_task(
@@ -955,7 +1025,9 @@ def run_final_exact_gp_array_task(
     """Fit one of the three final fingerprints and predict held-out folder 1."""
     fingerprints = list(FINGERPRINTS)
     if task_id < 0 or task_id >= len(fingerprints):
-        raise ValueError(f"task_id must be in [0, {len(fingerprints) - 1}], got {task_id}")
+        raise ValueError(
+            f"task_id must be in [0, {len(fingerprints) - 1}], got {task_id}"
+        )
     best_path = output_dir / "results" / "best_parameters_exact_gp.json"
     with best_path.open(encoding="utf-8") as handle:
         best = json.load(handle)
@@ -988,13 +1060,17 @@ def summarize_final_exact_gp(output_dir: Path) -> dict[str, Any]:
             raise RuntimeError(f"Missing final GP result: {result_path}")
         with result_path.open(encoding="utf-8") as handle:
             results.append(json.load(handle))
-        prediction_path = output_dir / "results" / "predictions" / f"{fingerprint}__gp.csv"
+        prediction_path = (
+            output_dir / "results" / "predictions" / f"{fingerprint}__gp.csv"
+        )
         prediction = pd.read_csv(prediction_path)
         predicted_indices = set(prediction["sample_index"].astype(int).tolist())
         if predicted_indices != heldout or len(prediction) != len(heldout):
             raise RuntimeError(f"Held-out predictions are incomplete for {fingerprint}")
         if prediction.isna().any().any():
-            raise RuntimeError(f"Held-out predictions contain missing values for {fingerprint}")
+            raise RuntimeError(
+                f"Held-out predictions contain missing values for {fingerprint}"
+            )
         combined_predictions.append(prediction)
     payload = {
         "protocol": "fold1 held-out; fold2-fold5 four-fold alpha optimization; final refit on fold2-fold5",
@@ -1020,8 +1096,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     classical = subparsers.add_parser("classical")
     classical.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
-    classical.add_argument("--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS))
-    classical.add_argument("--models", nargs="+", choices=CLASSICAL_MODELS, default=list(CLASSICAL_MODELS))
+    classical.add_argument(
+        "--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS)
+    )
+    classical.add_argument(
+        "--models", nargs="+", choices=CLASSICAL_MODELS, default=list(CLASSICAL_MODELS)
+    )
     classical.add_argument("--seed", type=int, default=42)
     classical.add_argument("--n-jobs", type=int, default=-1)
 
@@ -1039,7 +1119,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     gp = subparsers.add_parser("exact-gp")
     gp.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
-    gp.add_argument("--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS))
+    gp.add_argument(
+        "--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS)
+    )
     gp.add_argument("--alphas", nargs="+", type=float, default=list(GP_ALPHAS))
     gp.add_argument("--n-restarts", type=int, default=20)
     gp.add_argument("--seed", type=int, default=42)
@@ -1055,7 +1137,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     gp_collect = subparsers.add_parser("gp-collect")
     gp_collect.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
-    gp_collect.add_argument("--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS))
+    gp_collect.add_argument(
+        "--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS)
+    )
     gp_collect.add_argument("--alphas", nargs="+", type=float, default=list(GP_ALPHAS))
     gp_collect.add_argument("--n-restarts", type=int, default=20)
 
@@ -1073,10 +1157,16 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = build_parser().parse_args()
     if args.command == "split":
-        create_fivefold_split(args.source_dir.resolve(), args.output_dir.resolve(), args.seed)
+        create_fivefold_split(
+            args.source_dir.resolve(), args.output_dir.resolve(), args.seed
+        )
     elif args.command == "classical":
         optimize_classical(
-            args.output_dir.resolve(), args.fingerprints, args.models, args.seed, args.n_jobs
+            args.output_dir.resolve(),
+            args.fingerprints,
+            args.models,
+            args.seed,
+            args.n_jobs,
         )
     elif args.command == "classical-fixed-cv":
         evaluate_classical_fixed_fivefold(
@@ -1099,7 +1189,11 @@ def main() -> None:
         )
     elif args.command == "gp-task":
         run_exact_gp_array_task(
-            args.output_dir.resolve(), args.task_id, args.alphas, args.n_restarts, args.seed
+            args.output_dir.resolve(),
+            args.task_id,
+            args.alphas,
+            args.n_restarts,
+            args.seed,
         )
     elif args.command == "gp-collect":
         collect_exact_gp_search(
@@ -1118,7 +1212,10 @@ if __name__ == "__main__":
     # when using multiple exact-GP workers.
     print(
         "thread env:",
-        {name: os.environ.get(name) for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")},
+        {
+            name: os.environ.get(name)
+            for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")
+        },
         flush=True,
     )
     main()

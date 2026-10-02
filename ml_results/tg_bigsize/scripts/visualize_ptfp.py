@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 from matplotlib.colors import ListedColormap
 
-
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 DATA_DIR = ROOT / "data"
@@ -111,9 +110,7 @@ def main() -> None:
     matrix_axis.set_xticks(np.arange(0, 40, 2))
     matrix_axis.set_xticklabels(np.arange(1, 41, 2), fontsize=10)
     matrix_axis.set_ylabel("Polymers grouped by p-TFP pattern", fontsize=13)
-    matrix_axis.set_title(
-        "p-TFP matrix: 7,157 polymers × 40 dimensions", fontsize=15
-    )
+    matrix_axis.set_title("p-TFP matrix: 7,157 polymers × 40 dimensions", fontsize=15)
     matrix_axis.tick_params(direction="in", top=True, right=True)
 
     count_axis.bar(

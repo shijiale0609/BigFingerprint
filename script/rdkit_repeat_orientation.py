@@ -31,7 +31,9 @@ def terminal_descriptors(repeat_unit_smiles):
     return matches[0].group(0), matches[-1].group(0)
 
 
-def orient_repeat_unit_fragment(repeat_unit_smiles, repeat_descriptor_side, insert_side):
+def orient_repeat_unit_fragment(
+    repeat_unit_smiles, repeat_descriptor_side, insert_side
+):
     """
     Convert a BigSMILES repeat unit into a SMILES fragment oriented for attachment.
 
@@ -55,10 +57,14 @@ def orient_repeat_unit_fragment(repeat_unit_smiles, repeat_descriptor_side, inse
 
     _require_rdkit()
 
-    marked_smiles, descriptor_maps, descriptor_tokens = _mark_descriptors(repeat_unit_smiles)
+    marked_smiles, descriptor_maps, descriptor_tokens = _mark_descriptors(
+        repeat_unit_smiles
+    )
     mol = Chem.MolFromSmiles(marked_smiles)
     if mol is None:
-        raise ValueError(f"RDKit could not parse repeat unit after descriptor marking: {marked_smiles}")
+        raise ValueError(
+            f"RDKit could not parse repeat unit after descriptor marking: {marked_smiles}"
+        )
 
     descriptor_map = descriptor_maps[repeat_descriptor_side]
     anchor_atom_map = _find_anchor_atom_map(mol, descriptor_map)
@@ -178,7 +184,9 @@ def orient_all_wildcard_repeat_fragments(wildcard_smiles, insert_side):
     return _unique_fragments(fragments)
 
 
-def orient_bigsmiles_repeat_unit_fragments(repeat_unit_smiles, insert_side, descriptor="[$]"):
+def orient_bigsmiles_repeat_unit_fragments(
+    repeat_unit_smiles, insert_side, descriptor="[$]"
+):
     """
     Orient all possible terminal fragments from a BigSMILES repeat unit.
 
@@ -192,7 +200,8 @@ def orient_bigsmiles_repeat_unit_fragments(repeat_unit_smiles, insert_side, desc
             Defaults to "[$]". Numbered descriptors such as "[$2]" are also supported.
     """
     descriptor_occurrences = [
-        idx for idx, match in enumerate(DESCRIPTOR_RE.finditer(repeat_unit_smiles))
+        idx
+        for idx, match in enumerate(DESCRIPTOR_RE.finditer(repeat_unit_smiles))
         if match.group(0) == descriptor
     ]
     if not descriptor_occurrences:
@@ -231,7 +240,7 @@ def _mark_descriptors(repeat_unit_smiles):
     pieces = []
     cursor = 0
     for idx, match in enumerate(matches, start=1):
-        pieces.append(repeat_unit_smiles[cursor:match.start()])
+        pieces.append(repeat_unit_smiles[cursor : match.start()])
         pieces.append(f"[*:{_DESCRIPTOR_MAP_BASE + idx}]")
         cursor = match.end()
     pieces.append(repeat_unit_smiles[cursor:])
@@ -246,7 +255,7 @@ def _mark_wildcards(wildcard_smiles):
     wildcard_index = 0
 
     for match in re.finditer(r"\[\*\]|\*", wildcard_smiles):
-        pieces.append(wildcard_smiles[cursor:match.start()])
+        pieces.append(wildcard_smiles[cursor : match.start()])
         wildcard_index += 1
         atom_map = _DESCRIPTOR_MAP_BASE + wildcard_index
         wildcard_maps.append(atom_map)
@@ -274,13 +283,18 @@ def _unique_fragments(fragments):
 
 def _find_anchor_atom_map(mol, descriptor_map):
     descriptor_atoms = [
-        atom for atom in mol.GetAtoms()
+        atom
+        for atom in mol.GetAtoms()
         if atom.GetAtomicNum() == 0 and atom.GetAtomMapNum() == descriptor_map
     ]
     if len(descriptor_atoms) != 1:
-        raise ValueError(f"Expected exactly one descriptor dummy with map {descriptor_map}")
+        raise ValueError(
+            f"Expected exactly one descriptor dummy with map {descriptor_map}"
+        )
 
-    neighbors = [atom for atom in descriptor_atoms[0].GetNeighbors() if atom.GetAtomicNum() != 0]
+    neighbors = [
+        atom for atom in descriptor_atoms[0].GetNeighbors() if atom.GetAtomicNum() != 0
+    ]
     if len(neighbors) != 1:
         raise ValueError(
             "Expected the selected descriptor to be attached to exactly one molecular atom"
@@ -297,7 +311,8 @@ def _remove_dummy_descriptors(mol):
             atom.SetAtomMapNum(atom.GetIdx() + 1)
 
     dummy_indices = [
-        atom.GetIdx() for atom in rw_mol.GetAtoms()
+        atom.GetIdx()
+        for atom in rw_mol.GetAtoms()
         if atom.GetAtomicNum() == 0 and atom.GetAtomMapNum() >= _DESCRIPTOR_MAP_BASE
     ]
     for atom_idx in sorted(dummy_indices, reverse=True):
@@ -327,16 +342,22 @@ def _keep_selected_dummy_descriptor(mol, selected_descriptor_map):
     return fragment
 
 
-def _oriented_smiles_by_selected_dummy(fragment, selected_descriptor_map, dummy_position):
+def _oriented_smiles_by_selected_dummy(
+    fragment, selected_descriptor_map, dummy_position
+):
     dummy_token = f"[*:{selected_descriptor_map}]"
     candidates = []
 
     if dummy_position == "first":
         dummy_atom = _dummy_atom_with_map(fragment, selected_descriptor_map)
-        mapped_smiles = Chem.MolToSmiles(fragment, rootedAtAtom=dummy_atom.GetIdx(), canonical=False)
+        mapped_smiles = Chem.MolToSmiles(
+            fragment, rootedAtAtom=dummy_atom.GetIdx(), canonical=False
+        )
         if not mapped_smiles.startswith(dummy_token):
-            raise ValueError(f"Could not orient selected wildcard first: {mapped_smiles}")
-        smiles = mapped_smiles[len(dummy_token):]
+            raise ValueError(
+                f"Could not orient selected wildcard first: {mapped_smiles}"
+            )
+        smiles = mapped_smiles[len(dummy_token) :]
         return smiles, mapped_smiles
 
     atom_orders = [list(range(fragment.GetNumAtoms()))]
@@ -359,20 +380,25 @@ def _oriented_smiles_by_selected_dummy(fragment, selected_descriptor_map, dummy_
                 candidates.append((len(mapped_smiles), mapped_smiles))
 
     if not candidates:
-        raise ValueError("Could not orient selected wildcard at the end of the SMILES string")
+        raise ValueError(
+            "Could not orient selected wildcard at the end of the SMILES string"
+        )
 
     _, mapped_smiles = sorted(candidates)[0]
-    smiles = mapped_smiles[:-len(dummy_token)]
+    smiles = mapped_smiles[: -len(dummy_token)]
     return smiles, mapped_smiles
 
 
 def _dummy_atom_with_map(mol, descriptor_map):
     atoms = [
-        atom for atom in mol.GetAtoms()
+        atom
+        for atom in mol.GetAtoms()
         if atom.GetAtomicNum() == 0 and atom.GetAtomMapNum() == descriptor_map
     ]
     if len(atoms) != 1:
-        raise ValueError(f"Expected exactly one selected wildcard with map {descriptor_map}")
+        raise ValueError(
+            f"Expected exactly one selected wildcard with map {descriptor_map}"
+        )
     return atoms[0]
 
 
@@ -443,9 +469,13 @@ if __name__ == "__main__":
     ]
     for repeat, repeat_side, insert_side in examples:
         fragment = orient_repeat_unit_fragment(repeat, repeat_side, insert_side)
-        print(f"{repeat:18s} repeat_side={repeat_side:5s} insert={insert_side:5s} -> {fragment.smiles}")
+        print(
+            f"{repeat:18s} repeat_side={repeat_side:5s} insert={insert_side:5s} -> {fragment.smiles}"
+        )
 
     print("\nWildcard attachment-site expansion")
     for insert_side in ["right", "left"]:
-        fragments = orient_bigsmiles_repeat_unit_fragments("[$]CCC(C)[$]", insert_side=insert_side)
+        fragments = orient_bigsmiles_repeat_unit_fragments(
+            "[$]CCC(C)[$]", insert_side=insert_side
+        )
         print(insert_side, [fragment.smiles for fragment in fragments])

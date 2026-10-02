@@ -16,11 +16,29 @@ def generate_bigfingerprint_vector(
 ):
     """Generate one unified BigFingerprint vector from a BigSMILES string.
 
-    Missing or explicit ``[H]`` end groups are always preprocessed.  p-ECFP is
-    calculated for every resulting candidate and combined by bitwise OR.  The
-    p-TFP vector is calculated from the original BigSMILES because end-group
-    expansion does not change the polymer topology.  The return value is
-    therefore always one binary NumPy vector with shape ``(fp_size + 40,)``.
+    Parameters
+    ----------
+    bigsmiles : str
+        Polymer representation to encode.
+    pecfp_iterations : int, default=2
+        Non-negative p-ECFP radius. Radii greater than 2 are supported.
+    fp_size : int, default=2048
+        Number of bits in the p-ECFP portion.
+    print_identifiers : bool, default=False
+        Export the initial atom invariants for diagnostic use.
+    save_graph : bool, default=False
+        Save each processed atomistic graph as a PNG image.
+    graph_name : str, default=""
+        Filename suffix used when ``save_graph`` is enabled.
+    verbose : bool, default=False
+        Print p-ECFP iteration progress.
+
+    Returns
+    -------
+    numpy.ndarray
+        One binary vector with shape ``(fp_size + 40,)``. When end-group
+        preprocessing produces multiple candidates, their p-ECFP vectors are
+        combined by bitwise OR before the p-TFP is appended.
     """
     if not isinstance(bigsmiles, str) or not bigsmiles.strip():
         raise ValueError("bigsmiles must be a non-empty string")

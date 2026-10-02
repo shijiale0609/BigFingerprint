@@ -23,7 +23,6 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel, RBF
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-
 HERE = Path(__file__).resolve().parent
 DEFAULT_DATA_DIR = HERE / "data"
 DEFAULT_OUTPUT_DIR = HERE / "results"
@@ -96,7 +95,10 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
 
     cleaned = pd.read_csv(data_dir / "cleaned_tg.csv")
     assignments = pd.read_csv(data_dir / "split_assignments.csv")
-    if len(cleaned) != EXPECTED_SAMPLE_COUNT or len(assignments) != EXPECTED_SAMPLE_COUNT:
+    if (
+        len(cleaned) != EXPECTED_SAMPLE_COUNT
+        or len(assignments) != EXPECTED_SAMPLE_COUNT
+    ):
         raise ValueError(
             f"Expected exactly {EXPECTED_SAMPLE_COUNT:,} samples in cleaned data "
             "and assignments"
@@ -117,13 +119,21 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
         cleaned["sample_index"].to_numpy(dtype=int),
         np.arange(EXPECTED_SAMPLE_COUNT),
     ):
-        raise ValueError("cleaned_tg.csv sample_index is not the contiguous matrix row index")
+        raise ValueError(
+            "cleaned_tg.csv sample_index is not the contiguous matrix row index"
+        )
     if cleaned["tg"].isna().any():
         raise ValueError("Tg target contains missing values")
     if cleaned["canonical_psmiles"].str.contains(r"\[2H\]", regex=True).any():
         raise ValueError("Explicit [2H] remains in corrected canonical p-SMILES")
-    if not cleaned["canonical_psmiles"].map(lambda text: str(text).count("*") == 2).all():
-        raise ValueError("Corrected canonical p-SMILES must contain exactly two bare * endpoints")
+    if (
+        not cleaned["canonical_psmiles"]
+        .map(lambda text: str(text).count("*") == 2)
+        .all()
+    ):
+        raise ValueError(
+            "Corrected canonical p-SMILES must contain exactly two bare * endpoints"
+        )
     if not cleaned["bigsmiles"].astype(str).str.startswith("{").all():
         raise ValueError("Corrected BigSMILES rows must begin with a stochastic object")
 
@@ -134,17 +144,18 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
             "Expected corrected SVR/RF fold sizes "
             f"{EXPECTED_FOLD_SIZES}, found {[len(fold) for fold in folds]}"
         )
-    if (
-        len(np.unique(combined)) != EXPECTED_SAMPLE_COUNT
-        or set(combined.tolist()) != set(range(EXPECTED_SAMPLE_COUNT))
-    ):
+    if len(np.unique(combined)) != EXPECTED_SAMPLE_COUNT or set(
+        combined.tolist()
+    ) != set(range(EXPECTED_SAMPLE_COUNT)):
         raise ValueError(
             f"Five-fold indices overlap or do not cover all {EXPECTED_SAMPLE_COUNT:,} samples"
         )
     for fold_number, indices in enumerate(folds, start=1):
         assigned = assignments.iloc[indices]["folder"].to_numpy(dtype=int)
         if not np.all(assigned == fold_number):
-            raise ValueError(f"split_assignments.csv disagrees with fold{fold_number} indices")
+            raise ValueError(
+                f"split_assignments.csv disagrees with fold{fold_number} indices"
+            )
 
     shapes: dict[str, list[int]] = {}
     dtypes: dict[str, str] = {}
@@ -152,7 +163,9 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
         matrix = np.load(data_dir / filename, mmap_mode="r")
         expected_shape = (EXPECTED_SAMPLE_COUNT, EXPECTED_DIMENSIONS[fingerprint])
         if matrix.shape != expected_shape:
-            raise ValueError(f"{filename}: expected {expected_shape}, found {matrix.shape}")
+            raise ValueError(
+                f"{filename}: expected {expected_shape}, found {matrix.shape}"
+            )
         if not np.isfinite(matrix).all():
             raise ValueError(f"{filename} contains non-finite values")
         shapes[fingerprint] = [int(value) for value in matrix.shape]
@@ -160,7 +173,9 @@ def validate_data(data_dir: Path) -> dict[str, Any]:
 
     ptfp = np.load(data_dir / "fingerprint_ptfp.npy", mmap_mode="r")
     if ptfp.shape != (EXPECTED_SAMPLE_COUNT, 40):
-        raise ValueError(f"fingerprint_ptfp.npy: expected ({EXPECTED_SAMPLE_COUNT}, 40), found {ptfp.shape}")
+        raise ValueError(
+            f"fingerprint_ptfp.npy: expected ({EXPECTED_SAMPLE_COUNT}, 40), found {ptfp.shape}"
+        )
     if not np.array_equal(np.unique(ptfp), np.array([0, 1], dtype=ptfp.dtype)):
         raise ValueError("p-TFP must be binary and contain both 0 and 1")
     pecfp = np.load(data_dir / FINGERPRINT_FILES["pecfp"], mmap_mode="r")
@@ -233,7 +248,9 @@ def run_fold(
         metrics_path = fold_dir / f"{fingerprint}__gpr_metrics.json"
         predictions_path = fold_dir / f"{fingerprint}__gpr_predictions.csv"
         if metrics_path.exists() and predictions_path.exists():
-            print(f"Checkpoint exists; skip fold{fold_number} {fingerprint}", flush=True)
+            print(
+                f"Checkpoint exists; skip fold{fold_number} {fingerprint}", flush=True
+            )
             continue
 
         X = np.load(data_dir / FINGERPRINT_FILES[fingerprint], mmap_mode="r")
@@ -328,9 +345,13 @@ def summarize(data_dir: Path, output_dir: Path) -> pd.DataFrame:
             if actual_indices != expected_indices or len(predictions) != len(
                 folds[fold_number - 1]
             ):
-                raise RuntimeError(f"Prediction rows are incomplete for fold{fold_number} {fingerprint}")
+                raise RuntimeError(
+                    f"Prediction rows are incomplete for fold{fold_number} {fingerprint}"
+                )
             if predictions[["tg_actual", "tg_predicted"]].isna().any().any():
-                raise RuntimeError(f"Missing prediction value for fold{fold_number} {fingerprint}")
+                raise RuntimeError(
+                    f"Missing prediction value for fold{fold_number} {fingerprint}"
+                )
             fold_rows.append(result)
             prediction_frames.append(predictions)
 
@@ -360,7 +381,9 @@ def summarize(data_dir: Path, output_dir: Path) -> pd.DataFrame:
     summary_frame = pd.DataFrame(summary_rows).sort_values("fingerprint")
     write_csv(output_dir / "fold_metrics.csv", fold_frame)
     write_csv(output_dir / "summary_metrics.csv", summary_frame)
-    write_csv(output_dir / "predictions.csv", pd.concat(prediction_frames, ignore_index=True))
+    write_csv(
+        output_dir / "predictions.csv", pd.concat(prediction_frames, ignore_index=True)
+    )
     write_json(
         output_dir / "run_config.json",
         {
@@ -394,7 +417,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     run = subparsers.add_parser("run")
     run.add_argument("--fold", type=int, choices=range(1, 6), required=True)
-    run.add_argument("--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS))
+    run.add_argument(
+        "--fingerprints", nargs="+", choices=FINGERPRINTS, default=list(FINGERPRINTS)
+    )
     run.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
     run.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     run.add_argument("--dry-run", action="store_true")

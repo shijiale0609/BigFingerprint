@@ -29,12 +29,16 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.kernel_approximation import Nystroem
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, ParameterGrid, PredefinedSplit, train_test_split
+from sklearn.model_selection import (
+    GridSearchCV,
+    ParameterGrid,
+    PredefinedSplit,
+    train_test_split,
+)
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import TruncatedSVD
 from sklearn.svm import SVR
-
 
 HERE = Path(__file__).resolve().parent
 PROJECT_ROOT = HERE.parents[2]
@@ -44,6 +48,7 @@ if str(BIGFINGERPRINT_SCRIPT) not in sys.path:
 import search_tools as _bigfp_search_tools
 import polymer_ecfp as _bigfp_polymer_ecfp
 import polymer_topfp as _bigfp_polymer_topfp
+
 DEFAULT_INPUT = HERE / "tg_raw.csv"
 DEFAULT_OUTPUT = HERE / "artifacts"
 FINGERPRINT_FILES = {
@@ -165,7 +170,9 @@ def _morgan_fp(mol: Chem.Mol, generator, fp_size: int) -> np.ndarray:
     return array
 
 
-def _standard_bigsmiles_fingerprints(bigsmiles: str, fp_size: int) -> tuple[np.ndarray, np.ndarray]:
+def _standard_bigsmiles_fingerprints(
+    bigsmiles: str, fp_size: int
+) -> tuple[np.ndarray, np.ndarray]:
     """Generate p-ECFP and p-TFP through the repository's BigSMILES APIs."""
     graphs = _bigfp_search_tools.generate_NetworkX_graphs(bigsmiles, is_bigsmarts=False)
     _, individual_clusters, _ = _bigfp_search_tools.identify_cycles(graphs)
@@ -190,7 +197,9 @@ def _standard_bigsmiles_fingerprints(bigsmiles: str, fp_size: int) -> tuple[np.n
     return pecfp, p_tfp
 
 
-def _stratified_limit(frame: pd.DataFrame, limit: int, seed: int, n_bins: int) -> pd.DataFrame:
+def _stratified_limit(
+    frame: pd.DataFrame, limit: int, seed: int, n_bins: int
+) -> pd.DataFrame:
     if limit <= 0 or limit >= len(frame):
         return frame.reset_index(drop=True)
     chosen, _ = train_test_split(
@@ -264,18 +273,33 @@ def prepare_dataset(
             tg = float(row["tg"])
         except (TypeError, ValueError):
             excluded_records.append(
-                {"source_row": int(row_index + 2), "SMILES": smiles, "tg": row["tg"], "reason": "invalid_tg"}
+                {
+                    "source_row": int(row_index + 2),
+                    "SMILES": smiles,
+                    "tg": row["tg"],
+                    "reason": "invalid_tg",
+                }
             )
             continue
         if not math.isfinite(tg):
             excluded_records.append(
-                {"source_row": int(row_index + 2), "SMILES": smiles, "tg": tg, "reason": "invalid_tg"}
+                {
+                    "source_row": int(row_index + 2),
+                    "SMILES": smiles,
+                    "tg": tg,
+                    "reason": "invalid_tg",
+                }
             )
             continue
         canonical, reason = _canonicalize_linear_psmiles(smiles)
         if reason is not None:
             excluded_records.append(
-                {"source_row": int(row_index + 2), "SMILES": smiles, "tg": tg, "reason": reason}
+                {
+                    "source_row": int(row_index + 2),
+                    "SMILES": smiles,
+                    "tg": tg,
+                    "reason": reason,
+                }
             )
             continue
         valid_records.append(
@@ -300,19 +324,26 @@ def prepare_dataset(
             tg=("tg", "mean"),
             tg_std=("tg", "std"),
             measurement_count=("tg", "size"),
-            source_rows=("source_row", lambda values: ";".join(str(int(v)) for v in values)),
+            source_rows=(
+                "source_row",
+                lambda values: ";".join(str(int(v)) for v in values),
+            ),
         )
         .fillna({"tg_std": 0.0})
     )
     grouped = _stratified_limit(grouped, limit or 0, seed, n_bins)
-    grouped["bigsmiles"] = grouped["canonical_psmiles"].map(_psmiles_to_linear_bigsmiles)
+    grouped["bigsmiles"] = grouped["canonical_psmiles"].map(
+        _psmiles_to_linear_bigsmiles
+    )
 
     retained_rows: list[int] = []
     morgan_vectors: list[np.ndarray] = []
     pecfp_vectors: list[np.ndarray] = []
     topology_vectors: list[np.ndarray] = []
     started = time.time()
-    morgan_generator = GetMorganGenerator(radius=2, fpSize=fp_size, includeChirality=False)
+    morgan_generator = GetMorganGenerator(
+        radius=2, fpSize=fp_size, includeChirality=False
+    )
     for completed, (position, row) in enumerate(grouped.iterrows(), start=1):
         mol = Chem.MolFromSmiles(row["canonical_psmiles"])
         try:
@@ -321,8 +352,12 @@ def prepare_dataset(
             morgan = _morgan_fp(mol, morgan_generator, fp_size)
             # Morgan is deliberately the p-SMILES baseline.  The polymer
             # fingerprints must use the generated BigSMILES object.
-            pecfp, topology = _standard_bigsmiles_fingerprints(row["bigsmiles"], fp_size)
-        except Exception as exc:  # record the exact failed molecule; do not misalign matrices
+            pecfp, topology = _standard_bigsmiles_fingerprints(
+                row["bigsmiles"], fp_size
+            )
+        except (
+            Exception
+        ) as exc:  # record the exact failed molecule; do not misalign matrices
             excluded_records.append(
                 {
                     "source_row": row["source_rows"],
@@ -339,13 +374,18 @@ def prepare_dataset(
         topology_vectors.append(topology)
         if completed % 250 == 0 or completed == len(grouped):
             elapsed = time.time() - started
-            print(f"fingerprints: {completed}/{len(grouped)} ({elapsed:.1f} s)", flush=True)
+            print(
+                f"fingerprints: {completed}/{len(grouped)} ({elapsed:.1f} s)",
+                flush=True,
+            )
 
     cleaned = grouped.loc[retained_rows].reset_index(drop=True)
     morgan_matrix = np.stack(morgan_vectors).astype(np.uint8, copy=False)
     pecfp_matrix = np.stack(pecfp_vectors).astype(np.uint8, copy=False)
     topology_matrix = np.stack(topology_vectors).astype(np.uint8, copy=False)
-    bigfp_matrix = np.concatenate([pecfp_matrix, topology_matrix], axis=1).astype(np.uint8, copy=False)
+    bigfp_matrix = np.concatenate([pecfp_matrix, topology_matrix], axis=1).astype(
+        np.uint8, copy=False
+    )
 
     split = _make_split(
         cleaned["tg"].to_numpy(dtype=float),
@@ -363,9 +403,9 @@ def prepare_dataset(
 
     cleaned.to_csv(output_dir / "cleaned_tg.csv", index=False)
     pd.DataFrame(excluded_records).to_csv(output_dir / "excluded_rows.csv", index=False)
-    cleaned[
-        ["sample_index", "source_rows", "canonical_psmiles", "tg", "split"]
-    ].to_csv(output_dir / "split_assignments.csv", index=False)
+    cleaned[["sample_index", "source_rows", "canonical_psmiles", "tg", "split"]].to_csv(
+        output_dir / "split_assignments.csv", index=False
+    )
     np.save(output_dir / FINGERPRINT_FILES["morgan"], morgan_matrix)
     np.save(output_dir / FINGERPRINT_FILES["pecfp"], pecfp_matrix)
     np.save(output_dir / "fingerprint_ptfp.npy", topology_matrix)
@@ -374,7 +414,9 @@ def prepare_dataset(
 
     excluded_frame = pd.DataFrame(excluded_records)
     exclusion_counts = (
-        excluded_frame["reason"].value_counts().to_dict() if not excluded_frame.empty else {}
+        excluded_frame["reason"].value_counts().to_dict()
+        if not excluded_frame.empty
+        else {}
     )
     summary = {
         "input_csv": str(input_csv.resolve()),
@@ -384,7 +426,9 @@ def prepare_dataset(
         "analyzed_samples": int(len(cleaned)),
         "excluded_rows": int(len(excluded_frame)),
         "exclusion_counts": exclusion_counts,
-        "duplicate_measurements_aggregated": int(len(valid) - valid["canonical_psmiles"].nunique()),
+        "duplicate_measurements_aggregated": int(
+            len(valid) - valid["canonical_psmiles"].nunique()
+        ),
         "tg": {
             "min": float(cleaned["tg"].min()),
             "max": float(cleaned["tg"].max()),
@@ -401,15 +445,26 @@ def prepare_dataset(
         "seed": seed,
         "stratification_quantile_bins": n_bins,
         "fingerprints": {
-            "morgan": {"shape": list(morgan_matrix.shape), "dtype": str(morgan_matrix.dtype)},
-            "pecfp": {"shape": list(pecfp_matrix.shape), "dtype": str(pecfp_matrix.dtype)},
+            "morgan": {
+                "shape": list(morgan_matrix.shape),
+                "dtype": str(morgan_matrix.dtype),
+            },
+            "pecfp": {
+                "shape": list(pecfp_matrix.shape),
+                "dtype": str(pecfp_matrix.dtype),
+            },
             "ptfp": {
                 "shape": list(topology_matrix.shape),
                 "dtype": str(topology_matrix.dtype),
                 "unique_vectors": int(len(np.unique(topology_matrix, axis=0))),
-                "nonconstant_columns": np.flatnonzero(np.ptp(topology_matrix, axis=0)).tolist(),
+                "nonconstant_columns": np.flatnonzero(
+                    np.ptp(topology_matrix, axis=0)
+                ).tolist(),
             },
-            "bigfp": {"shape": list(bigfp_matrix.shape), "dtype": str(bigfp_matrix.dtype)},
+            "bigfp": {
+                "shape": list(bigfp_matrix.shape),
+                "dtype": str(bigfp_matrix.dtype),
+            },
         },
         "elapsed_seconds": float(time.time() - started),
     }
@@ -548,10 +603,15 @@ def _plot_parity(predictions: pd.DataFrame, output_path: Path, stage: str) -> No
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    fingerprints = [name for name in FINGERPRINT_FILES if name in set(selected["fingerprint"])]
+    fingerprints = [
+        name for name in FINGERPRINT_FILES if name in set(selected["fingerprint"])
+    ]
     models = [name for name in MODEL_LABELS if name in set(selected["model"])]
     fig, axes = plt.subplots(
-        len(models), len(fingerprints), figsize=(4.2 * len(fingerprints), 3.9 * len(models)), squeeze=False
+        len(models),
+        len(fingerprints),
+        figsize=(4.2 * len(fingerprints), 3.9 * len(models)),
+        squeeze=False,
     )
     for row, model in enumerate(models):
         for column, fingerprint in enumerate(fingerprints):
@@ -567,7 +627,9 @@ def _plot_parity(predictions: pd.DataFrame, output_path: Path, stage: str) -> No
             low = float(min(actual.min(), predicted.min()))
             high = float(max(actual.max(), predicted.max()))
             ax.scatter(actual, predicted, s=10, alpha=0.55, edgecolors="none")
-            ax.plot([low, high], [low, high], color="black", linewidth=1, linestyle="--")
+            ax.plot(
+                [low, high], [low, high], color="black", linewidth=1, linestyle="--"
+            )
             metrics = _metrics(actual, predicted)
             ax.text(
                 0.04,
@@ -695,7 +757,12 @@ def optimize_models(
             search_frame["params"] = search_frame["params"].map(
                 lambda value: json.dumps(_json_safe(value), sort_keys=True)
             )
-            for column in ("mean_train_rmse", "mean_test_rmse", "mean_train_mae", "mean_test_mae"):
+            for column in (
+                "mean_train_rmse",
+                "mean_test_rmse",
+                "mean_train_mae",
+                "mean_test_mae",
+            ):
                 search_frame[column] = -search_frame[column]
             search_frame.insert(0, "model", model_name)
             search_frame.insert(0, "fingerprint", fingerprint)
@@ -703,15 +770,21 @@ def optimize_models(
             all_search.append(search_frame)
 
             selection_model = clone(estimator).set_params(**best_params)
-            selection_model.fit(np.asarray(X[train_indices], dtype=np.float32), y[train_indices])
+            selection_model.fit(
+                np.asarray(X[train_indices], dtype=np.float32), y[train_indices]
+            )
             selection_predictions = {
                 "train_selection": (
                     train_indices,
-                    selection_model.predict(np.asarray(X[train_indices], dtype=np.float32)),
+                    selection_model.predict(
+                        np.asarray(X[train_indices], dtype=np.float32)
+                    ),
                 ),
                 "validation_selection": (
                     validation_indices,
-                    selection_model.predict(np.asarray(X[validation_indices], dtype=np.float32)),
+                    selection_model.predict(
+                        np.asarray(X[validation_indices], dtype=np.float32)
+                    ),
                 ),
             }
 
@@ -728,7 +801,10 @@ def optimize_models(
                 ),
             }
 
-            for stage, (indices, predicted) in {**selection_predictions, **final_predictions}.items():
+            for stage, (indices, predicted) in {
+                **selection_predictions,
+                **final_predictions,
+            }.items():
                 values = _metrics(y[indices], predicted)
                 metric_rows.append(
                     {
@@ -740,7 +816,9 @@ def optimize_models(
                     }
                 )
                 prediction_rows.extend(
-                    _prediction_rows(cleaned, indices, predicted, fingerprint, model_name, stage)
+                    _prediction_rows(
+                        cleaned, indices, predicted, fingerprint, model_name, stage
+                    )
                 )
 
             if isinstance(final_model, Pipeline):
@@ -753,7 +831,9 @@ def optimize_models(
             )
 
             pd.DataFrame(metric_rows).to_csv(results_dir / "metrics.csv", index=False)
-            pd.DataFrame(prediction_rows).to_csv(results_dir / "predictions.csv", index=False)
+            pd.DataFrame(prediction_rows).to_csv(
+                results_dir / "predictions.csv", index=False
+            )
             _write_json(results_dir / "best_parameters.json", best_parameters)
 
     search_summary = pd.concat(all_search, ignore_index=True)
@@ -762,7 +842,9 @@ def optimize_models(
     predictions_frame = pd.DataFrame(prediction_rows)
     metrics_frame.to_csv(results_dir / "metrics.csv", index=False)
     predictions_frame.to_csv(results_dir / "predictions.csv", index=False)
-    _plot_parity(predictions_frame, results_dir / "validation_parity.png", "validation_selection")
+    _plot_parity(
+        predictions_frame, results_dir / "validation_parity.png", "validation_selection"
+    )
     _plot_parity(predictions_frame, results_dir / "test_parity.png", "test_final")
 
     run_summary = {
@@ -791,24 +873,41 @@ def _add_prepare_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--test-size", type=float, default=0.20)
     parser.add_argument("--n-bins", type=int, default=10)
     parser.add_argument("--fp-size", type=int, default=2048)
-    parser.add_argument("--limit", type=int, default=None, help="Stratified sample limit for smoke tests")
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Stratified sample limit for smoke tests",
+    )
 
 
-def _add_optimize_arguments(parser: argparse.ArgumentParser, include_output: bool = True) -> None:
+def _add_optimize_arguments(
+    parser: argparse.ArgumentParser, include_output: bool = True
+) -> None:
     if include_output:
         parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--profile", choices=("smoke", "quick", "full"), default="quick")
-    parser.add_argument("--fingerprints", nargs="+", choices=tuple(FINGERPRINT_FILES), default=None)
-    parser.add_argument("--models", nargs="+", choices=tuple(MODEL_LABELS), default=None)
+    parser.add_argument(
+        "--profile", choices=("smoke", "quick", "full"), default="quick"
+    )
+    parser.add_argument(
+        "--fingerprints", nargs="+", choices=tuple(FINGERPRINT_FILES), default=None
+    )
+    parser.add_argument(
+        "--models", nargs="+", choices=tuple(MODEL_LABELS), default=None
+    )
     parser.add_argument("--n-jobs", type=int, default=-1)
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
-    prepare = subparsers.add_parser("prepare", help="clean, split and generate fingerprints")
+    prepare = subparsers.add_parser(
+        "prepare", help="clean, split and generate fingerprints"
+    )
     _add_prepare_arguments(prepare)
-    optimize = subparsers.add_parser("optimize", help="tune and evaluate all model/fingerprint combinations")
+    optimize = subparsers.add_parser(
+        "optimize", help="tune and evaluate all model/fingerprint combinations"
+    )
     _add_optimize_arguments(optimize)
     optimize.add_argument("--seed", type=int, default=42)
     all_parser = subparsers.add_parser("all", help="run prepare followed by optimize")

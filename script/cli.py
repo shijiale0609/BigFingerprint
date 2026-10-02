@@ -14,7 +14,9 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="bigfingerprint",
         description="Generate polymer fingerprints from BigSMILES.",
     )
-    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {__version__}"
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     preprocess_parser = subparsers.add_parser(
@@ -26,7 +28,13 @@ def _build_parser() -> argparse.ArgumentParser:
         "fingerprint", help="generate one unified BigFingerprint vector"
     )
     fingerprint_parser.add_argument("bigsmiles")
-    fingerprint_parser.add_argument("--radius", type=int, default=2, dest="pecfp_iterations")
+    fingerprint_parser.add_argument(
+        "--radius",
+        type=int,
+        default=2,
+        dest="pecfp_iterations",
+        help="non-negative p-ECFP radius (default: 2)",
+    )
     fingerprint_parser.add_argument("--fp-size", type=int, default=2048)
     fingerprint_parser.add_argument("--verbose", action="store_true")
     fingerprint_parser.add_argument(
