@@ -1,86 +1,94 @@
 # Machine-learning results
 
-This directory contains the property-prediction artifacts used to compare the
-Morgan fingerprint, p-ECFP, and BigFingerprint representations. Research data
-and models are kept outside the installable Python wheel.
-
-## Tg benchmark
-
-- `tg_bigsize/` is the Tg analysis used in the manuscript. It contains the final
-  7,157-polymer data set, generated embeddings, fixed five-fold splits,
-  trained Fold-1 RF/SVR models, all RF/SVR/GPR predictions and metrics, and the
-  processed figures.
-
-The complete protocol and numerical results for this analysis are in
-[`tg_bigsize/README.md`](tg_bigsize/README.md).
+This directory contains the code, processed data, trained models, numerical
+results, and figures used for the manuscript property-prediction studies. The
+installable BigFingerprint package does not include these research artifacts.
 
 ## Directory layout
 
 ```text
 ml_results/
 ├── README.md
-├── scripts/              # shared, parameterized EA/IP workflows
-├── ev/                    # EA/EV manuscript prediction panels
-├── ip/                    # IP manuscript prediction panels
-└── tg_bigsize/            # current large-data Tg benchmark
+├── code/
+│   ├── shared/             # parameterized EA/IP workflows
+│   └── tg_bigsize/         # large-data Tg workflows
+├── data/
+│   └── tg_bigsize/         # final Tg table, embeddings, and splits
+└── results/
+    ├── ev/                 # EA/EV manuscript figures
+    ├── ip/                 # IP manuscript figures
+    └── tg_bigsize/         # Tg metrics, predictions, models, and figures
 ```
 
-Each prediction-plot directory contains separate panels for the three
-fingerprints and three regressors because these are distinct manuscript panel
-outputs, not duplicate source code.
+Only `tg_bigsize` is used for the manuscript Tg analysis. The earlier
+small-data `tg` directory is not part of this repository.
 
-## Consolidated EA/IP scripts
+## Large-data Tg benchmark
 
-The earlier repository stored one nearly identical Python file for every
-property, fingerprint, and model. Those copies have been replaced by three
-shared scripts:
+The Tg benchmark contains 7,157 standard two-connection-point linear
+homopolymers. Thirteen structures containing explicit deuterium (`[2H]`) were
+excluded before fingerprint generation and splitting. The target values and
+figures use degrees Celsius.
 
-- `scripts/ev_ip_svr_rf.py` performs held-out-fold hyperparameter optimization
-  or fixed-parameter five-fold SVR/RF evaluation for either EA or IP.
-- `scripts/prepare_ev_ip_gpr_data.py` creates the corrected, fold-aligned
-  2,700-row data bundle used by the SCC jobs.
-- `scripts/ev_ip_gpr.py` validates the prepared bundle, runs one exact-GPR
-  property/fold job, and summarizes the five completed folds.
+The three input representations are:
 
-The random 2,700-row subset uses Python random seed 0. It contains all nine
-monomer-A identities, 100 randomly selected monomer-B identities, and all
-three topologies. KFold uses five splits, shuffling, and random state 42. Fold
-1 is excluded from hyperparameter selection; fixed parameters are then
-evaluated with each of the five folds held out once. Reported standard
-deviations use `ddof=0`.
+| Representation | Structural input | Matrix shape |
+|---|---|---:|
+| Morgan fingerprint | canonical p-SMILES | `(7157, 2048)` |
+| p-ECFP | BigSMILES | `(7157, 2048)` |
+| p-TFP | BigSMILES | `(7157, 40)` |
+| BigFingerprint | p-ECFP concatenated with p-TFP | `(7157, 2088)` |
 
-The raw EA/IP input directory must contain:
+The data were split with seed 42 into five fixed folds. Fold 1 was excluded
+from hyperparameter selection; parameters were optimized on Folds 2–5 and then
+held fixed while each fold served once as the test set. Reported standard
+deviations use `ddof=0`, and the generated embeddings were used without
+preprocessing.
 
-```text
-dataset.csv
-psmiles_mfp_arr.npy
-EVIP_pecfp_arr.npy
-EVIP_bigfp.npy
-```
+Full-precision metrics are in
+[`results/tg_bigsize/fivefold_summary_all_models.csv`](results/tg_bigsize/fivefold_summary_all_models.csv).
+Detailed contents and performance values are documented in
+[`results/tg_bigsize/README.md`](results/tg_bigsize/README.md).
 
-These research scripts additionally require NumPy, pandas, scikit-learn, and
-Matplotlib; those packages are intentionally not runtime dependencies of the
-installable fingerprint library.
+## Code
 
-Example commands:
+The shared EA/IP scripts replace the earlier collection of nearly identical
+files:
+
+- `code/shared/ev_ip_svr_rf.py`: hyperparameter optimization and fixed-parameter
+  five-fold RF/SVR evaluation.
+- `code/shared/prepare_ev_ip_gpr_data.py`: generation of the corrected,
+  fold-aligned 2,700-row GPR input bundle.
+- `code/shared/ev_ip_gpr.py`: validation, one-fold exact-GPR execution, and
+  five-fold summarization.
+
+The Tg scripts reproduce fingerprint generation, five-fold RF/SVR evaluation,
+exact GPR execution, and the saved figures. For example:
 
 ```bash
-python ml_results/scripts/ev_ip_svr_rf.py optimize \
-  --target ea --model rf --fingerprint bigfp \
-  --data-dir /path/to/vipea --output-dir /path/to/results
-
-python ml_results/scripts/ev_ip_svr_rf.py evaluate \
-  --target ip --data-dir /path/to/vipea --output-dir /path/to/results
-
-python ml_results/scripts/prepare_ev_ip_gpr_data.py \
-  --raw-data-dir /path/to/vipea --output-dir /path/to/scc_bundle/data
-
-python ml_results/scripts/ev_ip_gpr.py run \
-  --target ea --fold 1 --data-dir /path/to/scc_bundle/data \
-  --output-dir /path/to/scc_bundle/results
+python ml_results/code/tg_bigsize/run_gpr_fold.py validate
+python ml_results/code/tg_bigsize/plot_fold1.py
+python ml_results/code/tg_bigsize/visualize_ptfp.py
 ```
 
-For a broader hyperparameter search, pass a JSON parameter grid with
-`--grid`. For fixed-parameter evaluation, pass a nested JSON configuration
-with `--parameters`; otherwise the manuscript RF/SVR settings embedded in the
-script are used.
+The EA/IP scripts take explicit data and output paths. Example:
+
+```bash
+python ml_results/code/shared/ev_ip_svr_rf.py evaluate \
+  --target ip --data-dir /path/to/vipea --output-dir /path/to/results
+```
+
+EA/IP source arrays are not duplicated in this repository. Their required
+filenames are `dataset.csv`, `psmiles_mfp_arr.npy`, `EVIP_pecfp_arr.npy`, and
+`EVIP_bigfp.npy`.
+
+## Results
+
+For Tg, `results/tg_bigsize/` includes five-fold metrics and predictions,
+Fold-1 plotting data, six serialized Fold-1-held-out RF/SVR estimators,
+manuscript figures, and provenance metadata. Exact-GPR estimator objects are
+not serialized because they contain the full exact-kernel training state; the
+saved predictions, metrics, learned kernels, and training code are retained.
+
+The separate EV and IP SVG panels are retained as manuscript figure outputs,
+not as duplicated executable code.

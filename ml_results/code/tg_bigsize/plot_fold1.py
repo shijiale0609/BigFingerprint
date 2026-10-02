@@ -13,9 +13,10 @@ from matplotlib import rcParams
 from matplotlib.font_manager import FontProperties
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-PREDICTIONS = ROOT / "results" / "fold1_predictions"
-PLOTS = ROOT / "figures"
+ML_RESULTS_ROOT = HERE.parents[1]
+RESULTS_ROOT = ML_RESULTS_ROOT / "results" / "tg_bigsize"
+PREDICTIONS = RESULTS_ROOT / "fold1_predictions"
+PLOTS = RESULTS_ROOT / "figures"
 
 FP_ORDER = ("morgan", "pecfp", "bigfp")
 MODEL_ORDER = ("svr", "rf", "gpr")

@@ -12,10 +12,11 @@ import pandas as pd
 from matplotlib.colors import ListedColormap
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-DATA_DIR = ROOT / "data"
-OUTPUT_DIR = ROOT / "figures"
-METADATA_DIR = ROOT / "metadata"
+ML_RESULTS_ROOT = HERE.parents[1]
+DATA_DIR = ML_RESULTS_ROOT / "data" / "tg_bigsize"
+RESULTS_ROOT = ML_RESULTS_ROOT / "results" / "tg_bigsize"
+OUTPUT_DIR = RESULTS_ROOT / "figures"
+METADATA_DIR = RESULTS_ROOT / "metadata"
 
 plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.serif"] = ["Times New Roman"]

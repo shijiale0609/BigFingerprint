@@ -52,25 +52,27 @@ Thus, 839 samples (11.72%) contain at least one sample-dependent p-TFP bit.
 | GPR | BigFingerprint | 0.8964 +/- 0.0112 | 36.03 +/- 1.99 |
 
 The full-precision values are stored in the model-specific summary CSV files
-and in [`results/fivefold_summary_all_models.csv`](results/fivefold_summary_all_models.csv).
+and in
+[`fivefold_summary_all_models.csv`](fivefold_summary_all_models.csv).
 
 ## Contents
 
-- `data/`: final processed data, fixed split files, and all four fingerprint
-  matrices, including the separately stored 40-dimensional p-TFP.
+- `../../data/tg_bigsize/`: final processed data, fixed split files, and all
+  four fingerprint matrices, including the separately stored 40-dimensional
+  p-TFP.
 - `models/`: six serialized Fold-1-held-out RF/SVR models. They were serialized
   with scikit-learn 1.9.0 and expect the unprocessed fingerprint vectors.
-- `results/rf_svr/`: per-fold metrics and predictions for RF and SVR.
-- `results/gpr/`: per-fold metrics, learned kernels, and predictions from the
+- `rf_svr/`: per-fold metrics and predictions for RF and SVR.
+- `gpr/`: per-fold metrics, learned kernels, and predictions from the
   five exact-GPR SCC jobs.
-- `results/fold1_predictions/`: train/test values used to create the nine
+- `fold1_predictions/`: train/test values used to create the nine
   manuscript-style Fold-1 parity plots.
 - `figures/`: final PNG and editable SVG parity plots, the shared degree-Celsius
   axis panel, and p-TFP visualizations.
 - `metadata/`: fingerprint provenance, split, optimization, model, p-TFP, and
   verification settings.
-- `scripts/`: fingerprint generation, RF/SVR evaluation, SCC GPR, and plotting
-  scripts used for this benchmark.
+- `../../code/tg_bigsize/`: fingerprint generation, RF/SVR evaluation, SCC
+  GPR, and plotting scripts used for this benchmark.
 
 The exact GPR jobs did not serialize fitted estimator objects because each
 estimator contains the full exact-kernel training state. The saved GPR
@@ -80,11 +82,11 @@ files.
 
 ## Regenerate the processed figures
 
-From this directory, run:
+From the repository root, run:
 
 ```bash
-python scripts/plot_fold1.py
-python scripts/visualize_ptfp.py
+python ml_results/code/tg_bigsize/plot_fold1.py
+python ml_results/code/tg_bigsize/visualize_ptfp.py
 ```
 
 Times New Roman and a LaTeX installation are recommended for an exact

@@ -43,8 +43,9 @@ from sklearn.svm import SVR
 from tg_pipeline import FINGERPRINT_FILES, _json_safe, _write_json
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_SOURCE = HERE / "artifacts"
-DEFAULT_OUTPUT = HERE / "artifacts_fivefold"
+ML_RESULTS_ROOT = HERE.parents[1]
+DEFAULT_SOURCE = ML_RESULTS_ROOT / "data" / "tg_bigsize"
+DEFAULT_OUTPUT = ML_RESULTS_ROOT / "results" / "tg_bigsize" / "reproduction"
 FINGERPRINTS = ("morgan", "pecfp", "bigfp")
 CLASSICAL_MODELS = ("rf", "svr")
 GP_ALPHAS = (100.0, 200.0, 300.0, 400.0, 500.0, 600.0)

@@ -24,8 +24,9 @@ from sklearn.gaussian_process.kernels import ConstantKernel, RBF
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_DATA_DIR = HERE / "data"
-DEFAULT_OUTPUT_DIR = HERE / "results"
+ML_RESULTS_ROOT = HERE.parents[1]
+DEFAULT_DATA_DIR = ML_RESULTS_ROOT / "data" / "tg_bigsize"
+DEFAULT_OUTPUT_DIR = ML_RESULTS_ROOT / "results" / "tg_bigsize" / "gpr"
 FINGERPRINTS = ("morgan", "pecfp", "bigfp")
 FINGERPRINT_FILES = {
     "morgan": "fingerprint_morgan.npy",

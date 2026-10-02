@@ -42,6 +42,7 @@ from sklearn.svm import SVR
 
 HERE = Path(__file__).resolve().parent
 PROJECT_ROOT = HERE.parents[2]
+ML_RESULTS_ROOT = HERE.parents[1]
 BIGFINGERPRINT_SCRIPT = PROJECT_ROOT / "script"
 if str(BIGFINGERPRINT_SCRIPT) not in sys.path:
     sys.path.insert(0, str(BIGFINGERPRINT_SCRIPT))
@@ -49,8 +50,8 @@ import search_tools as _bigfp_search_tools
 import polymer_ecfp as _bigfp_polymer_ecfp
 import polymer_topfp as _bigfp_polymer_topfp
 
-DEFAULT_INPUT = HERE / "tg_raw.csv"
-DEFAULT_OUTPUT = HERE / "artifacts"
+DEFAULT_INPUT = ML_RESULTS_ROOT / "data" / "tg_bigsize" / "cleaned_tg.csv"
+DEFAULT_OUTPUT = ML_RESULTS_ROOT / "results" / "tg_bigsize" / "reproduction"
 FINGERPRINT_FILES = {
     "morgan": "fingerprint_morgan.npy",
     "pecfp": "fingerprint_pecfp.npy",

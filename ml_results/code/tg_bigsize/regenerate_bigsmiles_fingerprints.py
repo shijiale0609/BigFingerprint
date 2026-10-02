@@ -35,8 +35,9 @@ from tg_pipeline import (
 )
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_SOURCE = HERE / "artifacts_fivefold"
-DEFAULT_OUTPUT = HERE / "artifacts_fivefold_bigsmiles_corrected_no2H"
+ML_RESULTS_ROOT = HERE.parents[1]
+DEFAULT_SOURCE = ML_RESULTS_ROOT / "data" / "tg_bigsize"
+DEFAULT_OUTPUT = ML_RESULTS_ROOT / "results" / "tg_bigsize" / "regenerated_data"
 FP_SIZE = 2048
 P_TFP_SIZE = 40
 SPLIT_SEED = 42
