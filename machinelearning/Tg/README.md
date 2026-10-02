@@ -85,8 +85,8 @@ files.
 From the repository root, run:
 
 ```bash
-python MachineLearning/Tg/code/plot_fold1.py
-python MachineLearning/Tg/code/visualize_ptfp.py
+python machinelearning/Tg/code/plot_fold1.py
+python machinelearning/Tg/code/visualize_ptfp.py
 ```
 
 Times New Roman and a LaTeX installation are recommended for an exact

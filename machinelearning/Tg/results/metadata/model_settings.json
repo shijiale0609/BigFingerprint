@@ -28,6 +28,6 @@
   "random_state": 42,
   "sample_count": 7157,
   "small_dataset_reference": "ThermalProcess/final_prediction_tg_five_fold.py",
-  "split_reference": "MachineLearning/Tg/data/split_indices.npz",
+  "split_reference": "machinelearning/Tg/data/split_indices.npz",
   "standard_deviation_ddof": 0
 }

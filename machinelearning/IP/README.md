@@ -25,8 +25,8 @@ five-fold splitting used shuffle=True with random state 42. Every fold contains
 Validate the included selected-data bundle from the repository root:
 
 ```bash
-python MachineLearning/IP/code/ev_ip_gpr.py validate \
-  --data-dir MachineLearning/IP/data
+python machinelearning/IP/code/ev_ip_gpr.py validate \
+  --data-dir machinelearning/IP/data
 ```
 
 The RF/SVR script reproduces sampling from the original 42,966-row source and

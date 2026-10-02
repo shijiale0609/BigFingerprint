@@ -6,7 +6,7 @@ These research artifacts are not included in the installable BigFingerprint
 Python package.
 
 ```text
-MachineLearning/
+machinelearning/
 ├── EV/
 │   ├── code/
 │   ├── data/
