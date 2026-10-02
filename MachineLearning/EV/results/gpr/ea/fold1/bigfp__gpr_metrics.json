@@ -1,0 +1,32 @@
+{
+  "alpha": 1e-10,
+  "fingerprint": "bigfp",
+  "fit_seconds": 1161.8806116580963,
+  "input_dimensions": 2088,
+  "input_dtype": "float64",
+  "input_preprocessing": "none",
+  "kernel_template": "ConstantKernel(1.0, (1e-2, 1e2)) * RBF(1.0, (1e-1, 1e2)) + WhiteKernel(1.0, (1e-3, 1.0))",
+  "learned_kernel": "0.729**2 * RBF(length_scale=7.69) + WhiteKernel(noise_level=0.00273)",
+  "log_marginal_likelihood": 1460.3081699505478,
+  "model": "GaussianProcessRegressor",
+  "n_restarts_optimizer": 20,
+  "n_test": 540,
+  "n_train": 2160,
+  "normalize_y": false,
+  "predict_seconds": 6.1707189083099365,
+  "random_state": null,
+  "target": "ea",
+  "test_fold": 1,
+  "test_metrics": {
+    "mae": 0.0541247033713808,
+    "mse": 0.005320949824079684,
+    "r2": 0.9849107760843552,
+    "rmse": 0.07294484096959622
+  },
+  "train_metrics": {
+    "mae": 0.022585635654568673,
+    "mse": 0.0011239062472731165,
+    "r2": 0.9970274690137321,
+    "rmse": 0.03352471099462479
+  }
+}

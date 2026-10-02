@@ -1,0 +1,194 @@
+{
+  "target": "EA vs SHE (eV)",
+  "sample_random_seed": 0,
+  "sampled_mono_b": [
+    394,
+    430,
+    41,
+    265,
+    523,
+    497,
+    414,
+    310,
+    488,
+    366,
+    597,
+    223,
+    516,
+    142,
+    288,
+    143,
+    97,
+    633,
+    256,
+    545,
+    616,
+    150,
+    317,
+    101,
+    75,
+    338,
+    483,
+    573,
+    103,
+    362,
+    444,
+    323,
+    625,
+    209,
+    565,
+    673,
+    453,
+    533,
+    266,
+    63,
+    561,
+    14,
+    95,
+    408,
+    1,
+    626,
+    505,
+    341,
+    249,
+    333,
+    64,
+    195,
+    581,
+    227,
+    244,
+    145,
+    556,
+    458,
+    93,
+    82,
+    327,
+    520,
+    501,
+    111,
+    308,
+    564,
+    298,
+    127,
+    560,
+    340,
+    553,
+    208,
+    613,
+    601,
+    294,
+    455,
+    623,
+    681,
+    324,
+    589,
+    247,
+    297,
+    188,
+    193,
+    191,
+    33,
+    643,
+    487,
+    70,
+    91,
+    133,
+    153,
+    39,
+    622,
+    611,
+    400,
+    537,
+    282,
+    534,
+    241
+  ],
+  "n_selected": 2700,
+  "global_index_min": 3,
+  "global_index_max": 18413,
+  "kfold": {
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42,
+    "n_train_per_fold": 2160,
+    "n_test_per_fold": 540
+  },
+  "std_ddof": 0,
+  "full_embedding_shapes": {
+    "Morgan": [
+      42966,
+      2048
+    ],
+    "p-ECFP": [
+      42966,
+      2048
+    ],
+    "BigFP": [
+      42966,
+      2088
+    ]
+  },
+  "selected_embedding_shapes": {
+    "Morgan": [
+      2700,
+      2048
+    ],
+    "p-ECFP": [
+      2700,
+      2048
+    ],
+    "BigFP": [
+      2700,
+      2088
+    ]
+  },
+  "svr_parameters": {
+    "Morgan": {
+      "kernel": "rbf",
+      "C": 1.0,
+      "epsilon": 0.01
+    },
+    "p-ECFP": {
+      "kernel": "rbf",
+      "C": 1.0,
+      "epsilon": 0.01
+    },
+    "BigFP": {
+      "kernel": "rbf",
+      "C": 1.0,
+      "epsilon": 0.01
+    }
+  },
+  "rf_parameters": {
+    "Morgan": {
+      "n_estimators": 50,
+      "max_depth": 200,
+      "min_samples_split": 2,
+      "min_samples_leaf": 1,
+      "max_features": 1.0,
+      "max_leaf_nodes": 600,
+      "random_state": 0,
+      "n_jobs": -1
+    },
+    "p-ECFP": {
+      "n_estimators": 150,
+      "max_depth": 100,
+      "min_samples_split": 2,
+      "min_samples_leaf": 1,
+      "max_features": 1.0,
+      "max_leaf_nodes": 600,
+      "random_state": 0,
+      "n_jobs": -1
+    },
+    "BigFP": {
+      "n_estimators": 50,
+      "max_depth": 100,
+      "min_samples_split": 2,
+      "min_samples_leaf": 1,
+      "max_features": 1.0,
+      "max_leaf_nodes": 600,
+      "random_state": 0,
+      "n_jobs": -1
+    }
+  }
+}

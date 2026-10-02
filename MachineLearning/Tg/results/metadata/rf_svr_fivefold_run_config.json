@@ -1,0 +1,32 @@
+{
+  "fingerprints": [
+    "morgan",
+    "pecfp",
+    "bigfp"
+  ],
+  "models": [
+    "rf",
+    "svr"
+  ],
+  "n_folds": 5,
+  "n_test_by_fold": {
+    "fold1": 1432,
+    "fold2": 1432,
+    "fold3": 1431,
+    "fold4": 1431,
+    "fold5": 1431
+  },
+  "n_train_by_fold": {
+    "fold1": 5725,
+    "fold2": 5725,
+    "fold3": 5726,
+    "fold4": 5726,
+    "fold5": 5726
+  },
+  "parameter_source": "MachineLearning/Tg/results/metadata/best_parameters_classical.json",
+  "parameters_held_fixed": true,
+  "protocol": "fixed optimized parameters; each fold1-fold5 is test once; other four folds train",
+  "sample_count": 7157,
+  "seed": 42,
+  "standard_deviation_ddof": 0
+}
