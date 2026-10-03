@@ -6,7 +6,10 @@ implementation, processed datasets, machine-learning workflows and results,
 and vector-similarity case studies.
 
 BigFingerprint is a topology-aware extended-connectivity fingerprint that uses
-BigSMILES, an expressive line notation developed explicitly for polymers.
+BigSMILES, an expressive line notation developed explicitly for polymers by
+the Olsen Lab at MIT
+([BigSMILES documentation](https://olsenlabmit.github.io/BigSMILES/docs/line_notation.html#examples);
+[original publication](https://doi.org/10.1021/acscentsci.9b00476)).
 BigFingerprint consists of two components: a polymer extended-connectivity
 fingerprint (p-ECFP), which encodes atom-centered substructures within and
 across molecular fragments such as repeat units, and a polymer topology
