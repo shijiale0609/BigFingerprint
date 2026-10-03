@@ -171,7 +171,7 @@ directory.
 ## Research results
 
 Research artifacts remain available in [`machinelearning/`](machinelearning/)
-for the manuscript's EV, IP, and large-data Tg prediction studies.
+for the manuscript's EA, IP, and large-data Tg prediction studies.
 Vector-similarity datasets, figures, and reproduction scripts are in
 [`vector_similarity_search/`](vector_similarity_search/). These research
 artifacts stay in the repository but are excluded from the installable wheel.
@@ -191,7 +191,7 @@ BigFingerprint/
 │   ├── polymer_topfp.py
 │   └── ...
 ├── tests/
-├── machinelearning/     # EV, IP, and Tg code, data, and results
+├── machinelearning/     # EA, IP, and Tg code, data, and results
 └── vector_similarity_search/
                          # vector-search data, figures, and scripts
 ```

@@ -7,7 +7,7 @@ Python package.
 
 ```text
 machinelearning/
-├── EV/
+├── EA/
 │   ├── code/
 │   ├── data/
 │   └── results/
@@ -21,9 +21,9 @@ machinelearning/
     └── results/
 ```
 
-## EV and IP
+## EA and IP
 
-EV/EA and IP use the same randomly selected 2,700 polymers and the same five
+EA and IP use the same randomly selected 2,700 polymers and the same five
 folds. Python random seed 0 selected 100 monomer-B identities across all nine
 monomer-A identities and three topologies. Five-fold splitting used shuffling
 and random state 42, giving 540 held-out samples per fold.
@@ -38,7 +38,7 @@ Each property folder contains:
   per-fold outputs for all three fingerprints;
 - the final manuscript SVG panels.
 
-The EV and IP data directories intentionally contain the same embedding and
+The EA and IP data directories intentionally contain the same embedding and
 split files so that each property folder is self-contained. The parameterized
 source files are also identical; the target is selected with `--target ea` or
 `--target ip`.

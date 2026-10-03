@@ -25,8 +25,8 @@ TARGET_COLUMNS = {
 }
 FINGERPRINT_FILES = {
     "morgan": "psmiles_mfp_arr.npy",
-    "pecfp": "EVIP_pecfp_arr.npy",
-    "bigfp": "EVIP_bigfp.npy",
+    "pecfp": "EAIP_pecfp_arr.npy",
+    "bigfp": "EAIP_bigfp.npy",
 }
 STD_DDOF = 0
 
@@ -389,7 +389,7 @@ def evaluate_models(
                     prediction_test=test_prediction,
                 )
                 if fold_index == 0:
-                    property_label = "EV" if target == "ea" else "IP"
+                    property_label = "EA" if target == "ea" else "IP"
                     fingerprint_label = {
                         "morgan": "psmiles_MorganFP",
                         "pecfp": "ECFP",

@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from ev_ip_svr_rf import (
+from ea_ip_svr_rf import (
     FINGERPRINT_FILES,
     TARGET_COLUMNS,
     build_sampled_global_indices,
