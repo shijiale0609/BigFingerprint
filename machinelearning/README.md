@@ -45,6 +45,7 @@ source files are also identical; the target is selected with `--target ea` or
 
 ## Tg
 
-Only the 7,157-polymer large-data Tg benchmark is retained. The earlier
-small-data Tg workflow is not part of this repository. See
-[`Tg/README.md`](Tg/README.md) for the full protocol and reported performance.
+The Tg benchmark contains 7,157 linear homopolymers and compares Morgan
+fingerprint, p-ECFP, and BigFingerprint representations using SVR, RF, and
+exact GPR. See [`Tg/README.md`](Tg/README.md) for the full protocol and reported
+performance.
