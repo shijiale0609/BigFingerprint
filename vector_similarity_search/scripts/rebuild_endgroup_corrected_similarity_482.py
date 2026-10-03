@@ -215,7 +215,7 @@ def main() -> None:
     )
 
     metadata = {
-        "dataset": "482-polymer end-group-corrected vector-similarity dataset",
+        "dataset": "482-polymer end-group-corrected vector similarity search dataset",
         "source_directory": str(SOURCE_DIR),
         "polymer_count": EXPECTED_POLYMERS,
         "p-ECFP": {

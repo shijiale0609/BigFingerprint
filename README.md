@@ -10,7 +10,7 @@
 This repository accompanies the manuscript *BigFingerprint: A Topology-aware
 Extended-connectivity Fingerprint for Polymers* and contains the BigFingerprint
 implementation, processed datasets, machine-learning workflows and results,
-and vector-similarity case studies.
+and vector similarity search case studies.
 
 BigFingerprint is a topology-aware extended-connectivity fingerprint that uses
 BigSMILES, an expressive line notation developed explicitly for polymers by
@@ -24,7 +24,7 @@ fingerprint (p-TFP), which encodes global architectural features such as block,
 statistical, graft, star, branched, and network topologies.
 
 The utility of BigFingerprint is demonstrated through three use cases:
-topology-aware vector similarity searches that produce intuitive results;
+topology-aware vector similarity search that produces intuitive results;
 predictive performance comparable to pSMILES-based Morgan fingerprints for
 the glass transition temperatures of linear homopolymers; and improved
 prediction of the electron affinities and ionization potentials of copolymers.
@@ -208,7 +208,7 @@ directory.
 
 Research artifacts remain available in [`machinelearning/`](machinelearning/)
 for the manuscript's EA, IP, and large-data Tg prediction studies.
-Vector-similarity datasets, figures, and reproduction scripts are in
+Vector similarity search datasets, figures, and reproduction scripts are in
 [`vector_similarity_search/`](vector_similarity_search/). These research
 artifacts stay in the repository but are excluded from the installable wheel.
 
@@ -229,7 +229,7 @@ BigFingerprint/
 ├── tests/
 ├── machinelearning/     # EA, IP, and Tg code, data, and results
 └── vector_similarity_search/
-                         # vector-search data, figures, and scripts
+                         # vector similarity search data, figures, and scripts
 ```
 
 ## Contact

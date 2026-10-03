@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plot representative BigFingerprint Top-5 vector-search results.
+"""Plot representative BigFingerprint Top-5 vector similarity search results.
 
 The candidate order is determined solely by BigFingerprint similarity.  The
 component p-ECFP and p-TFP Tanimoto similarities are displayed for context.
@@ -596,8 +596,9 @@ def main() -> None:
         else ", ".join(panel_query_labels[:-1]) + f", and {panel_query_labels[-1]}"
     )
     caption = (
-        "Representative vector searches in the deduplicated 475-polymer BigSMILES "
-        f"database using {panel_queries} as queries. Candidate order is determined "
+        "Representative vector similarity search results in the deduplicated "
+        f"475-polymer BigSMILES database using {panel_queries} as queries. "
+        "Candidate order is determined "
         "solely by BigFingerprint similarity. The component p-ECFP and p-TFP "
         "Tanimoto similarities are shown separately, with BigFingerprint similarity "
         "calculated as their product. The selected queries yield top-five lists "

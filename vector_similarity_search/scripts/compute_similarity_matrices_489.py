@@ -4,7 +4,7 @@
 The input order is the exact-string unique target order from the BigSMARTS
 query-target dataset after excluding its first four small-molecule entries.
 
-Similarity definitions match the eight-polymer vector-search experiment:
+Similarity definitions match the eight-polymer vector similarity search experiment:
 
     p-ECFP similarity = binary Tanimoto(p-ECFP_i, p-ECFP_j)
     p-TFP similarity  = binary Tanimoto(p-TFP_i, p-TFP_j)
