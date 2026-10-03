@@ -1,4 +1,4 @@
-# Vector similarity research
+# Vector similarity search
 
 This folder contains the data, similarity matrices, and figures used for the
 BigFingerprint vector-search case studies.
