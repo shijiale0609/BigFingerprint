@@ -1,13 +1,39 @@
-# BigFingerprint
+# BigFingerprint: A Topology-aware Extended-connectivity Fingerprint for Polymers
 
-BigFingerprint is an installable Python package for polymer informatics with
-BigSMILES. It combines a 2,048-bit polymer extended-connectivity fingerprint
-(p-ECFP) with a 40-element polymer topology fingerprint (p-TFP), and includes
-BigSMARTS matching plus automatic explicit or missing `[H]` end-group
-preprocessing. Its unified fingerprint API always returns one binary vector,
-including when preprocessing produces multiple candidate structures.
+This repository accompanies the manuscript *BigFingerprint: A Topology-aware
+Extended-connectivity Fingerprint for Polymers* and contains the BigFingerprint
+implementation, processed datasets, machine-learning workflows and results,
+and vector-similarity case studies.
 
-## Installation
+BigFingerprint is a topology-aware extended-connectivity fingerprint that uses
+BigSMILES, an expressive line notation developed explicitly for polymers.
+BigFingerprint consists of two components: a polymer extended-connectivity
+fingerprint (p-ECFP), which encodes atom-centered substructures within and
+across molecular fragments such as repeat units, and a polymer topology
+fingerprint (p-TFP), which encodes global architectural features such as block,
+statistical, graft, star, branched, and network topologies.
+
+The utility of BigFingerprint is demonstrated through three use cases:
+topology-aware vector similarity searches that produce intuitive results;
+predictive performance comparable to pSMILES-based Morgan fingerprints for
+the glass transition temperatures of linear homopolymers; and improved
+prediction of the electron affinities and ionization potentials of copolymers.
+
+As a critical component of the BigSMILES-centered ecosystem, BigFingerprint
+provides a general and chemically interpretable representation for
+substructure analysis, similarity assessment, machine-learning-based property
+prediction, and inverse design of structurally diverse polymers.
+
+## BigFingerprint Python package
+
+The repository provides BigFingerprint as an installable Python package for
+polymer informatics. The package combines a 2,048-bit p-ECFP with a 40-element
+p-TFP and includes BigSMARTS matching plus automatic preprocessing of explicit
+or missing `[H]` end groups. Its unified fingerprint API always returns one
+binary vector, including when preprocessing produces multiple candidate
+structures.
+
+### Installation
 
 Install the package and its RDKit, NumPy, and NetworkX dependencies directly
 from the repository:
@@ -33,9 +59,9 @@ Python 3.9 or newer is required. If pip cannot find a compatible RDKit wheel
 for a platform, create a conda environment with RDKit first and then install
 BigFingerprint into that environment.
 
-## Python API
+### Python API
 
-### Generate one unified fingerprint
+#### Generate one unified fingerprint
 
 Use `generate_bigfingerprint_vector` for every BigSMILES input. The function
 always runs `[H]` preprocessing internally, even when no expansion is needed:
@@ -60,7 +86,7 @@ bit-vector size is 2,048. All examples in this README use these defaults,
 producing a 2,088-element binary BigFingerprint after concatenating the
 40-element p-TFP vector.
 
-### Automatic `[H]` preprocessing and candidate aggregation
+#### Automatic `[H]` preprocessing and candidate aggregation
 
 An open polymer end can expand to multiple chemically valid repeat-fragment
 candidates. The same function processes every candidate internally and returns
@@ -106,7 +132,7 @@ object ends, then expands every marker with compatible repeat-unit fragments.
 Multiple sites form a Cartesian product. Closed `[]` terminals are left alone,
 and nested BigSMILES text is preserved during directional expansion.
 
-### Lower-level modules
+#### Lower-level modules
 
 The original algorithms remain available as package submodules:
 
@@ -126,7 +152,7 @@ pecfp = polymer_ecfp.ECFP(
 ptfp = polymer_topfp.bigsmiles_topology_vector(bigsmiles)
 ```
 
-## Command line
+### Command line
 
 Installation provides a `bigfingerprint` command:
 
@@ -143,7 +169,7 @@ The `fingerprint` command always preprocesses `[H]` internally. Its JSON output
 contains the one aggregated vector and its on-bit indices, regardless of how
 many candidate structures preprocessing generates.
 
-## Optional diagnostics
+### Optional diagnostics
 
 Normal API calls do not print legacy debug traces or create files. To export
 the historical atom-invariant spreadsheet or network graph, install the
