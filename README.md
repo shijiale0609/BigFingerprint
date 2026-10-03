@@ -1,5 +1,7 @@
 # BigFingerprint: A Topology-aware Extended-connectivity Fingerprint for Polymers
 
+Jiale Shi, Nathan J. Rebello, Jiarui Lu, Aaron A. Burkey, Debra J. Audus, Bradley D. Olsen
+
 This repository accompanies the manuscript *BigFingerprint: A Topology-aware
 Extended-connectivity Fingerprint for Polymers* and contains the BigFingerprint
 implementation, processed datasets, machine-learning workflows and results,
