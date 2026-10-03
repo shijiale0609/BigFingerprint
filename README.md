@@ -225,6 +225,20 @@ BigFingerprint/
                          # vector-search data, figures, and scripts
 ```
 
+## Contact
+
+[Jiale Shi, PhD](https://www.utoledo.edu/engineering/chemical-engineering/facultystaff/jiale-shi/)
+
+Assistant Professor
+
+Department of Chemical Engineering
+
+The University of Toledo (UToledo)
+
+Email: [jiale.shi@utoledo.edu](mailto:jiale.shi@utoledo.edu)
+
+GitHub: [shijiale0609](https://github.com/shijiale0609)
+
 ## License
 
 BigFingerprint is distributed under the GNU General Public License v3.0.
