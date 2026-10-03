@@ -27,11 +27,11 @@ prediction, and inverse design of structurally diverse polymers.
 ## BigFingerprint Python package
 
 The repository provides BigFingerprint as an installable Python package for
-polymer informatics. The package combines a 2,048-bit p-ECFP with a 40-element
-p-TFP and includes BigSMARTS matching plus automatic preprocessing of explicit
-or missing `[H]` end groups. Its unified fingerprint API always returns one
-binary vector, including when preprocessing produces multiple candidate
-structures.
+polymer informatics. By default, the package combines a 2,048-bit p-ECFP with a
+40-element p-TFP; the p-ECFP bit-vector size is configurable. The package also
+includes BigSMARTS matching plus automatic preprocessing of explicit or
+missing `[H]` end groups. Its unified fingerprint API always returns one binary
+vector, including when preprocessing produces multiple candidate structures.
 
 ### Installation
 
