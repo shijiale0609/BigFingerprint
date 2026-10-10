@@ -7,6 +7,8 @@ import numpy as np
 
 from bigfingerprint import (
     generate_bigfingerprint_vector,
+    polymer_ecfp,
+    search_tools,
 )
 
 
@@ -23,19 +25,103 @@ class BigFingerprintApiTest(unittest.TestCase):
         self.assertEqual(vector.dtype, np.uint8)
         self.assertTrue(np.isin(vector, [0, 1]).all())
 
-    def test_radius_greater_than_two_is_supported(self):
-        radius_two = generate_bigfingerprint_vector(
-            "{[][<]CCO[>][]}",
-            pecfp_iterations=2,
+    def test_iterations_greater_than_two_are_rejected_before_preprocessing(self):
+        with patch("bigfingerprint.bigfingerprint.preprocess_bigsmiles") as preprocess:
+            for iterations in (3, 4, 100):
+                with self.subTest(iterations=iterations):
+                    with self.assertRaisesRegex(ValueError, "at most 2"):
+                        generate_bigfingerprint_vector(
+                            "{[][<]CCO[>][]}", pecfp_iterations=iterations
+                        )
+            preprocess.assert_not_called()
+
+    def test_core_rejects_iterations_greater_than_two_before_reading_graph(self):
+        for iterations in (3, 4, 100):
+            with self.subTest(iterations=iterations):
+                with self.assertRaisesRegex(ValueError, "at most 2"):
+                    polymer_ecfp.ECFP(
+                        {}, [], iteration_input=iterations, print_all=False
+                    )
+
+    def test_figure_one_supported_iterations_keep_reference_fingerprints(self):
+        bigsmiles = "CO{[>][<]CCO[>],[<]CC(C)O[>][<]}C"
+        # Full-vector on-bit indices captured from unmodified GitHub commit 4195169.
+        expected_bits = {
+            0: [274, 347, 1242, 1751, 2048, 2069],
+            1: [
+                155,
+                184,
+                274,
+                281,
+                347,
+                528,
+                782,
+                1041,
+                1155,
+                1242,
+                1317,
+                1751,
+                1850,
+                2024,
+                2048,
+                2069,
+            ],
+            2: [
+                87,
+                136,
+                138,
+                155,
+                184,
+                228,
+                274,
+                281,
+                305,
+                347,
+                376,
+                385,
+                426,
+                484,
+                528,
+                702,
+                771,
+                782,
+                835,
+                862,
+                906,
+                923,
+                1041,
+                1155,
+                1242,
+                1268,
+                1317,
+                1400,
+                1448,
+                1561,
+                1751,
+                1850,
+                1951,
+                2024,
+                2048,
+                2069,
+            ],
+        }
+        graphs = search_tools.generate_NetworkX_graphs(bigsmiles)
+        _, clusters, _ = search_tools.identify_cycles(graphs)
+        for iterations, bits in expected_bits.items():
+            with self.subTest(iterations=iterations):
+                expected = np.zeros(2088, dtype=np.uint8)
+                expected[bits] = 1
+                vector = generate_bigfingerprint_vector(
+                    bigsmiles, pecfp_iterations=iterations
+                )
+                np.testing.assert_array_equal(vector, expected)
+                core = polymer_ecfp.ECFP(
+                    graphs, clusters, iteration_input=iterations, print_all=False
+                )
+                np.testing.assert_array_equal(core, expected[:2048])
+        np.testing.assert_array_equal(
+            generate_bigfingerprint_vector(bigsmiles), expected
         )
-        radius_three = generate_bigfingerprint_vector(
-            "{[][<]CCO[>][]}",
-            pecfp_iterations=3,
-        )
-        self.assertEqual(radius_three.shape, (2088,))
-        self.assertTrue(np.isin(radius_three, [0, 1]).all())
-        self.assertTrue(np.all(radius_three >= radius_two))
-        self.assertGreater(radius_three.sum(), radius_two.sum())
 
     def test_negative_radius_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "non-negative integer"):

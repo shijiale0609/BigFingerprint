@@ -90,11 +90,19 @@ print(fp.shape)  # (2088,)
 print(fp.dtype)  # uint8
 ```
 
-The p-ECFP implementation accepts any non-negative integer radius; radius 2 is
-the standard default, not a limitation of the algorithm. The default p-ECFP
-bit-vector size is 2,048. All examples in this README use these defaults,
-producing a 2,088-element binary BigFingerprint after concatenating the
-40-element p-TFP vector.
+The p-ECFP implementation supports 0, 1, or 2 neighborhood-update iterations,
+with 2 as the default.
+
+Based on the previous work on polymer fingerprints (e.g., Morgan Fingerprint
+of pSMILES), two iterations contain sufficient information about the
+substructural information. The current implementation is also limited to two
+iterations to avoid incompatible across-descriptor connection histories;
+future work will develop algorithms that maintain connection-history
+consistency at higher iterations.
+
+The default p-ECFP bit-vector size is 2,048. All examples in this README use
+these defaults, producing a 2,088-element binary BigFingerprint after
+concatenating the 40-element p-TFP vector.
 
 #### Automatic `[H]` preprocessing and candidate aggregation
 
@@ -177,7 +185,8 @@ bigfingerprint --version
 
 The `fingerprint` command always preprocesses `[H]` internally. Its JSON output
 contains the one aggregated vector and its on-bit indices, regardless of how
-many candidate structures preprocessing generates.
+many candidate structures preprocessing generates. The `--radius` option sets
+the p-ECFP iteration count and accepts only `0`, `1`, or `2` (default: `2`).
 
 ### Optional diagnostics
 

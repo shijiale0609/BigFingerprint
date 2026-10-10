@@ -31,9 +31,10 @@ def _build_parser() -> argparse.ArgumentParser:
     fingerprint_parser.add_argument(
         "--radius",
         type=int,
+        choices=(0, 1, 2),
         default=2,
         dest="pecfp_iterations",
-        help="non-negative p-ECFP radius (default: 2)",
+        help="number of p-ECFP update iterations: 0, 1, or 2 (default: 2)",
     )
     fingerprint_parser.add_argument("--fp-size", type=int, default=2048)
     fingerprint_parser.add_argument("--verbose", action="store_true")

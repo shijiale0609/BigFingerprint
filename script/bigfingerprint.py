@@ -21,7 +21,7 @@ def generate_bigfingerprint_vector(
     bigsmiles : str
         Polymer representation to encode.
     pecfp_iterations : int, default=2
-        Non-negative p-ECFP radius. Radii greater than 2 are supported.
+        Number of p-ECFP update iterations: 0, 1, or 2.
     fp_size : int, default=2048
         Number of bits in the p-ECFP portion.
     print_identifiers : bool, default=False
@@ -44,6 +44,11 @@ def generate_bigfingerprint_vector(
         raise ValueError("bigsmiles must be a non-empty string")
     if not isinstance(pecfp_iterations, int) or pecfp_iterations < 0:
         raise ValueError("pecfp_iterations must be a non-negative integer")
+    if pecfp_iterations > 2:
+        raise ValueError(
+            "pecfp_iterations must be at most 2; iterations greater than 2 "
+            "are not currently supported"
+        )
     if not isinstance(fp_size, int) or fp_size <= 0:
         raise ValueError("fp_size must be a positive integer")
 

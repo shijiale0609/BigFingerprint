@@ -148,7 +148,7 @@ def ECFP(
     graph_name="",
     save_graph=False,
 ):
-    """Generate a p-ECFP vector at any non-negative radius.
+    """Generate a p-ECFP vector using zero, one, or two update iterations.
 
     Parameters
     ----------
@@ -157,7 +157,7 @@ def ECFP(
     individual_clusters : list[set]
         Stochastic-object clusters returned by :func:`identify_cycles`.
     iteration_input : int, default=2
-        Number of neighborhood-update rounds (the fingerprint radius).
+        Number of neighborhood-update rounds: 0, 1, or 2.
     repeat_unit_property : bool, default=False
         Include repeat-unit membership in the initial atom invariants.
     backbone_property : bool, default=False
@@ -180,6 +180,11 @@ def ECFP(
     """
     if not isinstance(iteration_input, int) or iteration_input < 0:
         raise ValueError("iteration_input must be a non-negative integer")
+    if iteration_input > 2:
+        raise ValueError(
+            "iteration_input must be at most 2; iterations greater than 2 "
+            "are not currently supported"
+        )
     if not isinstance(fp_size, int) or fp_size <= 0:
         raise ValueError("fp_size must be a positive integer")
 
