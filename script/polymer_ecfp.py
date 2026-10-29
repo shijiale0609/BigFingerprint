@@ -148,7 +148,7 @@ def ECFP(
     graph_name="",
     save_graph=False,
 ):
-    """Generate a p-ECFP vector using zero, one, or two update iterations.
+    """Generate a p-ECFP vector at radius 0, 1, or 2.
 
     Parameters
     ----------
@@ -157,7 +157,9 @@ def ECFP(
     individual_clusters : list[set]
         Stochastic-object clusters returned by :func:`identify_cycles`.
     iteration_input : int, default=2
-        Number of neighborhood-update rounds: 0, 1, or 2.
+        p-ECFP radius: 0, 1, or 2. As in RDKit's Morgan fingerprints, radius
+        counts neighborhood-update iterations after atom initialization.
+        Radius 0 uses only the initial atom identifiers.
     repeat_unit_property : bool, default=False
         Include repeat-unit membership in the initial atom invariants.
     backbone_property : bool, default=False

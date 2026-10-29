@@ -99,15 +99,25 @@ print(fp.shape)  # (2088,)
 print(fp.dtype)  # uint8
 ```
 
-The p-ECFP implementation supports 0, 1, or 2 neighborhood-update iterations,
-with 2 as the default.
+The p-ECFP implementation supports radius values of 0, 1, or 2, with 2 as the
+default. Here, `radius` is the number of fingerprint-expansion
+(neighborhood-update) iterations after atom initialization, following the
+same parameter convention as
+[RDKit's Morgan fingerprints](https://www.rdkit.org/docs/source/rdkit.Chem.rdFingerprintGenerator.html#rdkit.Chem.rdFingerprintGenerator.GetMorganGenerator).
+Radius 0 uses only the initial atom identifiers; radius 2 performs two update
+iterations. Initialization is not counted as an update iteration.
+
+The Python parameters `pecfp_iterations` and `iteration_input` specify this
+same radius value. For the Morgan baseline, `MORGAN_RADIUS` and the metadata
+field `morgan_radius` retain RDKit's radius terminology and likewise specify
+the number of update iterations.
 
 Based on the previous work on polymer fingerprints (e.g., Morgan Fingerprint
-of pSMILES), two iterations contain sufficient information about the
-substructural information. The current implementation is also limited to two
-iterations to avoid incompatible across-descriptor connection histories;
+of pSMILES), radius 2 provides sufficient substructural information.
+The current implementation is also limited to radius 2 to avoid incompatible
+across-descriptor connection histories;
 future work will develop algorithms that maintain connection-history
-consistency at higher iterations.
+consistency at higher radii.
 
 The default p-ECFP bit-vector size is 2,048. All examples in this README use
 these defaults, producing a 2,088-element binary BigFingerprint after
@@ -194,8 +204,10 @@ bigfingerprint --version
 
 The `fingerprint` command always preprocesses `[H]` internally. Its JSON output
 contains the one aggregated vector and its on-bit indices, regardless of how
-many candidate structures preprocessing generates. The `--radius` option sets
-the p-ECFP iteration count and accepts only `0`, `1`, or `2` (default: `2`).
+many candidate structures preprocessing generates. The `--radius` option maps
+to the Python API's `pecfp_iterations` parameter and accepts only `0`, `1`, or
+`2` (default: `2`). It sets the number of update iterations after atom
+initialization, using the radius convention described above.
 
 ### Optional diagnostics
 

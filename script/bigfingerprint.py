@@ -21,7 +21,9 @@ def generate_bigfingerprint_vector(
     bigsmiles : str
         Polymer representation to encode.
     pecfp_iterations : int, default=2
-        Number of p-ECFP update iterations: 0, 1, or 2.
+        p-ECFP radius: 0, 1, or 2. As in RDKit's Morgan fingerprints, radius
+        counts update iterations after atom initialization; radius 0 uses
+        only the initial atom identifiers.
     fp_size : int, default=2048
         Number of bits in the p-ECFP portion.
     print_identifiers : bool, default=False
