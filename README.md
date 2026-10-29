@@ -34,6 +34,15 @@ provides a general and chemically interpretable representation for
 substructure analysis, similarity assessment, machine-learning-based property
 prediction, and inverse design of structurally diverse polymers.
 
+## Development and updates
+
+For ongoing development and the latest updates, please visit the
+[BigFingerprint development repository](https://github.com/shijiale0609/BigFingerprint),
+maintained by [Jiale Shi](https://github.com/shijiale0609).
+
+Bug reports and feature requests are welcome in the development repository's
+[issue tracker](https://github.com/shijiale0609/BigFingerprint/issues).
+
 ## BigFingerprint Python package
 
 The repository provides BigFingerprint as an installable Python package for
