@@ -37,7 +37,7 @@ OUTPUT_DIR = HERE / "results_489"
 CHECKPOINT_DIR = OUTPUT_DIR / ".checkpoints"
 
 FP_SIZE = 2048
-PECFP_ITERATIONS = 2
+PECFP_RADIUS = 2
 PECFP_TIMEOUT_SECONDS = 180
 EXPECTED_ALL_UNIQUE = 493
 EXPECTED_POLYMERS = 489
@@ -145,7 +145,7 @@ def compute_one_pecfp(bigsmiles: str, use_fast_clusters: bool = False) -> np.nda
             vector = polymer_ecfp.ECFP(
                 graphs=graphs,
                 individual_clusters=clusters,
-                iteration_input=PECFP_ITERATIONS,
+                radius=PECFP_RADIUS,
                 repeat_unit_property=False,
                 backbone_property=False,
                 fp_size=FP_SIZE,
@@ -449,7 +449,7 @@ def main() -> None:
         "polymer_ids": "P1-P489; see polymer_id_mapping_489.csv",
         "p-ECFP": {
             "implementation": "polymer_ecfp.ECFP",
-            "iterations": PECFP_ITERATIONS,
+            "radius": PECFP_RADIUS,
             "fingerprint_size": FP_SIZE,
             "binary_conversion": "nonzero entries mapped to 1",
             "SCC_cycle_detection_target_indices": sorted(

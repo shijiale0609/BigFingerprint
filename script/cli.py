@@ -33,7 +33,7 @@ def _build_parser() -> argparse.ArgumentParser:
         type=int,
         choices=(0, 1, 2),
         default=2,
-        dest="pecfp_iterations",
+        dest="pecfp_radius",
         help=(
             "p-ECFP radius (update iterations after initialization): "
             "0, 1, or 2 (default: 2)"
@@ -57,7 +57,7 @@ def main(argv=None) -> int:
 
     vector = generate_bigfingerprint_vector(
         args.bigsmiles,
-        pecfp_iterations=args.pecfp_iterations,
+        pecfp_radius=args.pecfp_radius,
         fp_size=args.fp_size,
         verbose=args.verbose,
     )

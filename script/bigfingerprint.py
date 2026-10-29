@@ -6,7 +6,7 @@ from .bigfingerprint_preprocess import preprocess_bigsmiles
 
 def generate_bigfingerprint_vector(
     bigsmiles,
-    pecfp_iterations=2,
+    pecfp_radius=2,
     *,
     fp_size=2048,
     print_identifiers=False,
@@ -20,7 +20,7 @@ def generate_bigfingerprint_vector(
     ----------
     bigsmiles : str
         Polymer representation to encode.
-    pecfp_iterations : int, default=2
+    pecfp_radius : int, default=2
         p-ECFP radius: 0, 1, or 2. As in RDKit's Morgan fingerprints, radius
         counts update iterations after atom initialization; radius 0 uses
         only the initial atom identifiers.
@@ -33,7 +33,7 @@ def generate_bigfingerprint_vector(
     graph_name : str, default=""
         Filename suffix used when ``save_graph`` is enabled.
     verbose : bool, default=False
-        Print p-ECFP iteration progress.
+        Print p-ECFP progress at each radius.
 
     Returns
     -------
@@ -44,11 +44,11 @@ def generate_bigfingerprint_vector(
     """
     if not isinstance(bigsmiles, str) or not bigsmiles.strip():
         raise ValueError("bigsmiles must be a non-empty string")
-    if not isinstance(pecfp_iterations, int) or pecfp_iterations < 0:
-        raise ValueError("pecfp_iterations must be a non-negative integer")
-    if pecfp_iterations > 2:
+    if not isinstance(pecfp_radius, int) or pecfp_radius < 0:
+        raise ValueError("pecfp_radius must be a non-negative integer")
+    if pecfp_radius > 2:
         raise ValueError(
-            "pecfp_iterations must be at most 2; iterations greater than 2 "
+            "pecfp_radius must be at most 2; radii greater than 2 "
             "are not currently supported"
         )
     if not isinstance(fp_size, int) or fp_size <= 0:
@@ -63,7 +63,7 @@ def generate_bigfingerprint_vector(
         candidate_pecfp_vectors.append(
             _generate_pecfp_vector(
                 candidate,
-                pecfp_iterations=pecfp_iterations,
+                pecfp_radius=pecfp_radius,
                 fp_size=fp_size,
                 print_identifiers=print_identifiers,
                 save_graph=save_graph,
@@ -86,7 +86,7 @@ def generate_bigfingerprint_vector(
 def _generate_pecfp_vector(
     bigsmiles,
     *,
-    pecfp_iterations,
+    pecfp_radius,
     fp_size,
     print_identifiers,
     save_graph,
@@ -99,7 +99,7 @@ def _generate_pecfp_vector(
     return polymer_ecfp.ECFP(
         graphs=graphs,
         individual_clusters=individual_clusters,
-        iteration_input=pecfp_iterations,
+        radius=pecfp_radius,
         repeat_unit_property=False,
         backbone_property=False,
         fp_size=fp_size,
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCC(CO[>])(CO[>])CO[>][]}"
     bigfingerprint_example = generate_bigfingerprint_vector(
         bigsmiles_example,
-        pecfp_iterations=2,
+        pecfp_radius=2,
         fp_size=2048,
     )
     print("BigSMILES:", bigsmiles_example)
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     bigsmiles_example = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"
     bigfingerprint_example = generate_bigfingerprint_vector(
         bigsmiles_example,
-        pecfp_iterations=2,
+        pecfp_radius=2,
         fp_size=2048,
     )
     print("BigSMILES:", bigsmiles_example)

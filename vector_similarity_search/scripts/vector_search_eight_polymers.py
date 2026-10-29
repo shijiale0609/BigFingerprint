@@ -32,7 +32,7 @@ from bigfingerprint import polymer_ecfp, polymer_topfp, search_tools
 
 FP_SIZE = 2048
 MORGAN_RADIUS = 2
-PECFP_ITERATIONS = 2
+PECFP_RADIUS = 2
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "vector_search_eight_polymers"
 BLUE_OUTPUT_DIR = OUTPUT_DIR / "blue_individual_heatmaps"
@@ -133,7 +133,7 @@ def bigsmiles_fingerprints(bigsmiles: str) -> tuple[np.ndarray, np.ndarray]:
         pecfp = polymer_ecfp.ECFP(
             graphs=graphs,
             individual_clusters=clusters,
-            iteration_input=PECFP_ITERATIONS,
+            radius=PECFP_RADIUS,
             repeat_unit_property=False,
             backbone_property=False,
             fp_size=FP_SIZE,
@@ -431,7 +431,7 @@ def main() -> None:
         ],
         "morgan_radius": MORGAN_RADIUS,
         "morgan_fp_size": FP_SIZE,
-        "pecfp_iterations": PECFP_ITERATIONS,
+        "pecfp_radius": PECFP_RADIUS,
         "pecfp_fp_size": FP_SIZE,
         "ptfp_size": int(ptfp_vectors.shape[1]),
         "rdkit_version": rdBase.rdkitVersion,

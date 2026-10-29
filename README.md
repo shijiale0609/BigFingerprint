@@ -91,7 +91,7 @@ import bigfingerprint as bfp
 bigsmiles = "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}"  # closed terminals
 fp = bfp.generate_bigfingerprint_vector(
     bigsmiles,
-    pecfp_iterations=2,
+    pecfp_radius=2,
     fp_size=2048,
 )
 
@@ -107,10 +107,10 @@ same parameter convention as
 Radius 0 uses only the initial atom identifiers; radius 2 performs two update
 iterations. Initialization is not counted as an update iteration.
 
-The Python parameters `pecfp_iterations` and `iteration_input` specify this
-same radius value. For the Morgan baseline, `MORGAN_RADIUS` and the metadata
-field `morgan_radius` retain RDKit's radius terminology and likewise specify
-the number of update iterations.
+The Python API uses `pecfp_radius`; the lower-level `polymer_ecfp.ECFP`
+function uses `radius`. Both specify this same radius value. For the Morgan
+baseline, `MORGAN_RADIUS` and the metadata field `morgan_radius` likewise
+specify the number of update iterations.
 
 Based on the previous work on polymer fingerprints (e.g., Morgan Fingerprint
 of pSMILES), radius 2 provides sufficient substructural information.
@@ -135,7 +135,7 @@ import bigfingerprint as bfp
 bigsmiles = "{[>][<]CCO[>], [<]CC(C)O[>][<]}CC"
 fp = bfp.generate_bigfingerprint_vector(
     bigsmiles,
-    pecfp_iterations=2,
+    pecfp_radius=2,
     fp_size=2048,
 )
 
@@ -181,7 +181,7 @@ _, clusters, _ = search_tools.identify_cycles(graphs)
 pecfp = polymer_ecfp.ECFP(
     graphs,
     clusters,
-    iteration_input=2,
+    radius=2,
     fp_size=2048,
     print_all=False,
     save_graph=False,
@@ -205,7 +205,7 @@ bigfingerprint --version
 The `fingerprint` command always preprocesses `[H]` internally. Its JSON output
 contains the one aggregated vector and its on-bit indices, regardless of how
 many candidate structures preprocessing generates. The `--radius` option maps
-to the Python API's `pecfp_iterations` parameter and accepts only `0`, `1`, or
+to the Python API's `pecfp_radius` parameter and accepts only `0`, `1`, or
 `2` (default: `2`). It sets the number of update iterations after atom
 initialization, using the radius convention described above.
 
@@ -222,7 +222,7 @@ python -m pip install ".[debug]"
 ```python
 fp = bfp.generate_bigfingerprint_vector(
     bigsmiles,
-    pecfp_iterations=2,
+    pecfp_radius=2,
     fp_size=2048,
     print_identifiers=True,
     save_graph=True,

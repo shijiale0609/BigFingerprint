@@ -18,32 +18,32 @@ class BigFingerprintApiTest(unittest.TestCase):
         with contextlib.redirect_stdout(output):
             vector = generate_bigfingerprint_vector(
                 "{[][<]C(=O)CCC(=O)[<],[>]OCCCO[>][]}",
-                pecfp_iterations=0,
+                pecfp_radius=0,
             )
         self.assertEqual(output.getvalue(), "")
         self.assertEqual(vector.shape, (2088,))
         self.assertEqual(vector.dtype, np.uint8)
         self.assertTrue(np.isin(vector, [0, 1]).all())
 
-    def test_iterations_greater_than_two_are_rejected_before_preprocessing(self):
+    def test_radii_greater_than_two_are_rejected_before_preprocessing(self):
         with patch("bigfingerprint.bigfingerprint.preprocess_bigsmiles") as preprocess:
-            for iterations in (3, 4, 100):
-                with self.subTest(iterations=iterations):
+            for radius in (3, 4, 100):
+                with self.subTest(radius=radius):
                     with self.assertRaisesRegex(ValueError, "at most 2"):
                         generate_bigfingerprint_vector(
-                            "{[][<]CCO[>][]}", pecfp_iterations=iterations
+                            "{[][<]CCO[>][]}", pecfp_radius=radius
                         )
             preprocess.assert_not_called()
 
-    def test_core_rejects_iterations_greater_than_two_before_reading_graph(self):
-        for iterations in (3, 4, 100):
-            with self.subTest(iterations=iterations):
+    def test_core_rejects_radii_greater_than_two_before_reading_graph(self):
+        for radius in (3, 4, 100):
+            with self.subTest(radius=radius):
                 with self.assertRaisesRegex(ValueError, "at most 2"):
                     polymer_ecfp.ECFP(
-                        {}, [], iteration_input=iterations, print_all=False
+                        {}, [], radius=radius, print_all=False
                     )
 
-    def test_figure_one_supported_iterations_keep_reference_fingerprints(self):
+    def test_figure_one_supported_radii_keep_reference_fingerprints(self):
         bigsmiles = "CO{[>][<]CCO[>],[<]CC(C)O[>][<]}C"
         # Full-vector on-bit indices captured from unmodified GitHub commit 4195169.
         expected_bits = {
@@ -107,16 +107,16 @@ class BigFingerprintApiTest(unittest.TestCase):
         }
         graphs = search_tools.generate_NetworkX_graphs(bigsmiles)
         _, clusters, _ = search_tools.identify_cycles(graphs)
-        for iterations, bits in expected_bits.items():
-            with self.subTest(iterations=iterations):
+        for radius, bits in expected_bits.items():
+            with self.subTest(radius=radius):
                 expected = np.zeros(2088, dtype=np.uint8)
                 expected[bits] = 1
                 vector = generate_bigfingerprint_vector(
-                    bigsmiles, pecfp_iterations=iterations
+                    bigsmiles, pecfp_radius=radius
                 )
                 np.testing.assert_array_equal(vector, expected)
                 core = polymer_ecfp.ECFP(
-                    graphs, clusters, iteration_input=iterations, print_all=False
+                    graphs, clusters, radius=radius, print_all=False
                 )
                 np.testing.assert_array_equal(core, expected[:2048])
         np.testing.assert_array_equal(
@@ -127,7 +127,7 @@ class BigFingerprintApiTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "non-negative integer"):
             generate_bigfingerprint_vector(
                 "{[][<]CCO[>][]}",
-                pecfp_iterations=-1,
+                pecfp_radius=-1,
             )
 
     def test_multiple_h_candidates_are_combined_by_bitwise_or(self):
@@ -148,7 +148,7 @@ class BigFingerprintApiTest(unittest.TestCase):
         ):
             vector = generate_bigfingerprint_vector(
                 bigsmiles,
-                pecfp_iterations=2,
+                pecfp_radius=2,
                 fp_size=3,
             )
 

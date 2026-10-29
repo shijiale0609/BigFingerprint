@@ -139,7 +139,7 @@ def _pecfp_across_atoms(atomistic, symbols, node):
 def ECFP(
     graphs,
     individual_clusters,
-    iteration_input=2,
+    radius=2,
     repeat_unit_property=False,
     backbone_property=False,
     fp_size=2048,
@@ -156,7 +156,7 @@ def ECFP(
         Graph collection returned by :func:`generate_NetworkX_graphs`.
     individual_clusters : list[set]
         Stochastic-object clusters returned by :func:`identify_cycles`.
-    iteration_input : int, default=2
+    radius : int, default=2
         p-ECFP radius: 0, 1, or 2. As in RDKit's Morgan fingerprints, radius
         counts neighborhood-update iterations after atom initialization.
         Radius 0 uses only the initial atom identifiers.
@@ -180,11 +180,11 @@ def ECFP(
     numpy.ndarray
         Binary p-ECFP vector with shape ``(fp_size,)``.
     """
-    if not isinstance(iteration_input, int) or iteration_input < 0:
-        raise ValueError("iteration_input must be a non-negative integer")
-    if iteration_input > 2:
+    if not isinstance(radius, int) or radius < 0:
+        raise ValueError("radius must be a non-negative integer")
+    if radius > 2:
         raise ValueError(
-            "iteration_input must be at most 2; iterations greater than 2 "
+            "radius must be at most 2; radii greater than 2 "
             "are not currently supported"
         )
     if not isinstance(fp_size, int) or fp_size <= 0:
@@ -294,8 +294,8 @@ def ECFP(
     if print_identifiers:
         book.save("Atom_Invariants.xls")
 
-    for iteration in range(1, iteration_input + 1):
-        log("Iteration:", iteration)
+    for current_radius in range(1, radius + 1):
+        log("Radius:", current_radius)
         next_state = {}
         for node in state:
             local_messages = []
@@ -327,7 +327,7 @@ def ECFP(
                             neighbors = list(local)
                             if across_order is not None:
                                 neighbors.append((across_order, crossed_identifier))
-                            hashed = [iteration, own_identifier]
+                            hashed = [current_radius, own_identifier]
                             for order, identifier in sorted(neighbors):
                                 hashed.extend((order, identifier))
                             identifier = hash(tuple(hashed))

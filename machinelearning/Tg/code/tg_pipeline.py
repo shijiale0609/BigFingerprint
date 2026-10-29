@@ -13,7 +13,6 @@ import argparse
 import json
 import math
 import re
-import sys
 import time
 from pathlib import Path
 from typing import Any, Iterable
@@ -40,15 +39,12 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import TruncatedSVD
 from sklearn.svm import SVR
 
+from bigfingerprint import polymer_ecfp as _bigfp_polymer_ecfp
+from bigfingerprint import polymer_topfp as _bigfp_polymer_topfp
+from bigfingerprint import search_tools as _bigfp_search_tools
+
 HERE = Path(__file__).resolve().parent
-PROJECT_ROOT = HERE.parents[2]
 PROPERTY_ROOT = HERE.parent
-BIGFINGERPRINT_SCRIPT = PROJECT_ROOT / "script"
-if str(BIGFINGERPRINT_SCRIPT) not in sys.path:
-    sys.path.insert(0, str(BIGFINGERPRINT_SCRIPT))
-import search_tools as _bigfp_search_tools
-import polymer_ecfp as _bigfp_polymer_ecfp
-import polymer_topfp as _bigfp_polymer_topfp
 
 DEFAULT_INPUT = PROPERTY_ROOT / "data" / "cleaned_tg.csv"
 DEFAULT_OUTPUT = PROPERTY_ROOT / "results" / "reproduction"
@@ -180,7 +176,7 @@ def _standard_bigsmiles_fingerprints(
     pecfp = _bigfp_polymer_ecfp.ECFP(
         graphs=graphs,
         individual_clusters=individual_clusters,
-        iteration_input=2,
+        radius=2,
         repeat_unit_property=False,
         backbone_property=False,
         fp_size=fp_size,
