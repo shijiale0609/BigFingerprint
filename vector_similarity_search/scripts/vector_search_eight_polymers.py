@@ -8,6 +8,10 @@ distinguished.  Star-polymer architectures cannot be represented by this
 baseline, so their Morgan fingerprints and pairwise similarities are recorded
 as unavailable rather than approximated with an arm-only fingerprint.
 
+For P5-P8, each star arm ends with an empty outer right descriptor ([]).
+The inner repeat-unit [<] descriptor is retained. These inputs also reproduce
+the saved fingerprints through the public API with end-group preprocessing.
+
 BigFingerprint similarity is defined for this experiment as requested:
 
     S_BigFingerprint = S_p-ECFP * S_p-TFP
@@ -66,7 +70,7 @@ POLYMERS = [
         "id": "S3-EO",
         "label": "3-arm CCO star",
         "bigsmiles": (
-            "C(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})" "CO{[<][>]CCO[<][>]}"
+            "C(CO{[<][>]CCO[<][]})(CO{[<][>]CCO[<][]})" "CO{[<][>]CCO[<][]}"
         ),
         "morgan_fragments": None,
     },
@@ -74,8 +78,8 @@ POLYMERS = [
         "id": "S4-EO",
         "label": "4-arm CCO star",
         "bigsmiles": (
-            "C(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})"
-            "(CO{[<][>]CCO[<][>]})CO{[<][>]CCO[<][>]}"
+            "C(CO{[<][>]CCO[<][]})(CO{[<][>]CCO[<][]})"
+            "(CO{[<][>]CCO[<][]})CO{[<][>]CCO[<][]}"
         ),
         "morgan_fragments": None,
     },
@@ -83,7 +87,7 @@ POLYMERS = [
         "id": "S3-PO",
         "label": "3-arm CC(C)O star",
         "bigsmiles": (
-            "C(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})" "CO{[<][>]CC(C)O[<][>]}"
+            "C(CO{[<][>]CC(C)O[<][]})(CO{[<][>]CC(C)O[<][]})" "CO{[<][>]CC(C)O[<][]}"
         ),
         "morgan_fragments": None,
     },
@@ -91,8 +95,8 @@ POLYMERS = [
         "id": "S4-PO",
         "label": "4-arm CC(C)O star",
         "bigsmiles": (
-            "C(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})"
-            "(CO{[<][>]CC(C)O[<][>]})CO{[<][>]CC(C)O[<][>]}"
+            "C(CO{[<][>]CC(C)O[<][]})(CO{[<][>]CC(C)O[<][]})"
+            "(CO{[<][>]CC(C)O[<][]})CO{[<][>]CC(C)O[<][]}"
         ),
         "morgan_fragments": None,
     },

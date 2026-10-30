@@ -1,6 +1,8 @@
 import contextlib
+import csv
 import io
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
@@ -129,6 +131,33 @@ class BigFingerprintApiTest(unittest.TestCase):
                 "{[][<]CCO[>][]}",
                 pecfp_radius=-1,
             )
+
+    def test_eight_polymer_case_reproduces_reference_fingerprints(self):
+        case_dir = (
+            Path(__file__).resolve().parents[1]
+            / "vector_similarity_search"
+            / "eight_polymer_case"
+        )
+        with (case_dir / "polymer_definitions_and_bit_counts.csv").open(
+            newline="", encoding="utf-8"
+        ) as source:
+            polymers = list(csv.DictReader(source))
+        # Saved Figure 3 vectors are independent of the public API calculation.
+        expected = np.concatenate(
+            [
+                np.load(case_dir / "pecfp_fingerprints.npy"),
+                np.load(case_dir / "ptfp_fingerprints.npy"),
+            ],
+            axis=1,
+        )
+        self.assertEqual(len(polymers), 8)
+        self.assertEqual(expected.shape, (8, 2088))
+        for index, polymer in enumerate(polymers):
+            with self.subTest(polymer=polymer["id"]):
+                vector = generate_bigfingerprint_vector(
+                    polymer["BigSMILES"], pecfp_radius=2
+                )
+                np.testing.assert_array_equal(vector, expected[index])
 
     def test_multiple_h_candidates_are_combined_by_bitwise_or(self):
         bigsmiles = "{[>][<]CCO[>], [<]CC(C)O[>][<]}CC"

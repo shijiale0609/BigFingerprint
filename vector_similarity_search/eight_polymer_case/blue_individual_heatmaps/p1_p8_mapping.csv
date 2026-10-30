@@ -3,7 +3,7 @@ P1,Linear CCO,{[][<]CCO[>][]}
 P2,Linear CC(C)O,{[][<]CC(C)O[>][]}
 P3,Random CCO/CC(C)O,"{[][<]CCO[>],[<]CC(C)O[>][]}"
 P4,Block CCO/CC(C)O,{[][<]CCO[>][<]}{[>][<]CC(C)O[>][]}
-P5,3-arm CCO star,C(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})CO{[<][>]CCO[<][>]}
-P6,4-arm CCO star,C(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})(CO{[<][>]CCO[<][>]})CO{[<][>]CCO[<][>]}
-P7,3-arm CC(C)O star,C(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})CO{[<][>]CC(C)O[<][>]}
-P8,4-arm CC(C)O star,C(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})(CO{[<][>]CC(C)O[<][>]})CO{[<][>]CC(C)O[<][>]}
+P5,3-arm CCO star,C(CO{[<][>]CCO[<][]})(CO{[<][>]CCO[<][]})CO{[<][>]CCO[<][]}
+P6,4-arm CCO star,C(CO{[<][>]CCO[<][]})(CO{[<][>]CCO[<][]})(CO{[<][>]CCO[<][]})CO{[<][>]CCO[<][]}
+P7,3-arm CC(C)O star,C(CO{[<][>]CC(C)O[<][]})(CO{[<][>]CC(C)O[<][]})CO{[<][>]CC(C)O[<][]}
+P8,4-arm CC(C)O star,C(CO{[<][>]CC(C)O[<][]})(CO{[<][>]CC(C)O[<][]})(CO{[<][>]CC(C)O[<][]})CO{[<][>]CC(C)O[<][]}
